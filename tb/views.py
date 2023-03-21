@@ -47,6 +47,10 @@ def list_soal(request):
     listsoal = Soal.objects.all()
     return render(request, 'pg_guru/daftar_soal.html', {'judul_web' : 'Halaman list soal guru', 'listsoal':listsoal})
 
+def index(request):
+    judul_web = 'SMP Plus Rahmat'
+    return render(request, 'index.html', {'judul_web' : judul_web})
+
 def beranda(request):
     judul_web = 'SMP Plus Rahmat'
     return render(request, 'pg_admin/index.html', {'judul_web' : judul_web})
