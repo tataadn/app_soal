@@ -1,0 +1,12 @@
+def cek_db(request, pk=""):
+    id = request.POST['id']
+    idsoal = Soal.objects.get(pk=id)
+    if request.method == 'POST':
+        cekdb_web = request.POST['kunci_jawaban']
+        jawaban = request.POST['jawaban']
+
+        ratio = SequenceMatcher(None, jawaban, cekdb_web).ratio()
+        hasil = "Nilai {0:.2f}".format(ratio*100)
+    return render(request, 'soal/cek_db.html', cekdb_web)
+
+path('cek-db/<int:pk>', cek_db, name='cek_db'),

@@ -1,0 +1,71 @@
+{% extends 'siswa/layouts/temp.html' %} 
+{% block content %} 
+
+  <div class="row">
+    {% for s in soal %}
+    <div class="col-md-6" id="card{{ s.id }}">
+      <div class="dashboard_graph">
+
+        <div class="row x_title">
+          <div class="col-md-12">
+            <h4><strong>Soal no. {{ s.id }}</strong></h4>
+          </div>
+        </div>
+
+        <h3 class="text-center pb-4 pt-2">{{ s.soal }}</h3>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-7">
+              <form class="" action="" method="post">
+                {% csrf_token %}
+                <!-- <input type="text" value="{{ s.id }}" name="id" hidden> -->
+                <div class="field item form-group">
+                  <label class="col-form-label col-md-3 label-align">Jawaban<span class="required">*</span></label>
+                  <div class="col-md-6">
+                    <textarea rows="10" name="jawaban"></textarea>
+                  </div>
+                </div>
+                <div class="field item form-group">
+                  <label class="col-form-label col-md-3 label-align"></label>
+                  <div class="col-md-6">
+                    <textarea hidden rows="10" name="kunci_jawaban">{{ s.kunci_jawaban }}</textarea>
+                  </div>
+                </div>
+                <div class="field item form-group">
+                  <label class="col-form-label col-md-3 label-align"></label>
+                  <div class="col-md-6">
+                    <textarea hidden rows="10" name="bobot_soal">{{ s.bobot_soal }}</textarea>
+                  </div>
+                </div>
+        
+                <div class="field item form-group">
+                    <div class="col-md-6 offset-md-3">
+                        <button type='submit' name="check" class="btn btn-primary">Check</button>
+                        <button type='reset' class="btn btn-success">Reset</button>
+                    </div>
+                </div>
+                
+              </form>
+            </div>
+            <div class="col-md-4">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2>Hasil</h2>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <div class="dashboard-widget-content">
+                    <h1>{{ ratio }}</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %} 
+  </div>
+
+{% endblock %}
