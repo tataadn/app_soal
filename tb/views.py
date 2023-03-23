@@ -55,5 +55,11 @@ def beranda(request):
     judul_web = 'SMP Plus Rahmat'
     return render(request, 'pg_admin/index.html', {'judul_web' : judul_web})
 
-def login(request):
-    return render(request, 'auth/login.html', {'judul_web' : 'Halaman login'})
+def login_siswa(request):
+    return render(request, 'auth/login_siswa.html', {'judul_web' : 'Halaman login'})
+
+def login_pengajar(request):
+    return render(request, 'auth/login_pengajar.html', {'judul_web' : 'Halaman login'})
+
+def login_admin(request):
+    return render(request, 'auth/login_admin.html', {'judul_web' : 'Halaman login'})
