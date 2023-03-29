@@ -56,10 +56,10 @@ def beranda(request):
     return render(request, 'pg_admin/index.html', {'judul_web' : judul_web})
 
 def login_siswa(request):
-    return render(request, 'auth/login_siswa.html', {'judul_web' : 'Halaman login'})
+    return render(request, 'pg_siswa/auth/login_siswa.html', {'judul_web' : 'Halaman login'})
 
 def login_pengajar(request):
-    return render(request, 'auth/login_pengajar.html', {'judul_web' : 'Halaman login'})
+    return render(request, 'pg_pengajar/auth/login_pengajar.html', {'judul_web' : 'Halaman login'})
 
 def login_admin(request):
-    return render(request, 'auth/login_admin.html', {'judul_web' : 'Halaman login'})
+    return render(request, 'pg_admin/auth/login_admin.html', {'judul_web' : 'Halaman login'})
