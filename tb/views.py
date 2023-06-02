@@ -40,26 +40,37 @@ def soal_db(request):
     else:
         return render(request,"pg-siswa/cek_db.html", {'soal':soal, 'judul_web' : 'Halaman cek db'})
     
-def index_guru(request):
-    return render(request, 'pg_guru/index.html', {'judul_web' : 'Halaman index guru'})
+# def index_guru(request):
+#     return render(request, 'pg_guru/index.html', {'judul_web' : 'Halaman index guru'})
     
-def list_soal(request):
-    listsoal = Soal.objects.all()
-    return render(request, 'pg_guru/daftar_soal.html', {'judul_web' : 'Halaman list soal guru', 'listsoal':listsoal})
+# def list_soal(request):
+#     listsoal = Soal.objects.all()
+#     return render(request, 'pg_guru/daftar_soal.html', {'judul_web' : 'Halaman list soal guru', 'listsoal':listsoal})
 
+# ALL USERS VIEWS
 def index(request):
     judul_web = 'SMP Plus Rahmat'
     return render(request, 'index.html', {'judul_web' : judul_web})
+
+
+# ADMIN VIEWS
+def login_admin(request):
+    return render(request, 'pg_admin/auth/login_admin.html', {'judul_web' : 'Halaman login'})
 
 def beranda(request):
     judul_web = 'SMP Plus Rahmat'
     return render(request, 'pg_admin/index.html', {'judul_web' : judul_web})
 
+def data_siswa(request):
+    judul_web = 'Data Siswa | SMP Plus Rahmat'
+    return render(request, 'pg_admin/data_siswa.html', {'judul_web' : judul_web})
+
+
+# SISWA VIEWS
 def login_siswa(request):
     return render(request, 'pg_siswa/auth/login_siswa.html', {'judul_web' : 'Halaman login'})
 
+
+# PENGAJAR VIEWS
 def login_pengajar(request):
     return render(request, 'pg_pengajar/auth/login_pengajar.html', {'judul_web' : 'Halaman login'})
-
-def login_admin(request):
-    return render(request, 'pg_admin/auth/login_admin.html', {'judul_web' : 'Halaman login'})
