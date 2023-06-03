@@ -61,6 +61,11 @@ def beranda(request):
     judul_web = 'SMP Plus Rahmat'
     return render(request, 'pg_admin/index.html', {'judul_web' : judul_web})
 
+def data_pengajar(request):
+    judul_web = 'Data Pengajar | SMP Plus Rahmat'
+    sub_title = 'DATA PENGAJAR SMP PLUS RAHMAT'
+    return render(request, 'pg_admin/data_pengajar.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
+
 def data_siswa(request):
     judul_web = 'Data Siswa | SMP Plus Rahmat'
     return render(request, 'pg_admin/data_siswa.html', {'judul_web' : judul_web})
