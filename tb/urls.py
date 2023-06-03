@@ -22,6 +22,7 @@ urlpatterns = [
     # URL SISWA
     path('login-siswa', login_siswa, name='login_siswa'),
     path('index', beranda_siswa, name='index'),
+    path('profil-siswa', profil_siswa, name='profil_siswa'),
 
     # URL PENGAJAR
     path('login-pengajar', login_pengajar, name='login_pengajar'),

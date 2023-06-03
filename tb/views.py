@@ -79,6 +79,11 @@ def beranda_siswa(request):
     judul_web = 'SMP Plus Rahmat'
     return render(request, 'pg_siswa/index.html', {'judul_web' : judul_web})
 
+def profil_siswa(request):
+    judul_web = 'Profil Saya | SMP Plus Rahmat'
+    sub_title = 'PROFIL SISWA SMP PLUS RAHMAT'
+    return render(request, 'pg_siswa/profil.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
+
 # PENGAJAR VIEWS
 def login_pengajar(request):
     return render(request, 'pg_pengajar/auth/login_pengajar.html', {'judul_web' : 'Halaman login'})
