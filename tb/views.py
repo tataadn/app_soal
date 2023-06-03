@@ -75,6 +75,9 @@ def data_siswa(request):
 def login_siswa(request):
     return render(request, 'pg_siswa/auth/login_siswa.html', {'judul_web' : 'Halaman login'})
 
+def beranda_siswa(request):
+    judul_web = 'SMP Plus Rahmat'
+    return render(request, 'pg_siswa/index.html', {'judul_web' : judul_web})
 
 # PENGAJAR VIEWS
 def login_pengajar(request):
