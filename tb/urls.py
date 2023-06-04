@@ -23,6 +23,8 @@ urlpatterns = [
     path('login-siswa', login_siswa, name='login_siswa'),
     path('index', beranda_siswa, name='index'),
     path('profil-siswa', profil_siswa, name='profil_siswa'),
+    path('nilai-ujian', nilai_ujian, name='nilai_ujian'),
+    path('soal-ujian', soal_ujian, name='soal_ujian'),
 
     # URL PENGAJAR
     path('login-pengajar', login_pengajar, name='login_pengajar'),

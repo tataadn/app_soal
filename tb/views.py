@@ -84,6 +84,16 @@ def profil_siswa(request):
     sub_title = 'PROFIL SISWA SMP PLUS RAHMAT'
     return render(request, 'pg_siswa/profil.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
 
+def nilai_ujian(request):
+    judul_web = 'Nilai Ujian | SMP Plus Rahmat'
+    sub_title = 'NILAI UJIAN SISWA SMP PLUS RAHMAT'
+    return render(request, 'pg_siswa/nilai_ujian.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
+
+def soal_ujian(request):
+    judul_web = 'Soal Ujian | SMP Plus Rahmat'
+    sub_title = 'SOAL UJIAN SISWA SMP PLUS RAHMAT'
+    return render(request, 'pg_siswa/soal_ujian.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
+
 # PENGAJAR VIEWS
 def login_pengajar(request):
     return render(request, 'pg_pengajar/auth/login_pengajar.html', {'judul_web' : 'Halaman login'})

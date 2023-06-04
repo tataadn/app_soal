@@ -108,7 +108,7 @@
 											</a>
 										</div>
 										<div class="menu-item">
-											<a class="menu-link" href="#">
+											<a class="menu-link" href="/soal-ujian">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -116,7 +116,7 @@
 											</a>
 										</div>
 										<div class="menu-item">
-											<a class="menu-link" href="#">
+											<a class="menu-link" href="/nilai-ujian">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -315,6 +315,14 @@
 		<!--end::Page Vendors Javascript-->
 		<!--begin::Page Custom Javascript(used by this page)-->
 		<script src="static/plugins/custom/datatables/datatables.bundle.js"></script>
+		<script>
+			$('table').dataTable();
+
+			var table = $('#kt_table_users').DataTable();
+			$('#pencarian').on( 'keyup', function () {
+				table.search( this.value ).draw();
+			} );
+		</script>
 		<!--end::Page Vendors Javascript-->
 		<!--begin::Page Custom Javascript(used by this page)-->
 		<script src="static/js/custom/apps/user-management/users/list/table.js"></script>

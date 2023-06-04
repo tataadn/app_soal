@@ -395,6 +395,14 @@
 		<!--end::Page Custom Javascript-->
 		<!--begin::Page Vendors Javascript(used by this page)-->
 		<script src="static/plugins/custom/datatables/datatables.bundle.js"></script>
+		<script>
+			$('table').dataTable();
+
+			var table = $('#kt_table_users').DataTable();
+			$('#pencarian').on( 'keyup', function () {
+				table.search( this.value ).draw();
+			} );
+		</script>
 		<!--end::Page Vendors Javascript-->
 		<!--begin::Page Custom Javascript(used by this page)-->
 		<script src="static/js/custom/apps/user-management/users/list/table.js"></script>
