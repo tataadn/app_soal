@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import *
 from difflib import SequenceMatcher
 from .models import *
 from django.views.generic.base import TemplateView
+from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
 index_web = {
@@ -56,6 +57,24 @@ def index(request):
 # ADMIN VIEWS
 def login_admin(request):
     return render(request, 'pg_admin/auth/login_admin.html', {'judul_web' : 'Halaman login'})
+
+def login_admin(request):
+    user = None
+    if request.method == 'POST':
+        usn_admin = request.POST['username']
+        pwd_admin = request.POST['password']
+        user = authenticate(request, username=usn_admin, password=pwd_admin)
+
+        if user is not None:
+            login(request, user)
+            return redirect('beranda')
+        else:
+            return redirect('login_admin')
+    return render(request, 'pg_admin/auth/login_admin.html', {'judul_web' : 'Halaman login'})
+
+def logout_admin(request):
+    logout(request)
+    return redirect('login_admin')
 
 def beranda(request):
     judul_web = 'SMP Plus Rahmat'

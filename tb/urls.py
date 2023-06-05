@@ -13,8 +13,10 @@ urlpatterns = [
     
 
     # new urls
+
     # URL ADMIN
     path('login-admin', login_admin, name='login_admin'),
+    path('logout', logout_admin, name='logout_admin'),
     path('beranda', beranda, name='beranda'),
     path('data-siswa', data_siswa, name='data_siswa'),
     path('data-pengajar', data_pengajar, name='data_pengajar'),
