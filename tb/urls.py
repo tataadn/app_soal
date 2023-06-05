@@ -30,6 +30,7 @@ urlpatterns = [
     path('login-pengajar', login_pengajar, name='login_pengajar'),
     path('dashboard', beranda_pengajar, name='dashboard'),
     path('profil-pengajar', profil_pengajar, name='profil_pengajar'),
+    path('data-soal', data_soal, name='data_soal'),
 ]
 
 if settings.DEBUG:

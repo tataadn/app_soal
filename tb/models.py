@@ -20,8 +20,8 @@ class User(AbstractUser):
     is_guru = models.BooleanField('Is guru',default=False)
     is_admin = models.BooleanField('Is admin',default=False)
     foto = models.ImageField(upload_to='foto/', null=True)
-    id_mapel = models.CharField(max_length=10)
-    id_kelas = models.CharField(max_length=10)
+    id_mapel = models.CharField(max_length=10, null=True)
+    id_kelas = models.CharField(max_length=10, null=True)
 
 class Mapel(models.Model):
     id_mapel = models.CharField(primary_key=True, max_length=50)

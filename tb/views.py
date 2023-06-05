@@ -106,3 +106,8 @@ def profil_pengajar(request):
     judul_web = 'Profil Saya | SMP Plus Rahmat'
     sub_title = 'PROFIL PENGAJAR SMP PLUS RAHMAT'
     return render(request, 'pg_pengajar/profil.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
+
+def data_soal(request):
+    judul_web = 'Data Soal | SMP Plus Rahmat'
+    sub_title = 'DAFTAR SOAL MAPEL SMP PLUS RAHMAT'
+    return render(request, 'pg_pengajar/data_soal.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
