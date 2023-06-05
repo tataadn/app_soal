@@ -4,6 +4,7 @@ from difflib import SequenceMatcher
 from .models import *
 from django.views.generic.base import TemplateView
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 # Create your views here.
 
 index_web = {
@@ -69,6 +70,7 @@ def login_admin(request):
             login(request, user)
             return redirect('beranda')
         else:
+            messages.error(request, 'Username atau password anda salah!')
             return redirect('login_admin')
     return render(request, 'pg_admin/auth/login_admin.html', {'judul_web' : 'Halaman login'})
 
@@ -89,6 +91,10 @@ def data_siswa(request):
     judul_web = 'Data Siswa | SMP Plus Rahmat'
     return render(request, 'pg_admin/data_siswa.html', {'judul_web' : judul_web})
 
+def profil_admin(request):
+    judul_web = 'Profil Admin | SMP Plus Rahmat'
+    sub_title = 'PROFIL ADMIN SMP PLUS RAHMAT'
+    return render(request, 'pg_admin/profil.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
 
 # SISWA VIEWS
 def login_siswa(request):

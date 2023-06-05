@@ -20,6 +20,7 @@ urlpatterns = [
     path('beranda', beranda, name='beranda'),
     path('data-siswa', data_siswa, name='data_siswa'),
     path('data-pengajar', data_pengajar, name='data_pengajar'),
+    path('profil', profil_admin, name='profil_admin'),
 
     # URL SISWA
     path('login-siswa', login_siswa, name='login_siswa'),
