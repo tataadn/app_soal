@@ -85,7 +85,27 @@ def beranda(request):
 def data_pengajar(request):
     judul_web = 'Data Pengajar | SMP Plus Rahmat'
     sub_title = 'DATA PENGAJAR SMP PLUS RAHMAT'
-    return render(request, 'pg_admin/data_pengajar.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
+    mpl = Mapel.objects.all()
+    pengguna = User.objects.all()
+
+    listweb = {
+        'judul_web' : judul_web, 
+        'sub_title' : sub_title, 
+        'mpl' : mpl, 
+        'pengguna' : pengguna
+    }
+    
+    if request.method == 'POST':
+        foto = request.FILES['foto']
+        nip = request.POST['nip']
+        nama = request.POST['nama']
+        jk = request.POST['jk']
+        alamat = request.POST['alamat']
+        mapel = request.POST['mapel']
+        username = request.POST['username']
+        password = request.POST['password']
+        
+    return render(request, 'pg_admin/data_pengajar.html', listweb)
 
 def data_siswa(request):
     judul_web = 'Data Siswa | SMP Plus Rahmat'
@@ -95,6 +115,9 @@ def profil_admin(request):
     judul_web = 'Profil Admin | SMP Plus Rahmat'
     sub_title = 'PROFIL ADMIN SMP PLUS RAHMAT'
     return render(request, 'pg_admin/profil.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
+
+
+
 
 # SISWA VIEWS
 def login_siswa(request):
@@ -118,6 +141,9 @@ def soal_ujian(request):
     judul_web = 'Soal Ujian | SMP Plus Rahmat'
     sub_title = 'SOAL UJIAN SISWA SMP PLUS RAHMAT'
     return render(request, 'pg_siswa/soal_ujian.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
+
+
+
 
 # PENGAJAR VIEWS
 def login_pengajar(request):
