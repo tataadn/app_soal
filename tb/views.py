@@ -49,6 +49,8 @@ def soal_db(request):
 #     listsoal = Soal.objects.all()
 #     return render(request, 'pg_guru/daftar_soal.html', {'judul_web' : 'Halaman list soal guru', 'listsoal':listsoal})
 
+
+
 # ALL USERS VIEWS
 def index(request):
     judul_web = 'SMP Plus Rahmat'
@@ -83,33 +85,36 @@ def beranda(request):
     return render(request, 'pg_admin/index.html', {'judul_web' : judul_web})
 
 def data_pengajar(request):
-    judul_web = 'Data Pengajar | SMP Plus Rahmat'
-    sub_title = 'DATA PENGAJAR SMP PLUS RAHMAT'
-    mpl = Mapel.objects.all()
-    pengguna = User.objects.all()
-
     listweb = {
-        'judul_web' : judul_web, 
-        'sub_title' : sub_title, 
-        'mpl' : mpl, 
-        'pengguna' : pengguna
+        'judul_web' : 'Data Pengajar | SMP Plus Rahmat', 
+        'sub_title' : 'DATA PENGAJAR SMP PLUS RAHMAT', 
+        'mpl' : Mapel.objects.all(), 
+        'pengguna' : User.objects.filter(is_guru=True).order_by('date_joined')
     }
     
     if request.method == 'POST':
         foto = request.FILES['foto']
-        nip = request.POST['nip']
-        nama = request.POST['nama']
-        jk = request.POST['jk']
+        nip = request.POST['nomor_induk']
+        nama = request.POST['nama_lengkap']
+        email = request.POST['email']
         alamat = request.POST['alamat']
-        mapel = request.POST['mapel']
-        username = request.POST['username']
+        jk = request.POST['jenis_kelamin']
+        is_guru = request.POST['is_guru']
+        mapel = request.POST['id_mapel']
+        username = request.POST['nomor_induk']
         password = request.POST['password']
         
+        User.objects.create_user(foto=foto, nomor_induk=nip, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, is_guru=is_guru, id_mapel=mapel, username=username, password=password,)
+        messages.success(request, 'Akun berhasil ditambahkan!')
+        return redirect('data_pengajar')
+    
     return render(request, 'pg_admin/data_pengajar.html', listweb)
 
 def data_siswa(request):
-    judul_web = 'Data Siswa | SMP Plus Rahmat'
-    return render(request, 'pg_admin/data_siswa.html', {'judul_web' : judul_web})
+    listweb = {
+        'judul_web' : 'Data Siswa | SMP Plus Rahmat', 
+    }
+    return render(request, 'pg_admin/data_siswa.html', listweb)
 
 def profil_admin(request):
     judul_web = 'Profil Admin | SMP Plus Rahmat'
