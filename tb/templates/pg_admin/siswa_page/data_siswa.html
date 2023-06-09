@@ -1,0 +1,504 @@
+{% extends 'pg_admin/layout/temp.html' %} 
+{% block content %} 
+
+<!--begin::Content-->
+<div class="d-flex flex-column flex-column-fluid">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container">
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                    <!--begin::Alert-->
+                    <div class="alert alert-success d-flex align-items-center p-5">
+                        <!--begin::Svg Icon | path: /var/www/preview.keenthemes.com/kt-products/docs/metronic/html/releases/2023-06-08-055059/core/html/src/media/icons/duotune/general/gen048.svg-->
+                        <span class="svg-icon svg-icon-success svg-icon-2hx me-4"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path opacity="0.3" d="M20.5543 4.37824L12.1798 2.02473C12.0626 1.99176 11.9376 1.99176 11.8203 2.02473L3.44572 4.37824C3.18118 4.45258 3 4.6807 3 4.93945V13.569C3 14.6914 3.48509 15.8404 4.4417 16.984C5.17231 17.8575 6.18314 18.7345 7.446 19.5909C9.56752 21.0295 11.6566 21.912 11.7445 21.9488C11.8258 21.9829 11.9129 22 12.0001 22C12.0872 22 12.1744 21.983 12.2557 21.9488C12.3435 21.912 14.4326 21.0295 16.5541 19.5909C17.8169 18.7345 18.8277 17.8575 19.5584 16.984C20.515 15.8404 21 14.6914 21 13.569V4.93945C21 4.6807 20.8189 4.45258 20.5543 4.37824Z" fill="currentColor"/>
+                            <path d="M10.5606 11.3042L9.57283 10.3018C9.28174 10.0065 8.80522 10.0065 8.51412 10.3018C8.22897 10.5912 8.22897 11.0559 8.51412 11.3452L10.4182 13.2773C10.8099 13.6747 11.451 13.6747 11.8427 13.2773L15.4859 9.58051C15.771 9.29117 15.771 8.82648 15.4859 8.53714C15.1948 8.24176 14.7183 8.24176 14.4272 8.53714L11.7002 11.3042C11.3869 11.6221 10.874 11.6221 10.5606 11.3042Z" fill="currentColor"/>
+                            </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+        
+                        <!--begin::Wrapper-->
+                        <div class="d-flex flex-column">
+                            <!--begin::Title-->
+                            <h4 class="mb-1 text-dark">{{message}}</h4>
+                            <!--end::Title-->
+                        </div>
+                        <!--end::Wrapper-->
+                    </div>
+                    <!--end::Alert-->
+                    {% endif %}
+                    
+                    {% if message.tags == 'error' %}
+                    <!--begin::Alert-->
+                    <div class="alert alert-danger d-flex align-items-center p-5">
+                        <!--begin::Svg Icon | path: /var/www/preview.keenthemes.com/kt-products/docs/metronic/html/releases/2023-06-08-055059/core/html/src/media/icons/duotune/general/gen050.svg-->
+                        <span class="svg-icon svg-icon-danger svg-icon-2hx me-4"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path opacity="0.3" d="M20.5543 4.37824L12.1798 2.02473C12.0626 1.99176 11.9376 1.99176 11.8203 2.02473L3.44572 4.37824C3.18118 4.45258 3 4.6807 3 4.93945V13.569C3 14.6914 3.48509 15.8404 4.4417 16.984C5.17231 17.8575 6.18314 18.7345 7.446 19.5909C9.56752 21.0295 11.6566 21.912 11.7445 21.9488C11.8258 21.9829 11.9129 22 12.0001 22C12.0872 22 12.1744 21.983 12.2557 21.9488C12.3435 21.912 14.4326 21.0295 16.5541 19.5909C17.8169 18.7345 18.8277 17.8575 19.5584 16.984C20.515 15.8404 21 14.6914 21 13.569V4.93945C21 4.6807 20.8189 4.45258 20.5543 4.37824Z" fill="currentColor"/>
+                            <rect x="9" y="13.0283" width="7.3536" height="1.2256" rx="0.6128" transform="rotate(-45 9 13.0283)" fill="currentColor"/>
+                            <rect x="9.86664" y="7.93359" width="7.3536" height="1.2256" rx="0.6128" transform="rotate(45 9.86664 7.93359)" fill="currentColor"/>
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+        
+                        <!--begin::Wrapper-->
+                        <div class="d-flex flex-column">
+                            <!--begin::Title-->
+                            <h4 class="mb-1 text-dark">{{message}}</h4>
+                            <!--end::Title-->
+                        </div>
+                        <!--end::Wrapper-->
+                    </div>
+                    <!--end::Alert-->
+                    {% endif %}
+                
+                {% endfor %}
+            {% endif %}
+            
+            <!--begin::Row-->
+            <div class="row gy-5 g-xl-8">
+                <!--begin::Col-->
+                <div class="col-xxl-4">
+                    <!--begin::Mixed Widget 2-->
+                    <div class="card card-xxl-stretch mb-5">
+                        <!--begin::Header-->
+                        <div class="card-header border-0 bg-danger py-5">
+                            <h1 class="pt-3 fw-bolder text-white" style="height: 100px">Data Siswa SMP Plus Rahmat</h3>
+                        </div>
+                        <!--end::Header-->
+                        <!--begin::Body-->
+                        <div class="card-body p-0">
+                            <!--begin::Stats-->
+                            <div class="card-p mt-n20 position-relative">
+                                <!--begin::Tambah Akun Siswa-->
+                                <div class="row g-0">
+                                    <!--begin::Col-->
+                                    <div class="col bg-light-primary px-6 py-8 rounded-2 mb-7">
+                                        <!--begin::Svg Icon | path: icons/duotone/Communication/Add-user.svg-->
+                                        <span class="svg-icon svg-icon-3x svg-icon-primary d-block my-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <path d="M18,8 L16,8 C15.4477153,8 15,7.55228475 15,7 C15,6.44771525 15.4477153,6 16,6 L18,6 L18,4 C18,3.44771525 18.4477153,3 19,3 C19.5522847,3 20,3.44771525 20,4 L20,6 L22,6 C22.5522847,6 23,6.44771525 23,7 C23,7.55228475 22.5522847,8 22,8 L20,8 L20,10 C20,10.5522847 19.5522847,11 19,11 C18.4477153,11 18,10.5522847 18,10 L18,8 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                <path d="M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z" fill="#000000" fill-rule="nonzero" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                        <a href="#" class="text-primary fw-bold fs-6" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">Tambah Akun Siswa</a>
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+                                <!--end::Tambah Akun Siswa-->
+
+                                <!--begin::Baris kelas 7A-C-->
+                                <div class="row g-0 mb-7">
+                                    <!--begin::Col-->
+                                    <div class="col bg-light-danger px-6 py-8 rounded-2 me-7">
+                                        <!--begin::Svg Icon | path: icons/duotone/Design/Layers.svg-->
+                                        <span class="svg-icon svg-icon-3x svg-icon-danger d-block my-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                                                <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                        <a href="/data-7a" class="text-danger fw-bold fs-6 mt-2">Kelas VII-A</a>
+                                    </div>
+                                    <!--end::Col-->
+                                    <!--begin::Col-->
+                                    <div class="col bg-light-success px-6 py-8 rounded-2 me-7">
+                                        <!--begin::Svg Icon | path: icons/duotone/Communication/Urgent-mail.svg-->
+                                        <span class="svg-icon svg-icon-3x svg-icon-success d-block my-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <path d="M12.7037037,14 L15.6666667,10 L13.4444444,10 L13.4444444,6 L9,12 L11.2222222,12 L11.2222222,14 L6,14 C5.44771525,14 5,13.5522847 5,13 L5,3 C5,2.44771525 5.44771525,2 6,2 L18,2 C18.5522847,2 19,2.44771525 19,3 L19,13 C19,13.5522847 18.5522847,14 18,14 L12.7037037,14 Z" fill="#000000" opacity="0.3" />
+                                                <path d="M9.80428954,10.9142091 L9,12 L11.2222222,12 L11.2222222,16 L15.6666667,10 L15.4615385,10 L20.2072547,6.57253826 C20.4311176,6.4108595 20.7436609,6.46126971 20.9053396,6.68513259 C20.9668779,6.77033951 21,6.87277228 21,6.97787787 L21,17 C21,18.1045695 20.1045695,19 19,19 L5,19 C3.8954305,19 3,18.1045695 3,17 L3,6.97787787 C3,6.70173549 3.22385763,6.47787787 3.5,6.47787787 C3.60510559,6.47787787 3.70753836,6.51099993 3.79274528,6.57253826 L9.80428954,10.9142091 Z" fill="#000000" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                        <a href="/data-7b" class="text-success fw-bold fs-6 mt-2">Kelas VII-B</a>
+                                    </div>
+                                    <!--end::Col-->
+                                    <!--begin::Col-->
+                                    <div class="col bg-light-warning px-6 py-8 rounded-2">
+                                        <!--begin::Svg Icon | path: icons/duotone/Communication/Urgent-mail.svg-->
+                                        <span class="svg-icon svg-icon-3x svg-icon-warning d-block my-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24" />
+                                                    <rect fill="#000000" opacity="0.3" x="13" y="4" width="3" height="16" rx="1.5" />
+                                                    <rect fill="#000000" x="8" y="9" width="3" height="11" rx="1.5" />
+                                                    <rect fill="#000000" x="18" y="11" width="3" height="9" rx="1.5" />
+                                                    <rect fill="#000000" x="3" y="13" width="3" height="7" rx="1.5" />
+                                                </g>
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                        <a href="/data-7c" class="text-warning fw-bold fs-6 mt-2">Kelas VII-C</a>
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+                                <!--end::Baris kelas 7A-C-->
+
+                                <!--begin::Baris kelas 8A-C-->
+                                <div class="row g-0 mb-7">
+                                    <!--begin::Col-->
+                                    <div class="col bg-light-danger px-6 py-8 rounded-2 me-7">
+                                        <!--begin::Svg Icon | path: icons/duotone/Design/Layers.svg-->
+                                        <span class="svg-icon svg-icon-3x svg-icon-danger d-block my-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                                                <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                        <a href="/data-8a" class="text-danger fw-bold fs-6 mt-2">Kelas VIII-A</a>
+                                    </div>
+                                    <!--end::Col-->
+                                    <!--begin::Col-->
+                                    <div class="col bg-light-success px-6 py-8 rounded-2 me-7">
+                                        <!--begin::Svg Icon | path: icons/duotone/Communication/Urgent-mail.svg-->
+                                        <span class="svg-icon svg-icon-3x svg-icon-success d-block my-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <path d="M12.7037037,14 L15.6666667,10 L13.4444444,10 L13.4444444,6 L9,12 L11.2222222,12 L11.2222222,14 L6,14 C5.44771525,14 5,13.5522847 5,13 L5,3 C5,2.44771525 5.44771525,2 6,2 L18,2 C18.5522847,2 19,2.44771525 19,3 L19,13 C19,13.5522847 18.5522847,14 18,14 L12.7037037,14 Z" fill="#000000" opacity="0.3" />
+                                                <path d="M9.80428954,10.9142091 L9,12 L11.2222222,12 L11.2222222,16 L15.6666667,10 L15.4615385,10 L20.2072547,6.57253826 C20.4311176,6.4108595 20.7436609,6.46126971 20.9053396,6.68513259 C20.9668779,6.77033951 21,6.87277228 21,6.97787787 L21,17 C21,18.1045695 20.1045695,19 19,19 L5,19 C3.8954305,19 3,18.1045695 3,17 L3,6.97787787 C3,6.70173549 3.22385763,6.47787787 3.5,6.47787787 C3.60510559,6.47787787 3.70753836,6.51099993 3.79274528,6.57253826 L9.80428954,10.9142091 Z" fill="#000000" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                        <a href="/data-8b" class="text-success fw-bold fs-6 mt-2">Kelas VIII-B</a>
+                                    </div>
+                                    <!--end::Col-->
+                                    <!--begin::Col-->
+                                    <div class="col bg-light-warning px-6 py-8 rounded-2">
+                                        <!--begin::Svg Icon | path: icons/duotone/Communication/Urgent-mail.svg-->
+                                        <span class="svg-icon svg-icon-3x svg-icon-warning d-block my-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24" />
+                                                    <rect fill="#000000" opacity="0.3" x="13" y="4" width="3" height="16" rx="1.5" />
+                                                    <rect fill="#000000" x="8" y="9" width="3" height="11" rx="1.5" />
+                                                    <rect fill="#000000" x="18" y="11" width="3" height="9" rx="1.5" />
+                                                    <rect fill="#000000" x="3" y="13" width="3" height="7" rx="1.5" />
+                                                </g>
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                        <a href="/data-8c" class="text-warning fw-bold fs-6 mt-2">Kelas VIII-C</a>
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+                                <!--end::Baris kelas 8A-C-->
+
+                                <!--begin::Baris kelas 9A-C-->
+                                <div class="row g-0 mb-7">
+                                    <!--begin::Col-->
+                                    <div class="col bg-light-danger px-6 py-8 rounded-2 me-7">
+                                        <!--begin::Svg Icon | path: icons/duotone/Design/Layers.svg-->
+                                        <span class="svg-icon svg-icon-3x svg-icon-danger d-block my-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero" />
+                                                <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                        <a href="/data-9a" class="text-danger fw-bold fs-6 mt-2">Kelas IX-A</a>
+                                    </div>
+                                    <!--end::Col-->
+                                    <!--begin::Col-->
+                                    <div class="col bg-light-success px-6 py-8 rounded-2 me-7">
+                                        <!--begin::Svg Icon | path: icons/duotone/Communication/Urgent-mail.svg-->
+                                        <span class="svg-icon svg-icon-3x svg-icon-success d-block my-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <path d="M12.7037037,14 L15.6666667,10 L13.4444444,10 L13.4444444,6 L9,12 L11.2222222,12 L11.2222222,14 L6,14 C5.44771525,14 5,13.5522847 5,13 L5,3 C5,2.44771525 5.44771525,2 6,2 L18,2 C18.5522847,2 19,2.44771525 19,3 L19,13 C19,13.5522847 18.5522847,14 18,14 L12.7037037,14 Z" fill="#000000" opacity="0.3" />
+                                                <path d="M9.80428954,10.9142091 L9,12 L11.2222222,12 L11.2222222,16 L15.6666667,10 L15.4615385,10 L20.2072547,6.57253826 C20.4311176,6.4108595 20.7436609,6.46126971 20.9053396,6.68513259 C20.9668779,6.77033951 21,6.87277228 21,6.97787787 L21,17 C21,18.1045695 20.1045695,19 19,19 L5,19 C3.8954305,19 3,18.1045695 3,17 L3,6.97787787 C3,6.70173549 3.22385763,6.47787787 3.5,6.47787787 C3.60510559,6.47787787 3.70753836,6.51099993 3.79274528,6.57253826 L9.80428954,10.9142091 Z" fill="#000000" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                        <a href="/data-9b" class="text-success fw-bold fs-6 mt-2">Kelas IX-B</a>
+                                    </div>
+                                    <!--end::Col-->
+                                    <!--begin::Col-->
+                                    <div class="col bg-light-warning px-6 py-8 rounded-2">
+                                        <!--begin::Svg Icon | path: icons/duotone/Communication/Urgent-mail.svg-->
+                                        <span class="svg-icon svg-icon-3x svg-icon-warning d-block my-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect x="0" y="0" width="24" height="24" />
+                                                    <rect fill="#000000" opacity="0.3" x="13" y="4" width="3" height="16" rx="1.5" />
+                                                    <rect fill="#000000" x="8" y="9" width="3" height="11" rx="1.5" />
+                                                    <rect fill="#000000" x="18" y="11" width="3" height="9" rx="1.5" />
+                                                    <rect fill="#000000" x="3" y="13" width="3" height="7" rx="1.5" />
+                                                </g>
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                        <a href="/data-9c" class="text-warning fw-bold fs-6 mt-2">Kelas IX-C</a>
+                                    </div>
+                                    <!--end::Col-->
+                                </div>
+                                <!--end::Baris kelas 9A-C-->
+                            </div>
+                            <!--end::Stats-->
+                        </div>
+                        <!--end::Body-->
+
+                        <!--begin::Modal - Add task-->
+                        <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
+                            <!--begin::Modal dialog-->
+                            <div class="modal-dialog modal-dialog-centered mw-650px">
+                                <!--begin::Modal content-->
+                                <div class="modal-content">
+                                    <!--begin::Modal header-->
+                                    <div class="modal-header" id="kt_modal_add_user_header">
+                                        <!--begin::Modal title-->
+                                        <h2 class="fw-bolder">Tambah Akun Siswa</h2>
+                                        <!--end::Modal title-->
+                                        <!--begin::Close-->
+                                        <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <!--begin::Svg Icon | path: icons/duotone/Navigation/Close.svg-->
+                                            <span class="svg-icon svg-icon-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                    <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+                                                        <rect fill="#000000" x="0" y="7" width="16" height="2" rx="1" />
+                                                        <rect fill="#000000" opacity="0.5" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000)" x="0" y="7" width="16" height="2" rx="1" />
+                                                    </g>
+                                                </svg>
+                                            </span>
+                                            <!--end::Svg Icon-->
+                                        </div>
+                                        <!--end::Close-->
+                                    </div>
+                                    <!--end::Modal header-->
+                                    <!--begin::Modal body-->
+                                    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                                        <!--begin::Form-->
+                                        <form id="kt_modal_add_user_form" class="form" method="post" action="" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <!--begin::Scroll-->
+                                            <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+
+                                                <!--FOTO SISWA-->
+                                                <div class="fv-row mb-7">
+                                                    <!--begin::Label-->
+                                                    <label class="required d-block fw-bold fs-6 mb-5">Foto Siswa</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Image input-->
+                                                    <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url(static/media/avatars/blank.png)">
+                                                        <!--begin::Preview existing avatar-->
+                                                        <div class="image-input-wrapper w-125px h-125px" style="background-image: url(static/media/avatars/blank.png);"></div>
+                                                        <!--end::Preview existing avatar-->
+                                                        <!--begin::Label-->
+                                                        <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                                                            <i class="bi bi-pencil-fill fs-7"></i>
+                                                            <!--begin::Inputs-->
+                                                            <input type="file" name="foto" accept=".png, .jpg, .jpeg" />
+                                                            <input type="hidden" name="avatar_remove" />
+                                                            <!--end::Inputs-->
+                                                        </label>
+                                                        <!--end::Label-->
+                                                        <!--begin::Cancel-->
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                                                            <i class="bi bi-x fs-2"></i>
+                                                        </span>
+                                                        <!--end::Cancel-->
+                                                        <!--begin::Remove-->
+                                                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                                                            <i class="bi bi-x fs-2"></i>
+                                                        </span>
+                                                        <!--end::Remove-->
+                                                    </div>
+                                                    <!--end::Image input-->
+                                                    <!--begin::Hint-->
+                                                    <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                                                    <!--end::Hint-->
+                                                </div>
+                                                <!--FOTO SISWA-->
+
+                                                <!--NOMOR SISWA-->
+                                                <div class="fv-row mb-7">
+                                                    <!--begin::Label-->
+                                                    <label class="required fw-bold fs-6 mb-2">NISN</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="text" name="nomor_induk" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="123456789" />
+                                                    <!--end::Input-->
+                                                </div>
+                                                <!--NOMOR SISWA-->
+                                                
+                                                <!--NAMA LENGKAP-->
+                                                <div class="fv-row mb-7">
+                                                    <!--begin::Label-->
+                                                    <label class="required fw-bold fs-6 mb-2">Nama Lengkap</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="text" name="nama_lengkap" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="John Doe" />
+                                                    <!--end::Input-->
+                                                </div>
+                                                <!--NAMA LENGKAP-->
+                                                
+                                                <!--EMAIL-->
+                                                <div class="fv-row mb-7">
+                                                    <!--begin::Label-->
+                                                    <label class="required fw-bold fs-6 mb-2">Email</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="example@domain.com" />
+                                                    <!--end::Input-->
+                                                </div>
+                                                <!--EMAIL-->
+                                                
+                                                <!--password-->
+                                                <div class="fv-row mb-7">
+                                                    <!--begin::Label-->
+                                                    <label class="required fw-bold fs-6 mb-2">Password</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="password" name="password" class="form-control form-control-solid mb-3 mb-lg-0" />
+                                                    <!--end::Input-->
+                                                </div>
+                                                <!--password-->
+                                                
+                                                <!--ALAMAT SISWA-->
+                                                <div class="fv-row mb-12">
+                                                    <!--begin::Label-->
+                                                    <label class="required fw-bold fs-6 mb-2">Alamat Siswa</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="text" name="alamat" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Jl. Bence, Kediri" />
+                                                    <!--end::Input-->
+                                                </div>
+                                                <!--ALAMAT SISWA-->
+
+                                                <!--JENIS KELAMIN-->
+                                                <div class="mb-7">
+                                                    <!--begin::Label-->
+                                                    <label class="required fw-bold fs-6 mb-5">Jenis Kelamin</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Roles-->
+                                                    <!--begin::Input row-->
+                                                    <div class="d-flex fv-row">
+                                                        <!--begin::Radio-->
+                                                        <div class="form-check form-check-custom form-check-solid">
+                                                            <!--begin::Input-->
+                                                            <input class="form-check-input me-3" name="jenis_kelamin" type="radio" value="Perempuan" id="perempuan" />
+                                                            <!--end::Input-->
+                                                            <!--begin::Label-->
+                                                            <label class="form-check-label" for="perempuan">
+                                                                <div class="fw-bolder text-gray-800">Perempuan</div>
+                                                            </label>
+                                                            <!--end::Label-->
+                                                        </div>
+                                                        <!--end::Radio-->
+                                                    </div>
+                                                    <!--end::Input row-->
+                                                    <div class='separator separator-dashed my-5'></div>
+                                                    <!--begin::Input row-->
+                                                    <div class="d-flex fv-row">
+                                                        <!--begin::Radio-->
+                                                        <div class="form-check form-check-custom form-check-solid">
+                                                            <!--begin::Input-->
+                                                            <input class="form-check-input me-3" name="jenis_kelamin" type="radio" value="Laki-Laki" id="laki_laki" />
+                                                            <!--end::Input-->
+                                                            <!--begin::Label-->
+                                                            <label class="form-check-label" for="laki_laki">
+                                                                <div class="fw-bolder text-gray-800">Laki-Laki</div>
+                                                            </label>
+                                                            <!--end::Label-->
+                                                        </div>
+                                                        <!--end::Radio-->
+                                                    </div>
+                                                    <!--end::Input row-->
+                                                    <!--end::Roles-->
+                                                </div>
+                                                <!--JENIS KELAMIN-->
+                                                
+                                                <!--ROLE-->
+                                                <div class="">
+                                                    <!--begin::Radio-->
+                                                    <div class="form-check form-check-custom form-check-solid">
+                                                        <!--begin::Input-->
+                                                        <input class="form-check-input me-3" name="is_siswa" type="radio" value="1" id="is_siswa" checked='checked' style="display: none;" />
+                                                        <!--end::Input-->
+                                                        <!--begin::Label-->
+                                                        <label class="form-check-label" for="is_siswa">
+                                                            <div class="fw-bolder text-white">Siswa</div>
+                                                        </label>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Radio-->
+                                                    <!--begin::Radio-->
+                                                    <div class="form-check form-check-custom form-check-solid">
+                                                        <!--begin::Input-->
+                                                        <input class="form-check-input me-3" name="is_staff" type="radio" value="1" id="is_staff" checked='checked' style="display: none;" />
+                                                        <!--end::Input-->
+                                                        <!--begin::Label-->
+                                                        <label class="form-check-label" for="is_staff">
+                                                            <div class="fw-bolder text-white">Staff</div>
+                                                        </label>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Radio-->
+                                                </div>
+                                                <!--ROLE-->
+                                                
+                                                <!--KELAS SISWA-->
+                                                <div class="mb-7">
+                                                    <!--begin::Label-->
+                                                    <label class="required fw-bold fs-6 mb-5">Kelas</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Roles-->
+                                                    {% for kelas in kls %}
+                                                    <!--begin::Input row-->
+                                                    <div class="d-flex fv-row">
+                                                        <!--begin::Radio-->
+                                                        <div class="form-check form-check-custom form-check-solid">
+                                                            <!--begin::Input-->
+                                                            <input class="form-check-input me-3" name="id_kelas" type="radio" value="{{ kelas.id_kelas}}" id="{{ kelas.id_kelas}}" />
+                                                            <!--end::Input-->
+                                                            <!--begin::Label-->
+                                                            <label class="form-check-label" for="{{ kelas.id_kelas}}">
+                                                                <div class="fw-bolder text-gray-800">{{ kelas.nama_kelas }}</div>
+                                                            </label>
+                                                            <!--end::Label-->
+                                                        </div>
+                                                        <!--end::Radio-->
+                                                    </div>
+                                                    <!--end::Input row-->
+                                                    <div class='separator separator-dashed my-5'></div>
+                                                    {% endfor %}
+                                                    <!--end::Roles-->
+                                                </div>
+                                                <!--KELAS SISWA-->
+                                            </div>
+                                            <!--end::Scroll-->
+                                            <!--begin::Actions-->
+                                            <div class="text-center pt-15">
+                                                <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Discard</button>
+                                                <button type="submit" class="btn btn-primary">Submit
+                                                    <!-- <span class="indicator-label">Submit</span> -->
+                                                </button>
+                                            </div>
+                                            <!--end::Actions-->
+                                        </form>
+                                        <!--end::Form-->
+                                    </div>
+                                    <!--end::Modal body-->
+                                </div>
+                                <!--end::Modal content-->
+                            </div>
+                            <!--end::Modal dialog-->
+                        </div>
+                        <!--end::Modal - Add task-->
+                    </div>
+                    <!--end::Mixed Widget 2-->
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Row-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Post-->
+</div>
+<!--end::Content-->
+
+{% endblock %}

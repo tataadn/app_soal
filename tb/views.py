@@ -108,13 +108,103 @@ def data_pengajar(request):
         messages.success(request, 'Akun berhasil ditambahkan!')
         return redirect('data_pengajar')
     
-    return render(request, 'pg_admin/data_pengajar.html', listweb)
+    return render(request, 'pg_admin/pengajar_page/data_pengajar.html', listweb)
 
 def data_siswa(request):
     listweb = {
         'judul_web' : 'Data Siswa | SMP Plus Rahmat', 
+        'kls' : Kelas.objects.all(),
     }
-    return render(request, 'pg_admin/data_siswa.html', listweb)
+
+    if request.method == 'POST':
+        foto = request.FILES['foto']
+        nisn = request.POST['nomor_induk']
+        nama = request.POST['nama_lengkap']
+        email = request.POST['email']
+        alamat = request.POST['alamat']
+        jk = request.POST['jenis_kelamin']
+        is_siswa = request.POST['is_siswa']
+        kelas = request.POST['id_kelas']
+        username = request.POST['nomor_induk']
+        password = request.POST['password']
+
+        User.objects.create_user(foto=foto, nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, is_siswa=is_siswa, id_kelas=kelas, username=username, password=password,)
+        messages.success(request, 'Akun siswa berhasil ditambahkan!')
+        return redirect('data_siswa')
+
+    return render(request, 'pg_admin/siswa_page/data_siswa.html', listweb)
+
+def data_7a(request):
+    listweb = {
+        'judul_web' : 'Data Kelas 7A | SMP Plus Rahmat', 
+        'sub_title' : 'DATA KELAS 7A SMP PLUS RAHMAT', 
+        'siswa' : User.objects.filter(is_siswa=True, id_kelas='7A').order_by('nama_lengkap')
+    }
+    return render(request, 'pg_admin/siswa_page/data_7a.html', listweb)
+
+def data_7b(request):
+    listweb = {
+        'judul_web' : 'Data Kelas 7B | SMP Plus Rahmat', 
+        'sub_title' : 'DATA KELAS 7B SMP PLUS RAHMAT', 
+        'siswa' : User.objects.filter(is_siswa=True, id_kelas='7B').order_by('nama_lengkap')
+    }
+    return render(request, 'pg_admin/siswa_page/data_7b.html', listweb)
+
+def data_7c(request):
+    listweb = {
+        'judul_web' : 'Data Kelas 7C | SMP Plus Rahmat', 
+        'sub_title' : 'DATA KELAS 7C SMP PLUS RAHMAT', 
+        'siswa' : User.objects.filter(is_siswa=True, id_kelas='7C').order_by('nama_lengkap')
+    }
+    return render(request, 'pg_admin/siswa_page/data_7c.html', listweb)
+
+def data_8a(request):
+    listweb = {
+        'judul_web' : 'Data Kelas 8A | SMP Plus Rahmat', 
+        'sub_title' : 'DATA KELAS 8A SMP PLUS RAHMAT', 
+        'siswa' : User.objects.filter(is_siswa=True, id_kelas='8A').order_by('nama_lengkap')
+    }
+    return render(request, 'pg_admin/siswa_page/data_8a.html', listweb)
+
+def data_8b(request):
+    listweb = {
+        'judul_web' : 'Data Kelas 8B | SMP Plus Rahmat', 
+        'sub_title' : 'DATA KELAS 8B SMP PLUS RAHMAT', 
+        'siswa' : User.objects.filter(is_siswa=True, id_kelas='8B').order_by('nama_lengkap')
+    }
+    return render(request, 'pg_admin/siswa_page/data_8b.html', listweb)
+
+def data_8c(request):
+    listweb = {
+        'judul_web' : 'Data Kelas 8C | SMP Plus Rahmat', 
+        'sub_title' : 'DATA KELAS 8C SMP PLUS RAHMAT', 
+        'siswa' : User.objects.filter(is_siswa=True, id_kelas='8C').order_by('nama_lengkap')
+    }
+    return render(request, 'pg_admin/siswa_page/data_8c.html', listweb)
+
+def data_9a(request):
+    listweb = {
+        'judul_web' : 'Data Kelas 9A | SMP Plus Rahmat', 
+        'sub_title' : 'DATA KELAS 9A SMP PLUS RAHMAT', 
+        'siswa' : User.objects.filter(is_siswa=True, id_kelas='9A').order_by('nama_lengkap')
+    }
+    return render(request, 'pg_admin/siswa_page/data_9a.html', listweb)
+
+def data_9b(request):
+    listweb = {
+        'judul_web' : 'Data Kelas 9B | SMP Plus Rahmat', 
+        'sub_title' : 'DATA KELAS 9B SMP PLUS RAHMAT', 
+        'siswa' : User.objects.filter(is_siswa=True, id_kelas='9B').order_by('nama_lengkap')
+    }
+    return render(request, 'pg_admin/siswa_page/data_9b.html', listweb)
+
+def data_9c(request):
+    listweb = {
+        'judul_web' : 'Data Kelas 9C | SMP Plus Rahmat', 
+        'sub_title' : 'DATA KELAS 9C SMP PLUS RAHMAT', 
+        'siswa' : User.objects.filter(is_siswa=True, id_kelas='9C').order_by('nama_lengkap')
+    }
+    return render(request, 'pg_admin/siswa_page/data_9c.html', listweb)
 
 def profil_admin(request):
     judul_web = 'Profil Admin | SMP Plus Rahmat'
