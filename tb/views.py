@@ -59,16 +59,13 @@ def index(request):
 
 # ADMIN VIEWS
 def login_admin(request):
-    return render(request, 'pg_admin/auth/login_admin.html', {'judul_web' : 'Halaman login'})
-
-def login_admin(request):
     user = None
     if request.method == 'POST':
         usn_admin = request.POST['username']
         pwd_admin = request.POST['password']
         user = authenticate(request, username=usn_admin, password=pwd_admin)
 
-        if user is not None:
+        if user is not None and user.is_admin == True:
             login(request, user)
             return redirect('beranda')
         else:
@@ -216,7 +213,23 @@ def profil_admin(request):
 
 # SISWA VIEWS
 def login_siswa(request):
+    user = None
+    if request.method == 'POST':
+        usn_siswa = request.POST['username']
+        pwd_siswa = request.POST['password']
+        user = authenticate(request, username=usn_siswa, password=pwd_siswa)
+
+        if user is not None and user.is_siswa == True:
+            login(request, user)
+            return redirect('index')
+        else:
+            messages.error(request, 'Username atau password anda salah!')
+            return redirect('login_siswa')
     return render(request, 'pg_siswa/auth/login_siswa.html', {'judul_web' : 'Halaman login'})
+
+def logout_siswa(request):
+    logout(request)
+    return redirect('login_siswa')
 
 def beranda_siswa(request):
     judul_web = 'SMP Plus Rahmat'
@@ -242,7 +255,23 @@ def soal_ujian(request):
 
 # PENGAJAR VIEWS
 def login_pengajar(request):
+    user = None
+    if request.method == 'POST':
+        usn_pengajar = request.POST['username']
+        pwd_pengajar = request.POST['password']
+        user = authenticate(request, username=usn_pengajar, password=pwd_pengajar)
+
+        if user is not None and user.is_guru == True:
+            login(request, user)
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Username atau password anda salah!')
+            return redirect('login_pengajar')
     return render(request, 'pg_pengajar/auth/login_pengajar.html', {'judul_web' : 'Halaman login'})
+
+def logout_pengajar(request):
+    logout(request)
+    return redirect('login_pengajar')
 
 def beranda_pengajar(request):
     judul_web = 'SMP Plus Rahmat'

@@ -33,6 +33,7 @@ urlpatterns = [
 
     # URL SISWA
     path('login-siswa', login_siswa, name='login_siswa'),
+    path('sign-out', logout_siswa, name='logout_siswa'),
     path('index', beranda_siswa, name='index'),
     path('profil-siswa', profil_siswa, name='profil_siswa'),
     path('nilai-ujian', nilai_ujian, name='nilai_ujian'),
@@ -40,6 +41,7 @@ urlpatterns = [
 
     # URL PENGAJAR
     path('login-pengajar', login_pengajar, name='login_pengajar'),
+    path('signout', login_pengajar, name='login_pengajar'),
     path('dashboard', beranda_pengajar, name='dashboard'),
     path('profil-pengajar', profil_pengajar, name='profil_pengajar'),
     path('data-soal', data_soal, name='data_soal'),
