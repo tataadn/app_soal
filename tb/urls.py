@@ -45,6 +45,7 @@ urlpatterns = [
     path('dashboard', beranda_pengajar, name='dashboard'),
     path('profil-pengajar', profil_pengajar, name='profil_pengajar'),
     path('data-soal', data_soal, name='data_soal'),
+    path('process', process, name='process'),
 ]
 
 if settings.DEBUG:

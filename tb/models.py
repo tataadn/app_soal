@@ -10,6 +10,7 @@ class Soal(models.Model):
     soal = models.TextField(null=False)
     kunci_jawaban = models.TextField(null=False)
     bobot_soal = models.IntegerField(null=False)
+    id_user = models.BigIntegerField(null=False)
 
 class User(AbstractUser):
     nomor_induk = models.CharField(max_length=200, null=False)

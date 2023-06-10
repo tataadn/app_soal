@@ -1,0 +1,74 @@
+{% extends 'pg_pengajar/layout/temp.html' %} 
+{% block content %} 
+
+<div class="d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <div class="container" id="kt_content_container">
+            <!--begin::Row-->
+            <div class="row gy-10 gx-xl-10 mb-7">
+                <!--begin::Col-->
+                <div class="col-md-12">
+                    <!-- my_template.html -->
+                    <form method="post" action="{% url 'process' %}">
+                        {% csrf_token %}
+                    
+                        <div id="input-container">
+                        <div>
+                            <input type="text" name="input[]">
+                            <input type="text" name="input[]">
+                            <button type="button" class="remove-input">Remove</button>
+                        </div>
+                        </div>
+                    
+                        <button type="button" id="add-input">Add</button>
+                        <input type="submit" value="Submit">
+                    </form>
+                    
+                    <script>
+                        // Wait for the DOM to load
+                        document.addEventListener('DOMContentLoaded', function () {
+                        // Get the "Add" button and input container
+                        var addButton = document.getElementById('add-input');
+                        var inputContainer = document.getElementById('input-container');
+                    
+                        // Add event listener for the "Add" button
+                        addButton.addEventListener('click', function () {
+                            // Create a new input field and remove button
+                            var newInput = document.createElement('input');
+                            newInput.type = 'text';
+                            newInput.name = 'input[]';
+                    
+                            var removeButton = document.createElement('button');
+                            removeButton.type = 'button';
+                            removeButton.className = 'remove-input';
+                            removeButton.innerHTML = 'Remove';
+                    
+                            // Create a new div to hold the input field and remove button
+                            var inputWrapper = document.createElement('div');
+                            inputWrapper.appendChild(newInput);
+                            inputWrapper.appendChild(removeButton);
+                    
+                            // Add the new input field and remove button to the container
+                            inputContainer.appendChild(inputWrapper);
+                        });
+                    
+                        // Add event listener for the "Remove" buttons
+                        inputContainer.addEventListener('click', function (event) {
+                            if (event.target.classList.contains('remove-input')) {
+                            // Remove the parent div of the clicked remove button
+                            var inputWrapper = event.target.parentNode;
+                            inputContainer.removeChild(inputWrapper);
+                            }
+                        });
+                        });
+                    </script>
+  
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Row-->
+        </div>
+    </div>
+</div>
+
+{% endblock %}
