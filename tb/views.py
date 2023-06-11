@@ -287,17 +287,16 @@ def data_soal(request):
     sub_title = 'DAFTAR SOAL MAPEL SMP PLUS RAHMAT'
     return render(request, 'pg_pengajar/data_soal.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
 
-def process(request):
+def tambahsoal(request):
     listweb = {
         'judul_web' : 'Halaman Tambah Soal | SMP Plus Rahmat', 
         'sub_title' : 'SOAL UJIAN SMP PLUS RAHMAT', 
+        'numbers' : range(1, 5)
     }
-    if request.method == 'POST':
-        input_values = request.POST.getlist('input[]')
+    # if request.method == 'POST':
+    #     input_values = request.POST.getlist('input[]')
 
-        # Process the input values
-        for value in input_values:
-            # Do something with each input value
-            print(value)
+    #     for value in input_values:
+    #         print(value)
 
     return render(request, 'pg_pengajar/tambah_soal.html', listweb)

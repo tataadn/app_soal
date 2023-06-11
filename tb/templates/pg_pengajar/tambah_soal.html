@@ -4,71 +4,92 @@
 <div class="d-flex flex-column flex-column-fluid" id="kt_content">
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <div class="container" id="kt_content_container">
-            <!--begin::Row-->
-            <div class="row gy-10 gx-xl-10 mb-7">
-                <!--begin::Col-->
-                <div class="col-md-12">
-                    <!-- my_template.html -->
-                    <form method="post" action="{% url 'process' %}">
-                        {% csrf_token %}
-                    
-                        <div id="input-container">
-                        <div>
-                            <input type="text" name="input[]">
-                            <input type="text" name="input[]">
-                            <button type="button" class="remove-input">Remove</button>
+            <div class="row gy-10 gx-xl-10 row_field" id="rowfield">
+                <div class="row mt-7 mb-7">
+                    <div class="col-md-12">
+                        <div class="card shadow-sm mb-7">
+                            <div class="card-header">
+                                
+                                <h3 class="card-title" id="nomorsoal">Soal No. 1</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="fv-row mb-3">
+                                    <label class="required fw-semibold fs-6 mb-2">Soal</label>
+                                    <input type="text" name="soal[]" class="form-control form-control-solid mb-3 mb-lg-0" value="" />
+                                </div>
+                                <div class="fv-row mb-3">
+                                    <label class="required fw-semibold fs-6 mb-2">Kunci Jawaban</label>
+                                    <textarea name="kunci_jawaban[]" class="form-control form-control-solid"></textarea>
+                                </div>
+                                <div class="fv-row mb-3">
+                                    <label class="required fw-semibold fs-6 mb-2">Bobot Soal</label>
+                                    <input type="number" name="bobot_soal[]" class="form-control form-control-solid mb-3 mb-lg-0" />
+                                </div>
+                            </div>
                         </div>
-                        </div>
-                    
-                        <button type="button" id="add-input">Add</button>
-                        <input type="submit" value="Submit">
-                    </form>
-                    
-                    <script>
-                        // Wait for the DOM to load
-                        document.addEventListener('DOMContentLoaded', function () {
-                        // Get the "Add" button and input container
-                        var addButton = document.getElementById('add-input');
-                        var inputContainer = document.getElementById('input-container');
-                    
-                        // Add event listener for the "Add" button
-                        addButton.addEventListener('click', function () {
-                            // Create a new input field and remove button
-                            var newInput = document.createElement('input');
-                            newInput.type = 'text';
-                            newInput.name = 'input[]';
-                    
-                            var removeButton = document.createElement('button');
-                            removeButton.type = 'button';
-                            removeButton.className = 'remove-input';
-                            removeButton.innerHTML = 'Remove';
-                    
-                            // Create a new div to hold the input field and remove button
-                            var inputWrapper = document.createElement('div');
-                            inputWrapper.appendChild(newInput);
-                            inputWrapper.appendChild(removeButton);
-                    
-                            // Add the new input field and remove button to the container
-                            inputContainer.appendChild(inputWrapper);
-                        });
-                    
-                        // Add event listener for the "Remove" buttons
-                        inputContainer.addEventListener('click', function (event) {
-                            if (event.target.classList.contains('remove-input')) {
-                            // Remove the parent div of the clicked remove button
-                            var inputWrapper = event.target.parentNode;
-                            inputContainer.removeChild(inputWrapper);
-                            }
-                        });
-                        });
-                    </script>
-  
+                    </div>
                 </div>
-                <!--end::Col-->
             </div>
-            <!--end::Row-->
+            <div class="row gy-10 gx-xl-10 mb-10">
+                <div class="col-md-6">
+                    <button class="btn_tambah btn btn-success" id="btn_tambah" value="Add">
+                        <i class="fas la-plus-circle fs-4 me-2"></i>
+                        Tambah Soal
+                    </button>
+                </div>
+            </div>
+            <div class="row gy-10 gx-xl-10 mb-7">
+                <button type="button" class="btn btn-primary btn-block">Simpan Semua Soal</button>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        var btnadd = document.getElementById('btn_tambah');
+        var btnremove = document.getElementById('btn_remove');
+        var rowfield = document.getElementById('rowfield');
+        var rowCounter = 1;
+        
+        var html = '<div class="col-md-12"><div class="card shadow-sm mb-7"><div class="card-header"><h3 class="card-title">Nomor Soal ' + rowCounter + '</h3><div class="card-toolbar"><button class="btn btn-icon btn-danger btn_remove" id="btn_remove" value="Remove"><i class="fas la-times fs-1"></i></button></div></div><div class="card-body"><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">Soal</label><input type="text" name="soal[]" class="form-control form-control-solid mb-3 mb-lg-0" value="" /></div><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">Kunci Jawaban</label><textarea name="kunci_jawaban[]" class="form-control form-control-solid"></textarea></div><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">Bobot Soal</label><input type="number" name="bobot_soal[]" class="form-control form-control-solid mb-3 mb-lg-0" /></div></div></div></div>';
+        
+        btnadd.addEventListener('click', function() {
+            var rowfield = document.getElementById('rowfield');
+            var newRow = document.createElement('div');
+            newRow.className = 'row mb-7';
+            newRow.innerHTML = html;
+            rowfield.append(newRow);
+            rowCounter++;
+            updateCardTitles();
+        });
+
+        rowfield.addEventListener('click', function(event) {
+            if (event.target.classList.contains('btn_remove')) {
+                var row = event.target.closest('.row');
+                row.remove();
+                rowCounter--;
+                updateCardTitles();
+            }
+        });
+
+        btnremove.addEventListener('click', function() {
+            var rows = document.getElementsByClassName('row_field');
+            var rowCount = rows.length;
+            if (rowCount > 1) {
+                rows[rowCount - 1].remove();
+                rowCounter--;
+                updateCardTitles();
+            }
+        });
+
+        function updateCardTitles() {
+            var cardTitles = document.getElementsByClassName('card-title');
+            for (var i = 0; i < cardTitles.length; i++) {
+                cardTitles[i].textContent = 'Soal No. ' + (i + 1);
+            }
+        }
+    });
+</script>
 
 {% endblock %}
