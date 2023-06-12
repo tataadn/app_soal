@@ -290,13 +290,54 @@ def data_soal(request):
 def tambahsoal(request):
     listweb = {
         'judul_web' : 'Halaman Tambah Soal | SMP Plus Rahmat', 
-        'sub_title' : 'SOAL UJIAN SMP PLUS RAHMAT', 
-        'numbers' : range(1, 5)
+        'sub_title' : 'SOAL UJIAN SMP PLUS RAHMAT',
+        'kls' : Kelas.objects.all(), 
     }
-    # if request.method == 'POST':
-    #     input_values = request.POST.getlist('input[]')
+    if request.method == 'POST':
+        id_kelas_list = request.POST.getlist('id_kelas[]')
+        id_mapel_list = request.POST.getlist('id_mapel[]')
+        kode_soal_list = request.POST.getlist('kode_soal[]')
+        soal_list = request.POST.getlist('soal[]')
+        kunci_jawaban_list = request.POST.getlist('kunci_jawaban[]')
+        bobot_soal_list = request.POST.getlist('bobot_soal[]')
+        id_user_list = request.POST.getlist('id_user[]')
 
-    #     for value in input_values:
-    #         print(value)
+        # for i in range(len(soal_list)):
+
+        #     question = Soal(
+        #         id_kelas=id_kelas_list[i],
+        #         id_mapel=id_mapel_list[i],
+        #         kode_soal=kode_soal_list[i],
+        #         soal=soal_list[i],
+        #         kunci_jawaban=kunci_jawaban_list[i],
+        #         bobot_soal=bobot_soal_list[i],
+        #         id_user=id_user_list[i]
+        #     )
+        #     question.save()
+    
+        # messages.success(request, 'Data saved successfully.')
+        # return redirect('tambah_soal')
+
+    # if request.method == 'POST':
+    #     id_kelas = request.POST['id_kelas']
+    #     id_mapel = request.POST['id_mapel']
+    #     kode_soal = request.POST['kode_soal']
+    #     soal_list = request.POST.getlist('soal[]')
+    #     kunci_jawaban_list = request.POST.getlist('kunci_jawaban[]')
+    #     bobot_soal_list = request.POST.getlist('bobot_soal[]')
+    #     id_user = request.POST.getlist('id_user[]')
+
+    #     for i in range(len(soal_list)):
+    #         question = Soal(
+    #             id_kelas=id_kelas[i],
+    #             id_mapel=id_mapel[i],
+    #             kode_soal=kode_soal[i],
+    #             soal=soal_list[i],
+    #             kunci_jawaban=kunci_jawaban_list[i],
+    #             bobot_soal=int(bobot_soal_list[i]),
+    #             id_user=id_user[i]
+    #         )
+    #         question.save()
+    #         messages.success(request, 'Data saved successfully.')
 
     return render(request, 'pg_pengajar/tambah_soal.html', listweb)

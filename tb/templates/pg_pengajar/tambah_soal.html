@@ -4,43 +4,121 @@
 <div class="d-flex flex-column flex-column-fluid" id="kt_content">
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <div class="container" id="kt_content_container">
-            <div class="row gy-10 gx-xl-10 row_field" id="rowfield">
-                <div class="row mt-7 mb-7">
-                    <div class="col-md-12">
-                        <div class="card shadow-sm mb-7">
-                            <div class="card-header">
-                                
-                                <h3 class="card-title" id="nomorsoal">Soal No. 1</h3>
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                    <div class="row">
+                        <div class="col-md-5 mb-7">
+                            <div class="alert alert-dismissible bg-success d-flex flex-column flex-sm-row">
+                                <!--begin::Svg Icon | path: assets/media/icons/duotone/Code/Info-circle.svg-->
+                                <span class="svg-icon svg-icon-2hx svg-icon-light me-4 mb-5 mb-sm-0"><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10"/>
+                                    <rect fill="#000000" x="11" y="10" width="2" height="7" rx="1"/>
+                                    <rect fill="#000000" x="11" y="7" width="2" height="2" rx="1"/>
+                                </svg></span>
+                                <!--end::Svg Icon-->
+        
+                                <!--begin::Wrapper-->
+                                <div class="d-flex flex-column text-light pe-0 pe-sm-10 mt-2">
+                                    <!--begin::Title-->
+                                    <h4 class="text-white">{{message}}</h4>
+                                    <!--end::Title-->
+                                </div>
+                                <!--end::Wrapper-->
+        
+                                <!--begin::Close-->
+                                <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                                    <!--begin::Svg Icon | path: assets/media/icons/duotone/Navigation/Close.svg-->
+                                    <span class="svg-icon svg-icon-2x svg-icon-light"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+                                            <rect fill="#000000" x="0" y="7" width="16" height="2" rx="1"/>
+                                            <rect fill="#000000" opacity="0.5" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) " x="0" y="7" width="16" height="2" rx="1"/>
+                                        </g>
+                                    </svg></span>
+                                    <!--end::Svg Icon-->
+                                </button>
+                                <!--end::Close-->
                             </div>
-                            <div class="card-body">
-                                <div class="fv-row mb-3">
-                                    <label class="required fw-semibold fs-6 mb-2">Soal</label>
-                                    <input type="text" name="soal[]" class="form-control form-control-solid mb-3 mb-lg-0" value="" />
+                        </div>
+                    </div>
+                    {% endif %}
+                
+                {% endfor %}
+            {% endif %}
+            <form action="" method="post" class="form">
+                {% csrf_token %}
+                <div class="row gy-10 gx-xl-10 row_field" id="rowfield">
+                    <div class="row mb-7 mt-5">
+                        <div class="col-md-5">
+                            <select class="form-select" data-control="select2" name="id_kelas[]" data-placeholder="Pilih Kelas" id="idkelas">
+                                <option></option>
+                                {% for kelas in kls %}
+                                <option value="{{kelas.id_kelas}}">{{kelas.nama_kelas}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="kodesoal1" placeholder="Kode Soal (eg. KDS001)" aria-describedby="basic-addon3" value=""/>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-warning" id="getdata">
+                                <i class="fas la-plus-circle fs-4 me-2"></i>
+                                Get Data
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row mt-7 mb-7">
+                        <div class="col-md-12">
+                            <div class="card shadow-sm mb-7">
+                                <div class="card-header">
+                                    <h3 class="card-title" id="nomorsoal">Soal No. 1</h3>
                                 </div>
-                                <div class="fv-row mb-3">
-                                    <label class="required fw-semibold fs-6 mb-2">Kunci Jawaban</label>
-                                    <textarea name="kunci_jawaban[]" class="form-control form-control-solid"></textarea>
-                                </div>
-                                <div class="fv-row mb-3">
-                                    <label class="required fw-semibold fs-6 mb-2">Bobot Soal</label>
-                                    <input type="number" name="bobot_soal[]" class="form-control form-control-solid mb-3 mb-lg-0" />
+                                <div class="card-body">
+                                    <input type="hidden" name="id_mapel[]" value="{{user.id_mapel}}" class="form-control form-control-solid mb-3 mb-lg-0" id="kode2"/>
+                                    <fieldset disabled>
+                                        <div class="fv-row mb-3">
+                                            <label class="required fw-semibold fs-6 mb-2">ID Kelas</label>
+                                            <input type="text" name="id_kelas[]" class="form-control form-control-solid mb-3 mb-lg-0 text-danger idkelas2" id="idkelas2"/>
+                                        </div>
+                                        <div class="fv-row mb-3">
+                                            <label class="required fw-semibold fs-6 mb-2">Kode Soal</label>
+                                            <input type="text" name="kode_soal[]" class="form-control form-control-solid mb-3 mb-lg-0 text-danger kodesoal" id="kodesoal" value=""/>
+                                        </div>
+                                    </fieldset>
+                                    <div class="fv-row mb-3">
+                                        <label class="required fw-semibold fs-6 mb-2">Soal</label>
+                                        <input type="text" name="soal[]" class="form-control form-control-solid mb-3 mb-lg-0" />
+                                    </div>
+                                    <div class="fv-row mb-3">
+                                        <label class="required fw-semibold fs-6 mb-2">Kunci Jawaban</label>
+                                        <textarea name="kunci_jawaban[]" class="form-control form-control-solid"></textarea>
+                                    </div>
+                                    <div class="fv-row mb-3">
+                                        <label class="required fw-semibold fs-6 mb-2">Bobot Soal</label>
+                                        <input type="number" name="bobot_soal[]" class="form-control form-control-solid mb-3 mb-lg-0" />
+                                    </div>
+                                    <div class="fv-row mb-3">
+                                        <input type="hidden" name="id_user[]" value="{{ user.id }}" class="form-control form-control-solid mb-3 mb-lg-0" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row gy-10 gx-xl-10 mb-10">
-                <div class="col-md-6">
-                    <button class="btn_tambah btn btn-success" id="btn_tambah" value="Add">
-                        <i class="fas la-plus-circle fs-4 me-2"></i>
-                        Tambah Soal
-                    </button>
+
+                <div class="row gy-10 gx-xl-10 mb-10">
+                    <div class="col-md-6">
+                        <button class="btn_tambah btn btn-success" id="btn_tambah" value="Add">
+                            <i class="fas la-plus-circle fs-4 me-2"></i>
+                            Tambah Soal
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div class="row gy-10 gx-xl-10 mb-7">
-                <button type="button" class="btn btn-primary btn-block">Simpan Semua Soal</button>
-            </div>
+
+                <div class="row gy-10 gx-xl-10 mb-7">
+                    <button type="submit" name="submit" class="btn btn-primary btn-block">Simpan Semua Soal</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -52,9 +130,10 @@
         var rowfield = document.getElementById('rowfield');
         var rowCounter = 1;
         
-        var html = '<div class="col-md-12"><div class="card shadow-sm mb-7"><div class="card-header"><h3 class="card-title">Nomor Soal ' + rowCounter + '</h3><div class="card-toolbar"><button class="btn btn-icon btn-danger btn_remove" id="btn_remove" value="Remove"><i class="fas la-times fs-1"></i></button></div></div><div class="card-body"><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">Soal</label><input type="text" name="soal[]" class="form-control form-control-solid mb-3 mb-lg-0" value="" /></div><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">Kunci Jawaban</label><textarea name="kunci_jawaban[]" class="form-control form-control-solid"></textarea></div><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">Bobot Soal</label><input type="number" name="bobot_soal[]" class="form-control form-control-solid mb-3 mb-lg-0" /></div></div></div></div>';
+        var html = '<div class="col-md-12"><div class="card shadow-sm mb-7"><div class="card-header"><h3 class="card-title">Nomor Soal ' + rowCounter + '</h3><div class="card-toolbar"><button class="btn btn-icon btn-danger btn_remove" id="btn_remove" value="Remove"><i class="fas la-times fs-1"></i></button></div></div><div class="card-body"><input type="hidden" name="id_mapel[]" value="{{user.id_mapel}}" class="form-control form-control-solid mb-3 mb-lg-0" id="kode2"/><fieldset disabled><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">ID Kelas</label><input type="text" name="id_kelas[]" class="form-control form-control-solid mb-3 mb-lg-0 text-danger" id="idkelas2"/></div><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">Kode Soal</label><input type="text" name="kode_soal[]" class="form-control form-control-solid mb-3 mb-lg-0 text-danger" id="kodesoal" value=""/></div></fieldset><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">Soal</label><input type="text" name="soal[]" class="form-control form-control-solid mb-3 mb-lg-0" value="" /></div><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">Kunci Jawaban</label><textarea name="kunci_jawaban[]" class="form-control form-control-solid"></textarea></div><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">Bobot Soal</label><input type="number" name="bobot_soal[]" class="form-control form-control-solid mb-3 mb-lg-0" /></div><div class="fv-row mb-3"><input type="hidden" name="id_user[]" value="{{ user.id }}" class="form-control form-control-solid mb-3 mb-lg-0" /></div></div></div></div>';
         
-        btnadd.addEventListener('click', function() {
+        btnadd.addEventListener('click', function(event) {
+            event.preventDefault();
             var rowfield = document.getElementById('rowfield');
             var newRow = document.createElement('div');
             newRow.className = 'row mb-7';
@@ -90,6 +169,37 @@
             }
         }
     });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        
+        var btnget = document.getElementById('getdata');
+        
+        // Add event listener to the button
+        btnget.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent form submission
+            
+            var kode1 = document.getElementById('kodesoal1'); // the first input
+            var select1 = document.getElementById('idkelas'); // the select field
+            var kode2 = document.getElementsByClassName('kodesoal'); // the second input
+            var value2 = document.getElementsByClassName('idkelas2'); // the field which show the result
+
+            // Iterate over the fields and update the corresponding next field
+            for (var i = 0; i < kode2.length; i++) {
+                var kode_2 = kode2[i];
+                var value_2 = value2[i];
+
+                // Get the selected value from the select field
+                var selectedValue = select1.value;
+
+                // Update the value of the next input field
+                value_2.value = selectedValue;
+                kode_2.value = kode1.value;
+            }
+        });
+    });
+
 </script>
 
 {% endblock %}
