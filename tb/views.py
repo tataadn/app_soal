@@ -5,6 +5,7 @@ from .models import *
 from django.views.generic.base import TemplateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.db import connection
 # Create your views here.
 
 index_web = {
@@ -107,9 +108,9 @@ def data_pengajar(request):
     
     return render(request, 'pg_admin/pengajar_page/data_pengajar.html', listweb)
 
-def data_siswa(request):
+def data_kelas(request):
     listweb = {
-        'judul_web' : 'Data Siswa | SMP Plus Rahmat', 
+        'judul_web' : 'Data Kelas | SMP Plus Rahmat', 
         'kls' : Kelas.objects.all(),
     }
 
@@ -127,9 +128,9 @@ def data_siswa(request):
 
         User.objects.create_user(foto=foto, nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, is_siswa=is_siswa, id_kelas=kelas, username=username, password=password,)
         messages.success(request, 'Akun siswa berhasil ditambahkan!')
-        return redirect('data_siswa')
+        return redirect('data_kelas')
 
-    return render(request, 'pg_admin/siswa_page/data_siswa.html', listweb)
+    return render(request, 'pg_admin/siswa_page/data_kelas.html', listweb)
 
 def data_7a(request):
     listweb = {
@@ -277,15 +278,61 @@ def beranda_pengajar(request):
     judul_web = 'SMP Plus Rahmat'
     return render(request, 'pg_pengajar/index.html', {'judul_web' : judul_web})
 
+def daftarsiswa_pengajar(request):
+    listweb = {
+        'judul_web' : 'Halaman Data Siswa | SMP Plus Rahmat', 
+        'sub_title' : 'DATA SISWA SMP PLUS RAHMAT',
+        'kls7a' : User.objects.filter(is_siswa=True, id_kelas='7A').order_by('nama_lengkap'),
+        'kls7b' : User.objects.filter(is_siswa=True, id_kelas='7B').order_by('nama_lengkap'),
+        'kls7c' : User.objects.filter(is_siswa=True, id_kelas='7C').order_by('nama_lengkap'),
+        'kls8a' : User.objects.filter(is_siswa=True, id_kelas='8A').order_by('nama_lengkap'),
+        'kls8b' : User.objects.filter(is_siswa=True, id_kelas='8B').order_by('nama_lengkap'),
+        'kls8c' : User.objects.filter(is_siswa=True, id_kelas='8C').order_by('nama_lengkap'),
+        'kls9a' : User.objects.filter(is_siswa=True, id_kelas='9A').order_by('nama_lengkap'),
+        'kls9b' : User.objects.filter(is_siswa=True, id_kelas='9B').order_by('nama_lengkap'),
+        'kls9c' : User.objects.filter(is_siswa=True, id_kelas='9C').order_by('nama_lengkap')
+    }
+    return render(request, 'pg_pengajar/daftar_siswa.html', listweb)
+
 def profil_pengajar(request):
     judul_web = 'Profil Saya | SMP Plus Rahmat'
     sub_title = 'PROFIL PENGAJAR SMP PLUS RAHMAT'
     return render(request, 'pg_pengajar/profil.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
 
 def data_soal(request):
-    judul_web = 'Data Soal | SMP Plus Rahmat'
-    sub_title = 'DAFTAR SOAL MAPEL SMP PLUS RAHMAT'
-    return render(request, 'pg_pengajar/data_soal.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
+    query = """
+    SELECT b.nama_kelas AS kelas, a.kode_soal AS kodesoal, c.nama_mapel AS mapel,
+           GROUP_CONCAT(a.soal SEPARATOR ',') AS banyak_soal,
+           (LENGTH(GROUP_CONCAT(a.soal SEPARATOR ',')) - LENGTH(REPLACE(GROUP_CONCAT(a.soal SEPARATOR ','), ',', '')) + 1) AS jumlah_soal
+    FROM tb_soal a, tb_kelas b, tb_mapel c
+    WHERE b.id_kelas = a.id_kelas
+    AND a.id_mapel = c.id_mapel
+    GROUP BY a.kode_soal, b.id_kelas
+    ORDER BY b.id_kelas
+    """
+
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+        results = cursor.fetchall()
+
+    datasoal = []
+    for row in results:
+        item = {
+            'nama_kelas': row[0],
+            'kode_soal': row[1],
+            'mapel': row[2],
+            'banyak_soal': row[3],
+            'jumlah_soal': row[4],
+        }
+        datasoal.append(item)
+
+    listweb = {
+        'judul_web' : 'Data Soal | SMP Plus Rahmat',
+        'sub_title' : 'DAFTAR SOAL MAPEL SMP PLUS RAHMAT',
+        'datasoal' : datasoal,
+    }
+
+    return render(request, 'pg_pengajar/data_soal.html', listweb)
 
 def tambahsoal(request):
     listweb = {
@@ -302,21 +349,21 @@ def tambahsoal(request):
         bobot_soal_list = request.POST.getlist('bobot_soal[]')
         id_user_list = request.POST.getlist('id_user[]')
 
-        # for i in range(len(soal_list)):
+        for i in range(len(soal_list)):
 
-        #     question = Soal(
-        #         id_kelas=id_kelas_list[i],
-        #         id_mapel=id_mapel_list[i],
-        #         kode_soal=kode_soal_list[i],
-        #         soal=soal_list[i],
-        #         kunci_jawaban=kunci_jawaban_list[i],
-        #         bobot_soal=bobot_soal_list[i],
-        #         id_user=id_user_list[i]
-        #     )
-        #     question.save()
+            question = Soal(
+                id_kelas=id_kelas_list[i],
+                id_mapel=id_mapel_list[i],
+                kode_soal=kode_soal_list[i],
+                soal=soal_list[i],
+                kunci_jawaban=kunci_jawaban_list[i],
+                bobot_soal=bobot_soal_list[i],
+                id_user=id_user_list[i]
+            )
+            question.save()
     
-        # messages.success(request, 'Data saved successfully.')
-        # return redirect('tambah_soal')
+        messages.success(request, 'Data saved successfully.')
+        return redirect('tambah_soal')
 
     # if request.method == 'POST':
     #     id_kelas = request.POST['id_kelas']

@@ -1,0 +1,756 @@
+{% extends 'pg_pengajar/layout/temp.html' %} 
+{% block content %} 
+
+<!--begin::Content-->
+<div class="d-flex flex-column flex-column-fluid" id="kt_content">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container">
+            <!--begin::details View-->
+            <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+                <!--begin::Card header-->
+                <div class="card-header cursor-pointer">
+                    <!--begin::Card title-->
+                    <div class="card-title m-0">
+                        <h2 class="text-primary fw-bolder m-0">Data Siswa</h2>
+                    </div>
+                    <!--end::Card title-->
+                </div>
+                <!--begin::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body p-9">
+                    <div class="row">
+                        <div class="col-lg-12 mb-7">
+                            <div class="d-flex flex-column flex-md-row">
+                                <ul class="nav nav-tabs nav-pills flex-row border-0 flex-md-column me-5 mb-3 mb-md-0 fs-6 min-w-lg-200px">
+                                    <li class="nav-item w-100 me-0 mb-md-2">
+                                        <a class="nav-link w-100 active btn btn-flex btn-active-light-success" data-bs-toggle="tab" href="#kt_vtab_pane_1">
+                                            <span class="d-flex flex-column align-items-start">
+                                                <span class="fs-4 fw-bold">Kelas 7A</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item w-100 me-0 mb-md-2">
+                                        <a class="nav-link w-100 btn btn-flex btn-active-light-info" data-bs-toggle="tab" href="#kt_vtab_pane_2">
+                                            <span class="d-flex flex-column align-items-start">
+                                                <span class="fs-4 fw-bold">Kelas 7B</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item w-100 me-0 mb-md-2">
+                                        <a class="nav-link w-100 btn btn-flex btn-active-light-danger" data-bs-toggle="tab" href="#kt_vtab_pane_3">
+                                            <span class="d-flex flex-column align-items-start">
+                                                <span class="fs-4 fw-bold">Kelas 7C</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item w-100 me-0 mb-md-2">
+                                        <a class="nav-link w-100 btn btn-flex btn-active-light-success" data-bs-toggle="tab" href="#kt_vtab_pane_4">
+                                            <span class="d-flex flex-column align-items-start">
+                                                <span class="fs-4 fw-bold">Kelas 8A</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item w-100 me-0 mb-md-2">
+                                        <a class="nav-link w-100 btn btn-flex btn-active-light-info" data-bs-toggle="tab" href="#kt_vtab_pane_5">
+                                            <span class="d-flex flex-column align-items-start">
+                                                <span class="fs-4 fw-bold">Kelas 8B</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item w-100 me-0 mb-md-2">
+                                        <a class="nav-link w-100 btn btn-flex btn-active-light-danger" data-bs-toggle="tab" href="#kt_vtab_pane_6">
+                                            <span class="d-flex flex-column align-items-start">
+                                                <span class="fs-4 fw-bold">Kelas 8C</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item w-100 me-0 mb-md-2">
+                                        <a class="nav-link w-100 btn btn-flex btn-active-light-success" data-bs-toggle="tab" href="#kt_vtab_pane_7">
+                                            <span class="d-flex flex-column align-items-start">
+                                                <span class="fs-4 fw-bold">Kelas 9A</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item w-100 me-0 mb-md-2">
+                                        <a class="nav-link w-100 btn btn-flex btn-active-light-info" data-bs-toggle="tab" href="#kt_vtab_pane_8">
+                                            <span class="d-flex flex-column align-items-start">
+                                                <span class="fs-4 fw-bold">Kelas 9B</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item w-100">
+                                        <a class="nav-link w-100 btn btn-flex btn-active-light-danger" data-bs-toggle="tab" href="#kt_vtab_pane_9">
+                                            <span class="d-flex flex-column align-items-start">
+                                                <span class="fs-4 fw-bold">Kelas 9C</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+    
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="kt_vtab_pane_1" role="tabpanel">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                                <!--begin::Table row-->
+                                                <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                                                    <th class="min-w-125px">Nama Lengkap</th>
+                                                    <th class="min-w-125px">NISN</th>
+                                                    <th class="min-w-125px">Jenis Kelamin</th>
+                                                    <th class="min-w-125px">Alamat</th>
+                                                </tr>
+                                                <!--end::Table row-->
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody class="text-gray-600 fw-bold">
+    
+                                                {% for 7a in kls7a %}
+                                                <!--begin::Table row-->
+                                                <tr>
+                                                    
+                                                    <!--begin::User=-->
+                                                    <td class="d-flex align-items-center">
+                                                        <!--begin:: Avatar -->
+                                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                                            <a href="#">
+                                                                <div class="symbol-label">
+                                                                    <img src="media/{{ 7a.foto }}" alt="{{ 7a.nama_lengkap }}" class="w-100" />
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Avatar-->
+                                                        <!--begin::User details-->
+                                                        <div class="d-flex flex-column">
+                                                            <a href="#" class="text-gray-800 text-hover-primary mb-1">{{ 7a.nama_lengkap }}</a>
+                                                        </div>
+                                                        <!--begin::User details-->
+                                                    </td>
+                                                    <!--end::User=-->
+                                                    <!--begin::NISN=-->
+                                                    <td>
+                                                        {{ 7a.nomor_induk }}
+                                                    </td>
+                                                    <!--end::NISN=-->
+                                                    <!--begin::jenis_kelamin=-->
+                                                    <td>
+                                                        {% if 7a.jenis_kelamin == 'Perempuan' %}
+                                                        <div class="badge badge-light-danger fw-bolder">
+                                                            Perempuan
+                                                        </div>
+                                    
+                                                        {% else %}
+                                                        <div class="badge badge-light-info fw-bolder">
+                                                            Laki-laki
+                                                        </div>
+                                                        {% endif %}
+                                                    </td>
+                                                    <!--end::jenis_kelamin=-->
+                                                    
+                                                    <!--begin::alamat-->
+                                                    <td>{{ 7a.alamat }}</td>
+                                                    <!--begin::alamat-->
+                                                </tr>
+                                                <!--end::Table row-->
+                                                {% endfor %}
+    
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                    <div class="tab-pane fade" id="kt_vtab_pane_2" role="tabpanel">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                                <!--begin::Table row-->
+                                                <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                                                    <th class="min-w-125px">Nama Lengkap</th>
+                                                    <th class="min-w-125px">NISN</th>
+                                                    <th class="min-w-125px">Jenis Kelamin</th>
+                                                    <th class="min-w-125px">Alamat</th>
+                                                </tr>
+                                                <!--end::Table row-->
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody class="text-gray-600 fw-bold">
+    
+                                                {% for 7b in kls7b %}
+                                                <!--begin::Table row-->
+                                                <tr>
+                                                    
+                                                    <!--begin::User=-->
+                                                    <td class="d-flex align-items-center">
+                                                        <!--begin:: Avatar -->
+                                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                                            <a href="#">
+                                                                <div class="symbol-label">
+                                                                    <img src="media/{{ 7b.foto }}" alt="{{ 7b.nama_lengkap }}" class="w-100" />
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Avatar-->
+                                                        <!--begin::User details-->
+                                                        <div class="d-flex flex-column">
+                                                            <a href="#" class="text-gray-800 text-hover-primary mb-1">{{ 7b.nama_lengkap }}</a>
+                                                        </div>
+                                                        <!--begin::User details-->
+                                                    </td>
+                                                    <!--end::User=-->
+                                                    <!--begin::NISN=-->
+                                                    <td>
+                                                        {{ 7b.nomor_induk }}
+                                                    </td>
+                                                    <!--end::NISN=-->
+                                                    <!--begin::jenis_kelamin=-->
+                                                    <td>
+                                                        {% if 7b.jenis_kelamin == 'Perempuan' %}
+                                                        <div class="badge badge-light-danger fw-bolder">
+                                                            Perempuan
+                                                        </div>
+                                    
+                                                        {% else %}
+                                                        <div class="badge badge-light-info fw-bolder">
+                                                            Laki-laki
+                                                        </div>
+                                                        {% endif %}
+                                                    </td>
+                                                    <!--end::jenis_kelamin=-->
+                                                    
+                                                    <!--begin::alamat-->
+                                                    <td>{{ 7b.alamat }}</td>
+                                                    <!--begin::alamat-->
+                                                </tr>
+                                                <!--end::Table row-->
+                                                {% endfor %}
+    
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                    <div class="tab-pane fade" id="kt_vtab_pane_3" role="tabpanel">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                                <!--begin::Table row-->
+                                                <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                                                    <th class="min-w-125px">Nama Lengkap</th>
+                                                    <th class="min-w-125px">NISN</th>
+                                                    <th class="min-w-125px">Jenis Kelamin</th>
+                                                    <th class="min-w-125px">Alamat</th>
+                                                </tr>
+                                                <!--end::Table row-->
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody class="text-gray-600 fw-bold">
+    
+                                                {% for 7c in kls7c %}
+                                                <!--begin::Table row-->
+                                                <tr>
+                                                    
+                                                    <!--begin::User=-->
+                                                    <td class="d-flex align-items-center">
+                                                        <!--begin:: Avatar -->
+                                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                                            <a href="#">
+                                                                <div class="symbol-label">
+                                                                    <img src="media/{{ 7c.foto }}" alt="{{ 7c.nama_lengkap }}" class="w-100" />
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Avatar-->
+                                                        <!--begin::User details-->
+                                                        <div class="d-flex flex-column">
+                                                            <a href="#" class="text-gray-800 text-hover-primary mb-1">{{ 7c.nama_lengkap }}</a>
+                                                        </div>
+                                                        <!--begin::User details-->
+                                                    </td>
+                                                    <!--end::User=-->
+                                                    <!--begin::NISN=-->
+                                                    <td>
+                                                        {{ 7c.nomor_induk }}
+                                                    </td>
+                                                    <!--end::NISN=-->
+                                                    <!--begin::jenis_kelamin=-->
+                                                    <td>
+                                                        {% if 7c.jenis_kelamin == 'Perempuan' %}
+                                                        <div class="badge badge-light-danger fw-bolder">
+                                                            Perempuan
+                                                        </div>
+                                    
+                                                        {% else %}
+                                                        <div class="badge badge-light-info fw-bolder">
+                                                            Laki-laki
+                                                        </div>
+                                                        {% endif %}
+                                                    </td>
+                                                    <!--end::jenis_kelamin=-->
+                                                    
+                                                    <!--begin::alamat-->
+                                                    <td>{{ 7c.alamat }}</td>
+                                                    <!--begin::alamat-->
+                                                </tr>
+                                                <!--end::Table row-->
+                                                {% endfor %}
+    
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                    <div class="tab-pane fade" id="kt_vtab_pane_4" role="tabpanel">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                                <!--begin::Table row-->
+                                                <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                                                    <th class="min-w-125px">Nama Lengkap</th>
+                                                    <th class="min-w-125px">NISN</th>
+                                                    <th class="min-w-125px">Jenis Kelamin</th>
+                                                    <th class="min-w-125px">Alamat</th>
+                                                </tr>
+                                                <!--end::Table row-->
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody class="text-gray-600 fw-bold">
+    
+                                                {% for 8a in kls8a %}
+                                                <!--begin::Table row-->
+                                                <tr>
+                                                    
+                                                    <!--begin::User=-->
+                                                    <td class="d-flex align-items-center">
+                                                        <!--begin:: Avatar -->
+                                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                                            <a href="#">
+                                                                <div class="symbol-label">
+                                                                    <img src="media/{{ 8a.foto }}" alt="{{ 8a.nama_lengkap }}" class="w-100" />
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Avatar-->
+                                                        <!--begin::User details-->
+                                                        <div class="d-flex flex-column">
+                                                            <a href="#" class="text-gray-800 text-hover-primary mb-1">{{ 8a.nama_lengkap }}</a>
+                                                        </div>
+                                                        <!--begin::User details-->
+                                                    </td>
+                                                    <!--end::User=-->
+                                                    <!--begin::NISN=-->
+                                                    <td>
+                                                        {{ 8a.nomor_induk }}
+                                                    </td>
+                                                    <!--end::NISN=-->
+                                                    <!--begin::jenis_kelamin=-->
+                                                    <td>
+                                                        {% if 8a.jenis_kelamin == 'Perempuan' %}
+                                                        <div class="badge badge-light-danger fw-bolder">
+                                                            Perempuan
+                                                        </div>
+                                    
+                                                        {% else %}
+                                                        <div class="badge badge-light-info fw-bolder">
+                                                            Laki-laki
+                                                        </div>
+                                                        {% endif %}
+                                                    </td>
+                                                    <!--end::jenis_kelamin=-->
+                                                    
+                                                    <!--begin::alamat-->
+                                                    <td>{{ 8a.alamat }}</td>
+                                                    <!--begin::alamat-->
+                                                </tr>
+                                                <!--end::Table row-->
+                                                {% endfor %}
+    
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                    <div class="tab-pane fade" id="kt_vtab_pane_5" role="tabpanel">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                                <!--begin::Table row-->
+                                                <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                                                    <th class="min-w-125px">Nama Lengkap</th>
+                                                    <th class="min-w-125px">NISN</th>
+                                                    <th class="min-w-125px">Jenis Kelamin</th>
+                                                    <th class="min-w-125px">Alamat</th>
+                                                </tr>
+                                                <!--end::Table row-->
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody class="text-gray-600 fw-bold">
+    
+                                                {% for 8b in kls8b %}
+                                                <!--begin::Table row-->
+                                                <tr>
+                                                    
+                                                    <!--begin::User=-->
+                                                    <td class="d-flex align-items-center">
+                                                        <!--begin:: Avatar -->
+                                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                                            <a href="#">
+                                                                <div class="symbol-label">
+                                                                    <img src="media/{{ 8b.foto }}" alt="{{ 8b.nama_lengkap }}" class="w-100" />
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Avatar-->
+                                                        <!--begin::User details-->
+                                                        <div class="d-flex flex-column">
+                                                            <a href="#" class="text-gray-800 text-hover-primary mb-1">{{ 8b.nama_lengkap }}</a>
+                                                        </div>
+                                                        <!--begin::User details-->
+                                                    </td>
+                                                    <!--end::User=-->
+                                                    <!--begin::NISN=-->
+                                                    <td>
+                                                        {{ 8b.nomor_induk }}
+                                                    </td>
+                                                    <!--end::NISN=-->
+                                                    <!--begin::jenis_kelamin=-->
+                                                    <td>
+                                                        {% if 8b.jenis_kelamin == 'Perempuan' %}
+                                                        <div class="badge badge-light-danger fw-bolder">
+                                                            Perempuan
+                                                        </div>
+                                    
+                                                        {% else %}
+                                                        <div class="badge badge-light-info fw-bolder">
+                                                            Laki-laki
+                                                        </div>
+                                                        {% endif %}
+                                                    </td>
+                                                    <!--end::jenis_kelamin=-->
+                                                    
+                                                    <!--begin::alamat-->
+                                                    <td>{{ 8b.alamat }}</td>
+                                                    <!--begin::alamat-->
+                                                </tr>
+                                                <!--end::Table row-->
+                                                {% endfor %}
+    
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                    <div class="tab-pane fade" id="kt_vtab_pane_6" role="tabpanel">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                                <!--begin::Table row-->
+                                                <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                                                    <th class="min-w-125px">Nama Lengkap</th>
+                                                    <th class="min-w-125px">NISN</th>
+                                                    <th class="min-w-125px">Jenis Kelamin</th>
+                                                    <th class="min-w-125px">Alamat</th>
+                                                </tr>
+                                                <!--end::Table row-->
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody class="text-gray-600 fw-bold">
+    
+                                                {% for 8c in kls8c %}
+                                                <!--begin::Table row-->
+                                                <tr>
+                                                    
+                                                    <!--begin::User=-->
+                                                    <td class="d-flex align-items-center">
+                                                        <!--begin:: Avatar -->
+                                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                                            <a href="#">
+                                                                <div class="symbol-label">
+                                                                    <img src="media/{{ 8c.foto }}" alt="{{ 8c.nama_lengkap }}" class="w-100" />
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Avatar-->
+                                                        <!--begin::User details-->
+                                                        <div class="d-flex flex-column">
+                                                            <a href="#" class="text-gray-800 text-hover-primary mb-1">{{ 8c.nama_lengkap }}</a>
+                                                        </div>
+                                                        <!--begin::User details-->
+                                                    </td>
+                                                    <!--end::User=-->
+                                                    <!--begin::NISN=-->
+                                                    <td>
+                                                        {{ 8c.nomor_induk }}
+                                                    </td>
+                                                    <!--end::NISN=-->
+                                                    <!--begin::jenis_kelamin=-->
+                                                    <td>
+                                                        {% if 8c.jenis_kelamin == 'Perempuan' %}
+                                                        <div class="badge badge-light-danger fw-bolder">
+                                                            Perempuan
+                                                        </div>
+                                    
+                                                        {% else %}
+                                                        <div class="badge badge-light-info fw-bolder">
+                                                            Laki-laki
+                                                        </div>
+                                                        {% endif %}
+                                                    </td>
+                                                    <!--end::jenis_kelamin=-->
+                                                    
+                                                    <!--begin::alamat-->
+                                                    <td>{{ 8c.alamat }}</td>
+                                                    <!--begin::alamat-->
+                                                </tr>
+                                                <!--end::Table row-->
+                                                {% endfor %}
+    
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                    <div class="tab-pane fade" id="kt_vtab_pane_7" role="tabpanel">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                                <!--begin::Table row-->
+                                                <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                                                    <th class="min-w-125px">Nama Lengkap</th>
+                                                    <th class="min-w-125px">NISN</th>
+                                                    <th class="min-w-125px">Jenis Kelamin</th>
+                                                    <th class="min-w-125px">Alamat</th>
+                                                </tr>
+                                                <!--end::Table row-->
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody class="text-gray-600 fw-bold">
+    
+                                                {% for 9a in kls9a %}
+                                                <!--begin::Table row-->
+                                                <tr>
+                                                    
+                                                    <!--begin::User=-->
+                                                    <td class="d-flex align-items-center">
+                                                        <!--begin:: Avatar -->
+                                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                                            <a href="#">
+                                                                <div class="symbol-label">
+                                                                    <img src="media/{{ 9a.foto }}" alt="{{ 9a.nama_lengkap }}" class="w-100" />
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Avatar-->
+                                                        <!--begin::User details-->
+                                                        <div class="d-flex flex-column">
+                                                            <a href="#" class="text-gray-800 text-hover-primary mb-1">{{ 9a.nama_lengkap }}</a>
+                                                        </div>
+                                                        <!--begin::User details-->
+                                                    </td>
+                                                    <!--end::User=-->
+                                                    <!--begin::NISN=-->
+                                                    <td>
+                                                        {{ 9a.nomor_induk }}
+                                                    </td>
+                                                    <!--end::NISN=-->
+                                                    <!--begin::jenis_kelamin=-->
+                                                    <td>
+                                                        {% if 9a.jenis_kelamin == 'Perempuan' %}
+                                                        <div class="badge badge-light-danger fw-bolder">
+                                                            Perempuan
+                                                        </div>
+                                    
+                                                        {% else %}
+                                                        <div class="badge badge-light-info fw-bolder">
+                                                            Laki-laki
+                                                        </div>
+                                                        {% endif %}
+                                                    </td>
+                                                    <!--end::jenis_kelamin=-->
+                                                    
+                                                    <!--begin::alamat-->
+                                                    <td>{{ 9a.alamat }}</td>
+                                                    <!--begin::alamat-->
+                                                </tr>
+                                                <!--end::Table row-->
+                                                {% endfor %}
+    
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                    <div class="tab-pane fade" id="kt_vtab_pane_8" role="tabpanel">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                                <!--begin::Table row-->
+                                                <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                                                    <th class="min-w-125px">Nama Lengkap</th>
+                                                    <th class="min-w-125px">NISN</th>
+                                                    <th class="min-w-125px">Jenis Kelamin</th>
+                                                    <th class="min-w-125px">Alamat</th>
+                                                </tr>
+                                                <!--end::Table row-->
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody class="text-gray-600 fw-bold">
+    
+                                                {% for 9b in kls9b %}
+                                                <!--begin::Table row-->
+                                                <tr>
+                                                    
+                                                    <!--begin::User=-->
+                                                    <td class="d-flex align-items-center">
+                                                        <!--begin:: Avatar -->
+                                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                                            <a href="#">
+                                                                <div class="symbol-label">
+                                                                    <img src="media/{{ 9b.foto }}" alt="{{ 9b.nama_lengkap }}" class="w-100" />
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Avatar-->
+                                                        <!--begin::User details-->
+                                                        <div class="d-flex flex-column">
+                                                            <a href="#" class="text-gray-800 text-hover-primary mb-1">{{ 9b.nama_lengkap }}</a>
+                                                        </div>
+                                                        <!--begin::User details-->
+                                                    </td>
+                                                    <!--end::User=-->
+                                                    <!--begin::NISN=-->
+                                                    <td>
+                                                        {{ 9b.nomor_induk }}
+                                                    </td>
+                                                    <!--end::NISN=-->
+                                                    <!--begin::jenis_kelamin=-->
+                                                    <td>
+                                                        {% if 9b.jenis_kelamin == 'Perempuan' %}
+                                                        <div class="badge badge-light-danger fw-bolder">
+                                                            Perempuan
+                                                        </div>
+                                    
+                                                        {% else %}
+                                                        <div class="badge badge-light-info fw-bolder">
+                                                            Laki-laki
+                                                        </div>
+                                                        {% endif %}
+                                                    </td>
+                                                    <!--end::jenis_kelamin=-->
+                                                    
+                                                    <!--begin::alamat-->
+                                                    <td>{{ 9b.alamat }}</td>
+                                                    <!--begin::alamat-->
+                                                </tr>
+                                                <!--end::Table row-->
+                                                {% endfor %}
+    
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                    <div class="tab-pane fade" id="kt_vtab_pane_9" role="tabpanel">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                                <!--begin::Table row-->
+                                                <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                                                    <th class="min-w-125px">Nama Lengkap</th>
+                                                    <th class="min-w-125px">NISN</th>
+                                                    <th class="min-w-125px">Jenis Kelamin</th>
+                                                    <th class="min-w-125px">Alamat</th>
+                                                </tr>
+                                                <!--end::Table row-->
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody class="text-gray-600 fw-bold">
+    
+                                                {% for 9c in kls9c %}
+                                                <!--begin::Table row-->
+                                                <tr>
+                                                    
+                                                    <!--begin::User=-->
+                                                    <td class="d-flex align-items-center">
+                                                        <!--begin:: Avatar -->
+                                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                                            <a href="#">
+                                                                <div class="symbol-label">
+                                                                    <img src="media/{{ 9c.foto }}" alt="{{ 9c.nama_lengkap }}" class="w-100" />
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Avatar-->
+                                                        <!--begin::User details-->
+                                                        <div class="d-flex flex-column">
+                                                            <a href="#" class="text-gray-800 text-hover-primary mb-1">{{ 9c.nama_lengkap }}</a>
+                                                        </div>
+                                                        <!--begin::User details-->
+                                                    </td>
+                                                    <!--end::User=-->
+                                                    <!--begin::NISN=-->
+                                                    <td>
+                                                        {{ 9c.nomor_induk }}
+                                                    </td>
+                                                    <!--end::NISN=-->
+                                                    <!--begin::jenis_kelamin=-->
+                                                    <td>
+                                                        {% if 9c.jenis_kelamin == 'Perempuan' %}
+                                                        <div class="badge badge-light-danger fw-bolder">
+                                                            Perempuan
+                                                        </div>
+                                    
+                                                        {% else %}
+                                                        <div class="badge badge-light-info fw-bolder">
+                                                            Laki-laki
+                                                        </div>
+                                                        {% endif %}
+                                                    </td>
+                                                    <!--end::jenis_kelamin=-->
+                                                    
+                                                    <!--begin::alamat-->
+                                                    <td>{{ 9c.alamat }}</td>
+                                                    <!--begin::alamat-->
+                                                </tr>
+                                                <!--end::Table row-->
+                                                {% endfor %}
+    
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::details View-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Post-->
+</div>
+<!--end::Content-->
+
+{% endblock %}

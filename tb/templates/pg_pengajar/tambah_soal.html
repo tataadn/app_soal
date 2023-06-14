@@ -48,25 +48,6 @@
             <form action="" method="post" class="form">
                 {% csrf_token %}
                 <div class="row gy-10 gx-xl-10 row_field" id="rowfield">
-                    <div class="row mb-7 mt-5">
-                        <div class="col-md-5">
-                            <select class="form-select" data-control="select2" name="id_kelas[]" data-placeholder="Pilih Kelas" id="idkelas">
-                                <option></option>
-                                {% for kelas in kls %}
-                                <option value="{{kelas.id_kelas}}">{{kelas.nama_kelas}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="col-md-5">
-                            <input type="text" class="form-control" id="kodesoal1" placeholder="Kode Soal (eg. KDS001)" aria-describedby="basic-addon3" value=""/>
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-warning" id="getdata">
-                                <i class="fas la-plus-circle fs-4 me-2"></i>
-                                Get Data
-                            </button>
-                        </div>
-                    </div>
                     <div class="row mt-7 mb-7">
                         <div class="col-md-12">
                             <div class="card shadow-sm mb-7">
@@ -75,16 +56,19 @@
                                 </div>
                                 <div class="card-body">
                                     <input type="hidden" name="id_mapel[]" value="{{user.id_mapel}}" class="form-control form-control-solid mb-3 mb-lg-0" id="kode2"/>
-                                    <fieldset disabled>
-                                        <div class="fv-row mb-3">
-                                            <label class="required fw-semibold fs-6 mb-2">ID Kelas</label>
-                                            <input type="text" name="id_kelas[]" class="form-control form-control-solid mb-3 mb-lg-0 text-danger idkelas2" id="idkelas2"/>
-                                        </div>
-                                        <div class="fv-row mb-3">
-                                            <label class="required fw-semibold fs-6 mb-2">Kode Soal</label>
-                                            <input type="text" name="kode_soal[]" class="form-control form-control-solid mb-3 mb-lg-0 text-danger kodesoal" id="kodesoal" value=""/>
-                                        </div>
-                                    </fieldset>
+                                    <div class="fv-row mb-5">
+                                        <label class="required fw-semibold fs-6 mb-2">ID Kelas</label>
+                                        <select class="form-select" name="id_kelas[]">
+                                            <option>--Pilih Kelas--</option>
+                                            {% for kelas in kls %}
+                                            <option value="{{kelas.id_kelas}}">{{kelas.nama_kelas}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="fv-row mb-3">
+                                        <label class="required fw-semibold fs-6 mb-2">Kode Soal</label>
+                                        <input type="text" name="kode_soal[]" class="form-control form-control-solid mb-3 mb-lg-0 text-danger kodesoal" id="kodesoal" value=""/>
+                                    </div>
                                     <div class="fv-row mb-3">
                                         <label class="required fw-semibold fs-6 mb-2">Soal</label>
                                         <input type="text" name="soal[]" class="form-control form-control-solid mb-3 mb-lg-0" />
@@ -130,7 +114,7 @@
         var rowfield = document.getElementById('rowfield');
         var rowCounter = 1;
         
-        var html = '<div class="col-md-12"><div class="card shadow-sm mb-7"><div class="card-header"><h3 class="card-title">Nomor Soal ' + rowCounter + '</h3><div class="card-toolbar"><button class="btn btn-icon btn-danger btn_remove" id="btn_remove" value="Remove"><i class="fas la-times fs-1"></i></button></div></div><div class="card-body"><input type="hidden" name="id_mapel[]" value="{{user.id_mapel}}" class="form-control form-control-solid mb-3 mb-lg-0" id="kode2"/><fieldset disabled><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">ID Kelas</label><input type="text" name="id_kelas[]" class="form-control form-control-solid mb-3 mb-lg-0 text-danger" id="idkelas2"/></div><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">Kode Soal</label><input type="text" name="kode_soal[]" class="form-control form-control-solid mb-3 mb-lg-0 text-danger" id="kodesoal" value=""/></div></fieldset><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">Soal</label><input type="text" name="soal[]" class="form-control form-control-solid mb-3 mb-lg-0" value="" /></div><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">Kunci Jawaban</label><textarea name="kunci_jawaban[]" class="form-control form-control-solid"></textarea></div><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">Bobot Soal</label><input type="number" name="bobot_soal[]" class="form-control form-control-solid mb-3 mb-lg-0" /></div><div class="fv-row mb-3"><input type="hidden" name="id_user[]" value="{{ user.id }}" class="form-control form-control-solid mb-3 mb-lg-0" /></div></div></div></div>';
+        var html = '<div class="col-md-12"><div class="card shadow-sm mb-7"><div class="card-header"><h3 class="card-title">Nomor Soal ' + rowCounter + '</h3><div class="card-toolbar"><button class="btn btn-icon btn-danger btn_remove" id="btn_remove"><i class="fas la-times"></i></button></div></div><div class="card-body"><input type="hidden" name="id_mapel[]" value="{{user.id_mapel}}" class="form-control form-control-solid mb-3 mb-lg-0" id="kode2"/><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">ID Kelas</label><select class="form-select mb-4" name="id_kelas[]"><option>--Pilih Kelas--</option> {% for kelas in kls %}<option value="{{kelas.id_kelas}}">{{kelas.nama_kelas}}</option>{% endfor %}</select><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">Kode Soal</label><input type="text" name="kode_soal[]" class="form-control form-control-solid mb-3 mb-lg-0 text-danger" id="kodesoal" value=""/></div><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">Soal</label><input type="text" name="soal[]" class="form-control form-control-solid mb-3 mb-lg-0" value="" /></div><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">Kunci Jawaban</label><textarea name="kunci_jawaban[]" class="form-control form-control-solid"></textarea></div><div class="fv-row mb-3"><label class="required fw-semibold fs-6 mb-2">Bobot Soal</label><input type="number" name="bobot_soal[]" class="form-control form-control-solid mb-3 mb-lg-0" /></div><div class="fv-row mb-3"><input type="hidden" name="id_user[]" value="{{ user.id }}" class="form-control form-control-solid mb-3 mb-lg-0" /></div></div></div></div>';
         
         btnadd.addEventListener('click', function(event) {
             event.preventDefault();
@@ -169,37 +153,6 @@
             }
         }
     });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function(){
-        
-        var btnget = document.getElementById('getdata');
-        
-        // Add event listener to the button
-        btnget.addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent form submission
-            
-            var kode1 = document.getElementById('kodesoal1'); // the first input
-            var select1 = document.getElementById('idkelas'); // the select field
-            var kode2 = document.getElementsByClassName('kodesoal'); // the second input
-            var value2 = document.getElementsByClassName('idkelas2'); // the field which show the result
-
-            // Iterate over the fields and update the corresponding next field
-            for (var i = 0; i < kode2.length; i++) {
-                var kode_2 = kode2[i];
-                var value_2 = value2[i];
-
-                // Get the selected value from the select field
-                var selectedValue = select1.value;
-
-                // Update the value of the next input field
-                value_2.value = selectedValue;
-                kode_2.value = kode1.value;
-            }
-        });
-    });
-
 </script>
 
 {% endblock %}
