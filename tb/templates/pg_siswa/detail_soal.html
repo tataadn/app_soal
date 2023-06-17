@@ -1,0 +1,83 @@
+{% extends 'pg_siswa/layout/temp.html' %} 
+{% block content %} 
+
+<!--begin::Content-->
+<div class="d-flex flex-column flex-column-fluid" id="kt_content">
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container">
+            <!--begin::details View-->
+            <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+                <!--begin::Card header-->
+                <div class="card-header cursor-pointer">
+                    <!--begin::Card title-->
+                    <div class="card-title m-0">
+                        <h2 class="text-danger fw-bolder m-0">Mengerjakan Soal!</h2>
+                    </div>
+                    <!--end::Card title-->
+                </div>
+                <!--begin::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body p-9">
+                    <div class="row">
+                        <div class="col-lg-12 mb-7">
+                            <div class="d-flex flex-column flex-md-row">
+                                <div class="col-lg-8">
+                                    <div class="tab-content" id="myTabContent">
+                                        {% for item in nomorsoal %}
+                                            {% if forloop.first %}
+                                            <div class="tab-pane fade show active" id="soal{{item.id_soal}}" role="tabpanel">
+                                                <form action="" method="post" class="form">
+                                                    {% csrf_token %}
+                                                    <h3 class="mb-5"> Soal No {{forloop.counter}} <span class="text-danger">*</span></h3>
+                                                    <h4>{{ item.soal }}</h4>
+                                                    <textarea name="jawaban" class="form-control form-control-solid mb-3"></textarea>
+                                                    <textarea hidden name="kunci_jawaban" class="form-control form-control-solid mb-3">{{ item.kunci_jawaban }}</textarea>
+                                                    <input type="number" name="bobot_soal" class="form-control form-control-solid mb-4" value="{{ item.bobot_soal }}" hidden />
+                                                    <!-- <input type="number" name="nilai" class="form-control form-control-solid mb-4" value="{{ ratio }}" /> -->
+                                                    <button type="submit" class="btn btn-warning">Simpan Jawaban</button>
+                                                </form>
+                                            </div>
+                                            {% else %}
+                                            <div class="tab-pane fade" id="soal{{item.id_soal}}" role="tabpanel">
+                                                <form action="" method="post" class="form">
+                                                    {% csrf_token %}
+                                                    <h3 class="mb-5"> Soal No {{forloop.counter}} <span class="text-danger">*</span></h3>
+                                                    <h4>{{ item.soal }}</h4>
+                                                    <textarea name="jawaban" class="form-control form-control-solid mb-3"></textarea>
+                                                    <textarea hidden name="kunci_jawaban" class="form-control form-control-solid mb-3">{{ item.kunci_jawaban }}</textarea>
+                                                    <input type="number" name="bobot_soal" class="form-control form-control-solid mb-4" value="{{ item.bobot_soal }}" hidden />
+                                                    <!-- <input type="number" name="nilai" class="form-control form-control-solid mb-4" value="{{ ratio }}" /> -->
+                                                    <button type="submit" class="btn btn-warning">Simpan Jawaban</button>
+                                                </form>
+                                            </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <ul class="nav nav-tabs nav-pills border-0 mb-7 mb-md-0 fs-6 ms-15">
+                                        {% for item in nomorsoal %}
+                                        <li class="nav-item me-2 my-1">
+                                            <a class="btn btn-secondary nav-link" data-bs-toggle="tab" href="#soal{{item.id_soal}}">{{forloop.counter}}</a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::details View-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Post-->
+</div>
+<!--end::Content-->
+
+{% endblock %}

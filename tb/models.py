@@ -38,6 +38,7 @@ class Jawaban(models.Model):
     kode_soal = models.CharField(max_length=50, null=False)
     jawaban = models.TextField(null=False)
     nilai = models.IntegerField(null=False)
+    id_siswa = models.BigIntegerField(null=False)
 
 # class Siswa(models.Model):
 #     nis_siswa = models.CharField(max_length=50, null=False)

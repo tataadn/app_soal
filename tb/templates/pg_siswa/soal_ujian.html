@@ -6,6 +6,7 @@
         <div class="container" id="kt_content_container">
             <!--begin::Row-->
             <div class="row gy-10 gx-xl-10 mb-7">
+                {% for item in datasoal %}
                 <!--begin::Col-->
                 <div class="col-md-6">
                     <!--begin::Card-->
@@ -14,7 +15,7 @@
                         <div class="card-header">
                             <!--begin::Card title-->
                             <div class="card-title">
-                                <h2 class="text-white">NAMA MAPEL</h2>
+                                <h2 class="text-white">{{ item.mapel }} ({{ item.kode_soal }})</h2>
                             </div>
                             <!--end::Card title-->
                         </div>
@@ -22,23 +23,23 @@
                         <!--begin::Card body-->
                         <div class="card-body pt-1">
                             <!--begin::Users-->
-                            <div class="fw-bolder text-white mb-5">Total users with this role: 5</div>
+                            <div class="fw-bolder text-white mb-5">Total keseluruhan soal: {{ item.jumlah_soal }}</div>
                             <!--end::Users-->
                             <!--begin::Permissions-->
                             <div class="d-flex flex-column text-white">
                                 <div class="d-flex align-items-center py-2">
                                     <span class="bullet bg-primary me-3"></span>
-                                    All Admin Controls
+                                    Baca doa sebelum mengerjakan soal
                                 </div>
                                 <div class="d-flex align-items-center py-2">
-                                    <span class="bullet bg-primary me-3"></span>View and Edit Financial Summaries
+                                    <span class="bullet bg-primary me-3"></span>Pastikan dalam posisi nyaman dan tidak terganggu
                                 </div>
                                 <div class="d-flex align-items-center py-2">
-                                    <span class="bullet bg-primary me-3"></span>Enabled Bulk Reports
+                                    <span class="bullet bg-primary me-3"></span>Pastikan jaringan internet stabil
                                 </div>
                                 <div class='d-flex align-items-center py-2'>
                                     <span class='bullet bg-primary me-3'></span>
-                                    <em>and 7 more...</em>
+                                    <em>Silakan mengerjakan jika sudah siap!</em>
                                 </div>
                             </div>
                             <!--end::Permissions-->
@@ -46,13 +47,14 @@
                         <!--end::Card body-->
                         <!--begin::Card footer-->
                         <div class="card-footer d-flex justify-content-end align-items-end pt-0">
-                            <a href="#" class="btn btn-light btn-active-light-danger my-1 me-2">Kerjakan!</a>
+                            <a href="/soal-{{ item.kode_soal }}" class="btn btn-light btn-active-light-danger my-1 me-2">Kerjakan!</a>
                         </div>
                         <!--end::Card footer-->
                     </div>
                     <!--end::Card-->
                 </div>
                 <!--end::Col-->
+                {% endfor %}
             </div>
             <!--end::Row-->
         </div>

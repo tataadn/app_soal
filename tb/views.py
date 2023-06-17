@@ -42,13 +42,6 @@ def soal_db(request):
         return render(request,"pg-siswa/cek_db.html", var_halaman)
     else:
         return render(request,"pg-siswa/cek_db.html", {'soal':soal, 'judul_web' : 'Halaman cek db'})
-    
-# def index_guru(request):
-#     return render(request, 'pg_guru/index.html', {'judul_web' : 'Halaman index guru'})
-    
-# def list_soal(request):
-#     listsoal = Soal.objects.all()
-#     return render(request, 'pg_guru/daftar_soal.html', {'judul_web' : 'Halaman list soal guru', 'listsoal':listsoal})
 
 
 
@@ -247,10 +240,71 @@ def nilai_ujian(request):
     return render(request, 'pg_siswa/nilai_ujian.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
 
 def soal_ujian(request):
-    judul_web = 'Soal Ujian | SMP Plus Rahmat'
-    sub_title = 'SOAL UJIAN SISWA SMP PLUS RAHMAT'
-    return render(request, 'pg_siswa/soal_ujian.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
+    user_id_kelas = request.user.id_kelas
+    
+    query = """
+    SELECT a.`id_soal` AS id, b.nama_kelas AS kelas, a.`kode_soal`, c.`nama_mapel`,
+           GROUP_CONCAT(a.soal SEPARATOR ',') AS banyak_soal,
+           (LENGTH(GROUP_CONCAT(a.soal SEPARATOR ',')) - LENGTH(REPLACE(GROUP_CONCAT(a.soal SEPARATOR ','), ',', '')) + 1) AS jumlah_soal
+    FROM tb_soal a, tb_kelas b, tb_mapel c
+    WHERE b.id_kelas = a.id_kelas
+    AND a.`id_mapel` = c.`id_mapel`
+    AND b.`id_kelas` = %s
+    GROUP BY a.`kode_soal`, b.id_kelas
+    ORDER BY b.id_kelas
+    """
 
+    with connection.cursor() as cursor:
+        cursor.execute(query, [user_id_kelas])
+        results = cursor.fetchall()
+
+    datasoal = []
+    for row in results:
+        item = {
+            'id_soal': row[0],
+            'nama_kelas': row[1],
+            'kode_soal': row[2],
+            'mapel': row[3],
+            'banyak_soal': row[4],
+            'jumlah_soal': row[5],
+        }
+        datasoal.append(item)
+
+    listweb = {
+        'judul_web' : 'Soal Ujian | SMP Plus Rahmat',
+        'sub_title' : 'SOAL UJIAN SISWA SMP PLUS RAHMAT',
+        'datasoal' : datasoal,
+    }
+    return render(request, 'pg_siswa/soal_ujian.html', listweb)
+
+def halaman_soal(request, kode_soal):
+    id_kelas = request.user.id_kelas
+    nomorsoal = Soal.objects.filter(kode_soal=kode_soal, id_kelas=id_kelas)
+    hasil = 0
+
+    listweb = {
+        'judul_web' : 'Soal Ujian | SMP Plus Rahmat',
+        'sub_title' : 'SOAL UJIAN SISWA SMP PLUS RAHMAT',
+        'nomorsoal' : nomorsoal
+    }
+
+    if request.method == 'POST':
+        kuncijawaban = request.POST['kunci_jawaban']
+        jawaban = request.POST['jawaban']
+        bobot = request.POST['bobot_soal']
+
+        ratio = SequenceMatcher(None, jawaban, kuncijawaban).ratio()
+        hasil = round(ratio * float(bobot), 2)
+
+        title = {
+            'judul_web' : 'Soal Ujian | SMP Plus Rahmat',
+            'sub_title' : 'SOAL UJIAN SISWA SMP PLUS RAHMAT',
+            'nomorsoal' : nomorsoal,
+            'ratio'     : hasil
+        }
+        return render(request, 'pg_siswa/detail_soal.html', title)
+
+    return render(request, 'pg_siswa/detail_soal.html', listweb)
 
 
 
@@ -364,27 +418,5 @@ def tambahsoal(request):
     
         messages.success(request, 'Data saved successfully.')
         return redirect('tambah_soal')
-
-    # if request.method == 'POST':
-    #     id_kelas = request.POST['id_kelas']
-    #     id_mapel = request.POST['id_mapel']
-    #     kode_soal = request.POST['kode_soal']
-    #     soal_list = request.POST.getlist('soal[]')
-    #     kunci_jawaban_list = request.POST.getlist('kunci_jawaban[]')
-    #     bobot_soal_list = request.POST.getlist('bobot_soal[]')
-    #     id_user = request.POST.getlist('id_user[]')
-
-    #     for i in range(len(soal_list)):
-    #         question = Soal(
-    #             id_kelas=id_kelas[i],
-    #             id_mapel=id_mapel[i],
-    #             kode_soal=kode_soal[i],
-    #             soal=soal_list[i],
-    #             kunci_jawaban=kunci_jawaban_list[i],
-    #             bobot_soal=int(bobot_soal_list[i]),
-    #             id_user=id_user[i]
-    #         )
-    #         question.save()
-    #         messages.success(request, 'Data saved successfully.')
 
     return render(request, 'pg_pengajar/tambah_soal.html', listweb)
