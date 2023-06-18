@@ -280,7 +280,7 @@ def soal_ujian(request):
 def halaman_soal(request, kode_soal):
     id_kelas = request.user.id_kelas
     nomorsoal = Soal.objects.filter(kode_soal=kode_soal, id_kelas=id_kelas)
-    hasil = 0
+    # hasil = 0
 
     listweb = {
         'judul_web' : 'Soal Ujian | SMP Plus Rahmat',
@@ -290,21 +290,36 @@ def halaman_soal(request, kode_soal):
 
     if request.method == 'POST':
         kuncijawaban = request.POST['kunci_jawaban']
-        jawaban = request.POST['jawaban']
+        # jwb = request.POST.get('jawaban_siswa', False)
+        jwb = request.POST['jawaban_siswa']
         bobot = request.POST['bobot_soal']
 
-        ratio = SequenceMatcher(None, jawaban, kuncijawaban).ratio()
+        ratio = SequenceMatcher(None, jwb, kuncijawaban).ratio()
         hasil = round(ratio * float(bobot), 2)
+        
+        idsoal = request.POST['id_soal']
+        idsiswa = request.POST['id_siswa']
 
-        title = {
-            'judul_web' : 'Soal Ujian | SMP Plus Rahmat',
-            'sub_title' : 'SOAL UJIAN SISWA SMP PLUS RAHMAT',
-            'nomorsoal' : nomorsoal,
-            'ratio'     : hasil
-        }
-        return render(request, 'pg_siswa/detail_soal.html', title)
+        Jawaban.objects.create(id_soal=idsoal, jawaban_siswa=jwb, nilai=hasil, id_siswa=idsiswa)
 
     return render(request, 'pg_siswa/detail_soal.html', listweb)
+
+
+    # if request.method == 'POST':
+    #     ratio = SequenceMatcher(None, jwb, kuncijawaban).ratio()
+    #     hasil = round(ratio * float(bobot), 2)
+
+    #     kuncijawaban = request.POST['kunci_jawaban']
+    #     jwb = request.POST['jawaban_siswa']
+    #     bobot = request.POST['bobot_soal']
+
+
+    #     idsoal = request.POST['id_soal']
+    #     idsiswa = request.POST['id_siswa']
+
+    #     Jawaban.objects.create(id_soal=idsoal, jawaban_siswa=jwb, nilai=hasil, id_siswa=idsiswa)
+
+    # return render(request, 'pg_siswa/detail_soal.html', listweb)
 
 
 

@@ -10,7 +10,7 @@ class Soal(models.Model):
     soal = models.TextField(null=False)
     kunci_jawaban = models.TextField(null=False)
     bobot_soal = models.IntegerField(null=False)
-    id_user = models.BigIntegerField(null=False)
+    id_user = models.BigIntegerField(null=False, default=1)
 
 class User(AbstractUser):
     nomor_induk = models.CharField(max_length=200, null=False)
@@ -35,8 +35,7 @@ class Kelas(models.Model):
 class Jawaban(models.Model):
     id_jawaban = models.AutoField(primary_key=True)
     id_soal = models.CharField(max_length=50, null=False)
-    kode_soal = models.CharField(max_length=50, null=False)
-    jawaban = models.TextField(null=False)
+    jawaban_siswa = models.TextField(null=False)
     nilai = models.IntegerField(null=False)
     id_siswa = models.BigIntegerField(null=False)
 

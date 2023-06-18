@@ -32,10 +32,11 @@
                                                     {% csrf_token %}
                                                     <h3 class="mb-5"> Soal No {{forloop.counter}} <span class="text-danger">*</span></h3>
                                                     <h4>{{ item.soal }}</h4>
-                                                    <textarea name="jawaban" class="form-control form-control-solid mb-3"></textarea>
+                                                    <textarea name="jawaban_siswa" class="form-control form-control-solid mb-3"></textarea>
                                                     <textarea hidden name="kunci_jawaban" class="form-control form-control-solid mb-3">{{ item.kunci_jawaban }}</textarea>
                                                     <input type="number" name="bobot_soal" class="form-control form-control-solid mb-4" value="{{ item.bobot_soal }}" hidden />
-                                                    <!-- <input type="number" name="nilai" class="form-control form-control-solid mb-4" value="{{ ratio }}" /> -->
+                                                    <input hidden type="text" name="id_soal" class="form-control form-control-solid mb-4" value="{{ item.id_soal }}" />
+                                                    <input hidden type="text" name="id_siswa" class="form-control form-control-solid mb-4" value="{{ user.id }}" />
                                                     <button type="submit" class="btn btn-warning">Simpan Jawaban</button>
                                                 </form>
                                             </div>
@@ -45,10 +46,11 @@
                                                     {% csrf_token %}
                                                     <h3 class="mb-5"> Soal No {{forloop.counter}} <span class="text-danger">*</span></h3>
                                                     <h4>{{ item.soal }}</h4>
-                                                    <textarea name="jawaban" class="form-control form-control-solid mb-3"></textarea>
+                                                    <textarea name="jawaban_siswa" class="form-control form-control-solid mb-3"></textarea>
                                                     <textarea hidden name="kunci_jawaban" class="form-control form-control-solid mb-3">{{ item.kunci_jawaban }}</textarea>
                                                     <input type="number" name="bobot_soal" class="form-control form-control-solid mb-4" value="{{ item.bobot_soal }}" hidden />
-                                                    <!-- <input type="number" name="nilai" class="form-control form-control-solid mb-4" value="{{ ratio }}" /> -->
+                                                    <input hidden type="text" name="id_soal" class="form-control form-control-solid mb-4" value="{{ item.id_soal }}" />
+                                                    <input hidden type="text" name="id_siswa" class="form-control form-control-solid mb-4" value="{{ user.id }}" />
                                                     <button type="submit" class="btn btn-warning">Simpan Jawaban</button>
                                                 </form>
                                             </div>
