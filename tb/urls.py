@@ -20,6 +20,15 @@ urlpatterns = [
     path('beranda', beranda, name='beranda'),
     path('data-kelas', data_kelas, name='data_kelas'),
     path('data-7a', data_7a, name='data_7a'),
+    path('7a-<int:id>', edit_7a, name='edit_7a'),
+    path('7b-<int:id>', edit_7b, name='edit_7b'),
+    path('7c-<int:id>', edit_7c, name='edit_7c'),
+    path('8a-<int:id>', edit_8a, name='edit_8a'),
+    path('8b-<int:id>', edit_8b, name='edit_8b'),
+    path('8c-<int:id>', edit_8c, name='edit_8c'),
+    path('9a-<int:id>', edit_9a, name='edit_9a'),
+    path('9b-<int:id>', edit_9b, name='edit_9b'),
+    path('9c-<int:id>', edit_9c, name='edit_9c'),
     path('data-7b', data_7b, name='data_7b'),
     path('data-7c', data_7c, name='data_7c'),
     path('data-8a', data_8a, name='data_8a'),
@@ -29,6 +38,8 @@ urlpatterns = [
     path('data-9b', data_9b, name='data_9b'),
     path('data-9c', data_9c, name='data_9c'),
     path('data-pengajar', data_pengajar, name='data_pengajar'),
+    path('nonaktif-<int:id>', nonaktif_7a, name='nonaktif_7a'),
+    path('aktif-<int:id>', aktif_7a, name='aktif_7a'),
     path('profil', profil_admin, name='profil_admin'),
 
     # URL SISWA
@@ -49,6 +60,8 @@ urlpatterns = [
     path('data-soal', data_soal, name='data_soal'),
     path('tambah-soal', tambahsoal, name='tambah_soal'),
 ]
+
+# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

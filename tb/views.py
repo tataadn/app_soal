@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import *
 from difflib import SequenceMatcher
 from .models import *
@@ -131,6 +131,7 @@ def data_7a(request):
         'sub_title' : 'DATA KELAS 7A SMP PLUS RAHMAT', 
         'siswa' : User.objects.filter(is_siswa=True, id_kelas='7A').order_by('nama_lengkap')
     }
+
     return render(request, 'pg_admin/siswa_page/data_7a.html', listweb)
 
 def data_7b(request):
@@ -196,6 +197,261 @@ def data_9c(request):
         'siswa' : User.objects.filter(is_siswa=True, id_kelas='9C').order_by('nama_lengkap')
     }
     return render(request, 'pg_admin/siswa_page/data_9c.html', listweb)
+
+def edit_7a(request, id):
+
+    if request.method == 'POST':
+
+        if 'foto' in request.FILES:
+            foto = request.FILES['foto']
+            nisn = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).create(foto=foto, nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        else:
+            nisn = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).update(nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        return redirect('data_7a')
+    
+def edit_7b(request, id):
+
+    if request.method == 'POST':
+
+        if 'foto' in request.FILES:
+            foto = request.FILES['foto']
+            nisn = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).create(foto=foto, nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        else:
+            nisn = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).update(nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        return redirect('data_7b')
+
+def edit_7c(request, id):
+
+    if request.method == 'POST':
+
+        if 'foto' in request.FILES:
+            foto = request.FILES['foto']
+            nisn = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).create(foto=foto, nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        else:
+            nisn = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).update(nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        return redirect('data_7c')
+    
+def edit_8a(request, id):
+
+    if request.method == 'POST':
+
+        if 'foto' in request.FILES:
+            foto = request.FILES['foto']
+            nisn = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).create(foto=foto, nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        else:
+            nisn = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).update(nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        return redirect('data_8a')
+    
+def edit_8b(request, id):
+
+    if request.method == 'POST':
+
+        if 'foto' in request.FILES:
+            foto = request.FILES['foto']
+            nisn = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).create(foto=foto, nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        else:
+            nisn = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).update(nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        return redirect('data_8b')
+    
+def edit_8c(request, id):
+
+    if request.method == 'POST':
+
+        if 'foto' in request.FILES:
+            foto = request.FILES['foto']
+            nisn = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).create(foto=foto, nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        else:
+            nisn = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).update(nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        return redirect('data_8c')
+    
+def edit_9a(request, id):
+
+    if request.method == 'POST':
+
+        if 'foto' in request.FILES:
+            foto = request.FILES['foto']
+            nisn = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).create(foto=foto, nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        else:
+            nisn = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).update(nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        return redirect('data_9a')
+    
+def edit_9b(request, id):
+
+    if request.method == 'POST':
+
+        if 'foto' in request.FILES:
+            foto = request.FILES['foto']
+            nisn = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).create(foto=foto, nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        else:
+            nisn = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).update(nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        return redirect('data_9b')
+
+def edit_9c(request, id):
+
+    if request.method == 'POST':
+
+        if 'foto' in request.FILES:
+            foto = request.FILES['foto']
+            nisn = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).create(foto=foto, nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        else:
+            nisn = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).update(nomor_induk=nisn, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        return redirect('data_9c')
+
+def nonaktif_7a(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.is_active = False
+    siswa.save()
+    return redirect('data_7a')
+
+def aktif_7a(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.is_active = True
+    siswa.save() 
+    return redirect('data_7a')
 
 def profil_admin(request):
     judul_web = 'Profil Admin | SMP Plus Rahmat'
