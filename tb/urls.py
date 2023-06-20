@@ -2,6 +2,9 @@ from django.urls import path
 from .views import *
 from django.conf import settings
 from django.conf.urls.static import static
+from . import views
+
+app_name = 'tb'
 
 urlpatterns = [
     path('', index, name='index'),
@@ -49,7 +52,7 @@ urlpatterns = [
     path('profil-siswa', profil_siswa, name='profil_siswa'),
     path('nilai-ujian', nilai_ujian, name='nilai_ujian'),
     path('soal-ujian', soal_ujian, name='soal_ujian'),
-    path('soal-<str:kode_soal>', halaman_soal, name='halaman_soal'),
+    path('soal-<str:kode_soal>-', halaman_soal, name='halaman_soal'),
 
     # URL PENGAJAR
     path('login-pengajar', login_pengajar, name='login_pengajar'),

@@ -6,6 +6,7 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db import connection
+from django.core.paginator import Paginator
 # Create your views here.
 
 index_web = {
@@ -536,46 +537,18 @@ def soal_ujian(request):
 def halaman_soal(request, kode_soal):
     id_kelas = request.user.id_kelas
     nomorsoal = Soal.objects.filter(kode_soal=kode_soal, id_kelas=id_kelas)
-    # hasil = 0
+    paginator = Paginator(nomorsoal, 2)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
     listweb = {
         'judul_web' : 'Soal Ujian | SMP Plus Rahmat',
         'sub_title' : 'SOAL UJIAN SISWA SMP PLUS RAHMAT',
-        'nomorsoal' : nomorsoal
+        'nomorsoal' : nomorsoal,
+        'page_obj' : page_obj,
     }
 
-    if request.method == 'POST':
-        kuncijawaban = request.POST['kunci_jawaban']
-        # jwb = request.POST.get('jawaban_siswa', False)
-        jwb = request.POST['jawaban_siswa']
-        bobot = request.POST['bobot_soal']
-
-        ratio = SequenceMatcher(None, jwb, kuncijawaban).ratio()
-        hasil = round(ratio * float(bobot), 2)
-        
-        idsoal = request.POST['id_soal']
-        idsiswa = request.POST['id_siswa']
-
-        Jawaban.objects.create(id_soal=idsoal, jawaban_siswa=jwb, nilai=hasil, id_siswa=idsiswa)
-
     return render(request, 'pg_siswa/detail_soal.html', listweb)
-
-
-    # if request.method == 'POST':
-    #     ratio = SequenceMatcher(None, jwb, kuncijawaban).ratio()
-    #     hasil = round(ratio * float(bobot), 2)
-
-    #     kuncijawaban = request.POST['kunci_jawaban']
-    #     jwb = request.POST['jawaban_siswa']
-    #     bobot = request.POST['bobot_soal']
-
-
-    #     idsoal = request.POST['id_soal']
-    #     idsiswa = request.POST['id_siswa']
-
-    #     Jawaban.objects.create(id_soal=idsoal, jawaban_siswa=jwb, nilai=hasil, id_siswa=idsiswa)
-
-    # return render(request, 'pg_siswa/detail_soal.html', listweb)
 
 
 
