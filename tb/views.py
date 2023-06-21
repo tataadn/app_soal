@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db import connection
 from django.core.paginator import Paginator
+from django.urls import reverse_lazy
 # Create your views here.
 
 index_web = {
@@ -81,7 +82,7 @@ def data_pengajar(request):
         'judul_web' : 'Data Pengajar | SMP Plus Rahmat', 
         'sub_title' : 'DATA PENGAJAR SMP PLUS RAHMAT', 
         'mpl' : Mapel.objects.all(), 
-        'pengguna' : User.objects.filter(is_guru=True).order_by('date_joined')
+        'pengguna' : User.objects.filter(is_guru=True).order_by('date_joined'),
     }
     
     if request.method == 'POST':
@@ -448,11 +449,161 @@ def nonaktif_7a(request, id):
     siswa.save()
     return redirect('data_7a')
 
+def nonaktif_7b(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.is_active = False
+    siswa.save()
+    return redirect('data_7b')
+
+def nonaktif_7c(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.is_active = False
+    siswa.save()
+    return redirect('data_7c')
+
+def nonaktif_8a(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.is_active = False
+    siswa.save()
+    return redirect('data_8a')
+
+def nonaktif_8b(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.is_active = False
+    siswa.save()
+    return redirect('data_8b')
+
+def nonaktif_8c(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.is_active = False
+    siswa.save()
+    return redirect('data_8c')
+
+def nonaktif_9a(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.is_active = False
+    siswa.save()
+    return redirect('data_9a')
+
+def nonaktif_9b(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.is_active = False
+    siswa.save()
+    return redirect('data_9b')
+
+def nonaktif_9c(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.is_active = False
+    siswa.save()
+    return redirect('data_9c')
+
 def aktif_7a(request, id):
     siswa = User.objects.get(id=id)
     siswa.is_active = True
-    siswa.save() 
+    siswa.save()
     return redirect('data_7a')
+
+def aktif_7b(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.is_active = True
+    siswa.save()
+    return redirect('data_7b')
+
+def aktif_7c(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.is_active = True
+    siswa.save()
+    return redirect('data_7c')
+
+def aktif_8a(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.is_active = True
+    siswa.save()
+    return redirect('data_8a')
+
+def aktif_8b(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.is_active = True
+    siswa.save()
+    return redirect('data_8b')
+
+def aktif_8c(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.is_active = True
+    siswa.save()
+    return redirect('data_8c')
+
+def aktif_9a(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.is_active = True
+    siswa.save()
+    return redirect('data_9a')
+
+def aktif_9b(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.is_active = True
+    siswa.save()
+    return redirect('data_9b')
+
+def aktif_9c(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.is_active = True
+    siswa.save()
+    return redirect('data_9c')
+
+def hapus_7a(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.delete()
+    messages.success(request, 'Akun siswa berhasil dihapus!')
+    return redirect('data_7a')
+
+def hapus_7b(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.delete()
+    messages.success(request, 'Akun siswa berhasil dihapus!')
+    return redirect('data_7b')
+
+def hapus_7c(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.delete()
+    messages.success(request, 'Akun siswa berhasil dihapus!')
+    return redirect('data_7c')
+
+def hapus_8a(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.delete()
+    messages.success(request, 'Akun siswa berhasil dihapus!')
+    return redirect('data_8a')
+
+def hapus_8b(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.delete()
+    messages.success(request, 'Akun siswa berhasil dihapus!')
+    return redirect('data_8b')
+
+def hapus_8c(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.delete()
+    messages.success(request, 'Akun siswa berhasil dihapus!')
+    return redirect('data_8c')
+
+def hapus_9a(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.delete()
+    messages.success(request, 'Akun siswa berhasil dihapus!')
+    return redirect('data_9a')
+
+def hapus_9b(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.delete()
+    messages.success(request, 'Akun siswa berhasil dihapus!')
+    return redirect('data_9b')
+
+def hapus_9c(request, id):
+    siswa = User.objects.get(id=id)
+    siswa.delete()
+    messages.success(request, 'Akun siswa berhasil dihapus!')
+    return redirect('data_9c')
 
 def profil_admin(request):
     judul_web = 'Profil Admin | SMP Plus Rahmat'
