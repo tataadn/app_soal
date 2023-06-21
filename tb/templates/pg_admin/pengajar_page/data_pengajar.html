@@ -94,7 +94,7 @@
                                     <rect fill="#000000" opacity="0.5" transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000)" x="4" y="11" width="16" height="2" rx="1" />
                                 </svg>
                             </span>
-                            <!--end::Svg Icon-->Add User</button>
+                            <!--end::Svg Icon-->Tambah Akun</button>
                             <!--end::Add user-->
                         </div>
                         <!--end::Toolbar-->
@@ -358,9 +358,9 @@
                             <!--begin::Table row-->
                             <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                                 <th class="min-w-125px">Nama Lengkap</th>
-                                <th class="min-w-125px">Role</th>
                                 <th class="min-w-125px">Last login</th>
                                 <th class="min-w-125px">Joined Date</th>
+                                <th class="min-w-125px">Status Akun</th>
                                 <th class="text-end min-w-100px">Actions</th>
                             </tr>
                             <!--end::Table row-->
@@ -390,17 +390,6 @@
                                     <!--begin::User details-->
                                 </td>
                                 <!--end::User=-->
-                                <!--begin::Role=-->
-                                <td>
-                                    {% if pengajar.is_superuser == 1 and pengajar.is_staff == 1 and pengajar.is_admin == 1 %}
-                                    Admin SMP 
-                                    {% elif pengajar.is_active == 1 and pengajar.is_guru == 1 %}
-                                    Pengajar
-                                    {% elif pengajar.is_active == 1 and pengajar.is_siswa == 1 %}
-                                    Siswa
-                                    {% endif %}
-                                </td>
-                                <!--end::Role=-->
                                 <!--begin::Last login=-->
                                 <td>
                                     {% if pengajar.last_login == None %}
@@ -419,6 +408,20 @@
                                 <!--begin::Joined-->
                                 <td>{{ pengajar.date_joined }}</td>
                                 <!--begin::Joined-->
+
+                                <!--begin::Status-->
+                                <td>
+                                    {% if pengajar.is_active == 1 %}
+                                    <div class="badge badge-light-success fw-bolder">
+                                        Aktif
+                                    </div>
+                                    {% else %}
+                                    <div class="badge badge-light-danger fw-bolder">
+                                        Tidak Aktif
+                                    </div>
+                                    {% endif %}
+                                </td>
+                                <!--begin::Status-->
 
                                 <!--begin::Action=-->
                                 <td class="text-end">
@@ -446,9 +449,9 @@
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-3">
                                             {% if pengajar.is_active == 1 %}
-                                            <a href="/nonaktif-7a-{{ pengajar.id }}" class="menu-link px-3 text-danger">Non-aktif</a>
+                                            <a href="/nonaktif-pg{{ pengajar.id }}" class="menu-link px-3 text-danger">Non-aktif</a>
                                             {% else %}
-                                            <a href="/aktif-7a-{{ pengajar.id }}" class="menu-link px-3 text-success">Aktifkan</a>
+                                            <a href="/aktif-pg{{ pengajar.id }}" class="menu-link px-3 text-success">Aktifkan</a>
                                             {% endif %}
                                         </div>
                                         <!--end::Menu item-->
@@ -525,7 +528,14 @@
                                                 <td>Email pengajar</td>
                                                 <td>:</td>
                                                 <td>
-                                                    <h5>{{ pengajar.email }}</h5>
+                                                    <h4>{{ pengajar.email }}</h4>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mata Pelajaran</td>
+                                                <td>:</td>
+                                                <td>
+                                                    <h4 class="text-primary">{{ pengajar.nama_mapel }}</h4>
                                                 </td>
                                             </tr>
                                             <tr>

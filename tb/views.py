@@ -78,11 +78,43 @@ def beranda(request):
     return render(request, 'pg_admin/index.html', {'judul_web' : judul_web})
 
 def data_pengajar(request):
+    query = """
+        SELECT id, last_login, username, date_joined, nomor_induk,
+        nama_lengkap, alamat, jenis_kelamin, is_guru, foto, a.id_mapel as idmapel, nama_mapel, email, is_active
+        FROM tb_user a, tb_mapel b
+        WHERE a.`id_mapel` = b.id_mapel
+    """
+
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+        results = cursor.fetchall()
+
+    pengajar = []
+    for row in results:
+        item = {
+            'id' : row[0],
+            'last_login' : row[1],
+            'username' : row[2],
+            'date_joined' : row[3],
+            'nomor_induk' : row[4],
+            'nama_lengkap' : row[5],
+            'alamat' : row[6],
+            'jenis_kelamin' : row[7],
+            'is_guru' : row[8],
+            'foto' : row[9],
+            'idmapel' : row[10],
+            'nama_mapel' : row[11],
+            'email' : row[12],
+            'is_active' : row[13],
+        }
+        pengajar.append(item)
+
     listweb = {
         'judul_web' : 'Data Pengajar | SMP Plus Rahmat', 
         'sub_title' : 'DATA PENGAJAR SMP PLUS RAHMAT', 
         'mpl' : Mapel.objects.all(), 
-        'pengguna' : User.objects.filter(is_guru=True).order_by('date_joined'),
+        'pengguna' : pengajar
+        # 'pengguna' : User.objects.filter(is_guru=True).order_by('date_joined'),
     }
     
     if request.method == 'POST':
@@ -443,6 +475,33 @@ def edit_9c(request, id):
 
         return redirect('data_9c')
 
+def edit_pengajar(request, id):
+
+    if request.method == 'POST':
+
+        if 'foto' in request.FILES:
+            foto = request.FILES['foto']
+            nip = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).create(foto=foto, nomor_induk=nip, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        else:
+            nip = request.POST['nomor_induk']
+            nama = request.POST['nama_lengkap']
+            email = request.POST['email']
+            alamat = request.POST['alamat']
+            jk = request.POST['jenis_kelamin']
+            username = request.POST['nomor_induk']
+            User.objects.filter(id=id).update(nomor_induk=nip, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
+            messages.success(request, 'Akun siswa berhasil diedit!')
+
+        return redirect('data_pengajar')
+
 def nonaktif_7a(request, id):
     siswa = User.objects.get(id=id)
     siswa.is_active = False
@@ -496,6 +555,12 @@ def nonaktif_9c(request, id):
     siswa.is_active = False
     siswa.save()
     return redirect('data_9c')
+
+def nonaktif_pengajar(request, id):
+    pengajar = User.objects.get(id=id)
+    pengajar.is_active = False
+    pengajar.save()
+    return redirect('data_pengajar')
 
 def aktif_7a(request, id):
     siswa = User.objects.get(id=id)
@@ -551,6 +616,12 @@ def aktif_9c(request, id):
     siswa.save()
     return redirect('data_9c')
 
+def aktif_pengajar(request, id):
+    pengajar = User.objects.get(id=id)
+    pengajar.is_active = True
+    pengajar.save()
+    return redirect('data_pengajar')
+
 def hapus_7a(request, id):
     siswa = User.objects.get(id=id)
     siswa.delete()
@@ -604,6 +675,12 @@ def hapus_9c(request, id):
     siswa.delete()
     messages.success(request, 'Akun siswa berhasil dihapus!')
     return redirect('data_9c')
+
+def hapus_pengajar(request, id):
+    pengajar = User.objects.get(id=id)
+    pengajar.delete()
+    messages.success(request, 'Akun pengajar berhasil dihapus!')
+    return redirect('data_pengajar')
 
 def profil_admin(request):
     judul_web = 'Profil Admin | SMP Plus Rahmat'
@@ -815,3 +892,14 @@ def tambahsoal(request):
         return redirect('tambah_soal')
 
     return render(request, 'pg_pengajar/tambah_soal.html', listweb)
+
+def detail_soal(request):
+    kd_soal = request.user.kode_soal
+
+    listweb = {
+        'judul_web' : 'Halaman Detail Soal | SMP Plus Rahmat', 
+        'sub_title' : 'DETAIL SOAL SMP PLUS RAHMAT',
+        'listsoal' : Soal.objects.filter(kode_soal=kd_soal),
+        # 'kls7b' : User.objects.filter(is_siswa=True, id_kelas='7B').order_by('nama_lengkap'),
+    }
+    return render(request, 'pg_pengajar/daftar_siswa.html', listweb)

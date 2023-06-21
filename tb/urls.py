@@ -8,14 +8,20 @@ from . import views
 
 urlpatterns = [
     # new urls
+    path('', index, name='index'),
 
     # URL ADMIN
     path('login-admin', login_admin, name='login_admin'),
     path('logout', logout_admin, name='logout_admin'),
     path('beranda', beranda, name='beranda'),
-    path('data-kelas', data_kelas, name='data_kelas'),
+    # url action for guru
     path('data-pengajar', data_pengajar, name='data_pengajar'),
-    # show data per kelas
+    path('pengajar-edt<int:id>', edit_pengajar, name='edit_pengajar'),
+    path('pengajar-rmv<int:id>', hapus_pengajar, name='hapus_pengajar'),
+    path('aktif-pg<int:id>', aktif_pengajar, name='aktif_pengajar'),
+    path('nonaktif-pg<int:id>', nonaktif_pengajar, name='nonaktif_pengajar'),
+    # show data siswa
+    path('data-kelas', data_kelas, name='data_kelas'),
     path('data-7a', data_7a, name='data_7a'),
     path('data-7b', data_7b, name='data_7b'),
     path('data-7c', data_7c, name='data_7c'),
@@ -25,7 +31,7 @@ urlpatterns = [
     path('data-9a', data_9a, name='data_9a'),
     path('data-9b', data_9b, name='data_9b'),
     path('data-9c', data_9c, name='data_9c'),
-    # edit data per kelas
+    # edit data siswa per kelas
     path('7a-<int:id>', edit_7a, name='edit_7a'),
     path('7b-<int:id>', edit_7b, name='edit_7b'),
     path('7c-<int:id>', edit_7c, name='edit_7c'),
@@ -91,6 +97,7 @@ urlpatterns = [
     path('profil-pengajar', profil_pengajar, name='profil_pengajar'),
     path('data-soal', data_soal, name='data_soal'),
     path('tambah-soal', tambahsoal, name='tambah_soal'),
+    path('detail-<str:kode>', detail_soal, name='detail_soal'),
 ]
 
 # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
