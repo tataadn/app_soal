@@ -893,13 +893,36 @@ def tambahsoal(request):
 
     return render(request, 'pg_pengajar/tambah_soal.html', listweb)
 
-def detail_soal(request):
-    kd_soal = request.user.kode_soal
-
+def detail_soal(request, kode_soal):
     listweb = {
         'judul_web' : 'Halaman Detail Soal | SMP Plus Rahmat', 
         'sub_title' : 'DETAIL SOAL SMP PLUS RAHMAT',
-        'listsoal' : Soal.objects.filter(kode_soal=kd_soal),
-        # 'kls7b' : User.objects.filter(is_siswa=True, id_kelas='7B').order_by('nama_lengkap'),
+        'listsoal' : Soal.objects.filter(kode_soal=kode_soal),
     }
-    return render(request, 'pg_pengajar/daftar_siswa.html', listweb)
+    return render(request, 'pg_pengajar/detail_soal.html', listweb)
+
+def edit_soal(request, kode_soal, pk):
+    listweb = {
+        'judul_web' : 'Halaman Edit Soal | SMP Plus Rahmat', 
+        'sub_title' : 'EDIT SOAL SMP PLUS RAHMAT',
+        'list_soal' : Soal.objects.get(id_soal=pk, kode_soal=kode_soal),
+        'list_kelas' : Kelas.objects.all(),
+    }
+
+    if request.method == 'POST':
+        kelas = request.POST['id_kelas']
+        kode = request.POST['kode_soal']
+        soal = request.POST['soal']
+        kunci_jawaban = request.POST['kunci_jawaban']
+        bobot = request.POST['bobot_soal']
+        Soal.objects.filter(id_soal=pk, kode_soal=kode_soal).update(id_kelas=kelas, kode_soal=kode, soal=soal, kunci_jawaban=kunci_jawaban, bobot_soal=bobot)
+        messages.success(request, 'Soal berhasil diedit!')
+        return redirect('detail_soal', kode_soal=kode_soal)
+    
+    return render(request, 'pg_pengajar/edit_soal.html', listweb)
+
+def hapus_soal(request, kode_soal, pk):
+    soal = Soal.objects.get(id_soal=pk, kode_soal=kode_soal)
+    soal.delete()
+    messages.success(request, 'Berhasil menghapus soal!')
+    return redirect('detail_soal', kode_soal=kode_soal)

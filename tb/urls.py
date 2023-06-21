@@ -97,7 +97,9 @@ urlpatterns = [
     path('profil-pengajar', profil_pengajar, name='profil_pengajar'),
     path('data-soal', data_soal, name='data_soal'),
     path('tambah-soal', tambahsoal, name='tambah_soal'),
-    path('detail-<str:kode>', detail_soal, name='detail_soal'),
+    path('detail-<str:kode_soal>', detail_soal, name='detail_soal'),
+    path('hapus-<str:kode_soal>-<int:pk>', hapus_soal, name='hapus_soal'),
+    path('edit-<str:kode_soal>-<int:pk>', edit_soal, name='edit_soal'),
 ]
 
 # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

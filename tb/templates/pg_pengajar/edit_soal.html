@@ -1,0 +1,111 @@
+{% extends 'pg_pengajar/layout/temp.html' %} 
+{% block content %} 
+
+<div class="d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <div class="container" id="kt_content_container">
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                    <div class="row">
+                        <div class="col-md-5 mb-7">
+                            <div class="alert alert-dismissible bg-success d-flex flex-column flex-sm-row">
+                                <!--begin::Svg Icon | path: assets/media/icons/duotone/Code/Info-circle.svg-->
+                                <span class="svg-icon svg-icon-2hx svg-icon-light me-4 mb-5 mb-sm-0"><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10"/>
+                                    <rect fill="#000000" x="11" y="10" width="2" height="7" rx="1"/>
+                                    <rect fill="#000000" x="11" y="7" width="2" height="2" rx="1"/>
+                                </svg></span>
+                                <!--end::Svg Icon-->
+        
+                                <!--begin::Wrapper-->
+                                <div class="d-flex flex-column text-light pe-0 pe-sm-10 mt-2">
+                                    <!--begin::Title-->
+                                    <h4 class="text-white">{{message}}</h4>
+                                    <!--end::Title-->
+                                </div>
+                                <!--end::Wrapper-->
+        
+                                <!--begin::Close-->
+                                <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                                    <!--begin::Svg Icon | path: assets/media/icons/duotone/Navigation/Close.svg-->
+                                    <span class="svg-icon svg-icon-2x svg-icon-light"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+                                            <rect fill="#000000" x="0" y="7" width="16" height="2" rx="1"/>
+                                            <rect fill="#000000" opacity="0.5" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) " x="0" y="7" width="16" height="2" rx="1"/>
+                                        </g>
+                                    </svg></span>
+                                    <!--end::Svg Icon-->
+                                </button>
+                                <!--end::Close-->
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                
+                {% endfor %}
+            {% endif %}
+            <div class="row gy-10 gx-xl-10 row_field" id="rowfield">
+                <div class="row mt-7 mb-7">
+                    <div class="col-md-12">
+                        <div class="card shadow-sm mb-7">
+                            <div class="card-header">
+                                <h3 class="card-title" id="nomorsoal">Edit Soal</h3>
+                            </div>
+                            <div class="card-body">
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-lg-6 mb-3">
+                                            <div class="fv-row mb-5">
+                                                <label class="required fw-semibold fs-6 mb-2">Kelas</label>
+                                                <select class="form-select" name="id_kelas">
+                                                    {% for kelas in list_kelas %}
+                                                        {% if kelas.id_kelas == list_soal.id_kelas %}
+                                                            <option value="{{kelas.id_kelas}}" selected>{{kelas.nama_kelas}}</option>
+                                                        {% else %}
+                                                            <option value="{{kelas.id_kelas}}">{{kelas.nama_kelas}}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    <!-- <option value="">Kelas</option> -->
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mb-3">
+                                            <div class="fv-row mb-3">
+                                                <label class="required fw-semibold fs-6 mb-2">Kode Soal</label>
+                                                <input type="text" name="kode_soal" class="form-control form-control-solid mb-3 mb-lg-0" value="{{ list_soal.kode_soal }}" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 mb-3">
+                                            <div class="fv-row mb-3">
+                                                <label class="required fw-semibold fs-6 mb-2">Soal</label>
+                                                <input type="text" name="soal" class="form-control form-control-solid mb-3 mb-lg-0" value="{{ list_soal.soal }}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 mb-3">
+                                            <div class="fv-row mb-3">
+                                                <label class="required fw-semibold fs-6 mb-2">Kunci Jawaban</label>
+                                                <textarea name="kunci_jawaban" class="form-control form-control-solid">{{ list_soal.kunci_jawaban }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 mb-3">
+                                            <div class="fv-row mb-3">
+                                                <label class="required fw-semibold fs-6 mb-2">Bobot Soal</label>
+                                                <input type="text" name="bobot_soal" class="form-control form-control-solid mb-3 mb-lg-0" value="{{ list_soal.bobot_soal }}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" type="submit">Simpan Perubahan</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
