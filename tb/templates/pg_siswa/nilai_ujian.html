@@ -4,6 +4,47 @@
 <div class="d-flex flex-column flex-column-fluid" id="kt_content">
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <div class="container" id="kt_content_container">
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                    <div class="row">
+                        <div class="col-md-5 mb-7">
+                            <div class="alert alert-dismissible bg-success d-flex flex-column flex-sm-row">
+                                <!--begin::Svg Icon | path: assets/media/icons/duotone/Code/Info-circle.svg-->
+                                <span class="svg-icon svg-icon-2hx svg-icon-light me-4 mb-5 mb-sm-0"><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10"/>
+                                    <rect fill="#000000" x="11" y="10" width="2" height="7" rx="1"/>
+                                    <rect fill="#000000" x="11" y="7" width="2" height="2" rx="1"/>
+                                </svg></span>
+                                <!--end::Svg Icon-->
+        
+                                <!--begin::Wrapper-->
+                                <div class="d-flex flex-column text-light pe-0 pe-sm-10 mt-2">
+                                    <!--begin::Title-->
+                                    <h4 class="text-white">{{message}}</h4>
+                                    <!--end::Title-->
+                                </div>
+                                <!--end::Wrapper-->
+        
+                                <!--begin::Close-->
+                                <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                                    <!--begin::Svg Icon | path: assets/media/icons/duotone/Navigation/Close.svg-->
+                                    <span class="svg-icon svg-icon-2x svg-icon-light"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+                                            <rect fill="#000000" x="0" y="7" width="16" height="2" rx="1"/>
+                                            <rect fill="#000000" opacity="0.5" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) " x="0" y="7" width="16" height="2" rx="1"/>
+                                        </g>
+                                    </svg></span>
+                                    <!--end::Svg Icon-->
+                                </button>
+                                <!--end::Close-->
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                
+                {% endfor %}
+            {% endif %}
             <!--begin::Row-->
             <div class="row gy-10 gx-xl-10 mb-7">
                 <!--begin::Col-->

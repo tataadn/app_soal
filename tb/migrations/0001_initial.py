@@ -10,19 +10,20 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ('auth', '0012_alter_user_first_name_max_length'),
-    ]
+    # dependencies = [
+    #     ('auth', '0012_alter_user_first_name_max_length'),
+    # ]
 
     operations = [
         migrations.CreateModel(
             name='Jawaban',
             fields=[
-                ('id_jawaban', models.AutoField(primary_key=True, serialize=False)),
+                ('id_jawaban', models.CharField(max_length=11, primary_key=True, serialize=False)),
                 ('id_soal', models.CharField(max_length=50)),
-                ('kode_soal', models.CharField(max_length=50)),
-                ('jawaban', models.TextField()),
+                ('jawaban_siswa', models.TextField()),
                 ('nilai', models.IntegerField()),
+                ('id_siswa', models.BigIntegerField()),
+                ('tgl_ujian', models.DateField()),
             ],
             options={
                 'db_table': 'tb_soal',
@@ -53,6 +54,7 @@ class Migration(migrations.Migration):
                 ('soal', models.TextField()),
                 ('kunci_jawaban', models.TextField()),
                 ('bobot_soal', models.IntegerField()),
+                ('id_user', models.BigIntegerField(default=1)),
             ],
         ),
         migrations.CreateModel(

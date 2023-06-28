@@ -765,16 +765,36 @@ def soal_ujian(request):
 def halaman_soal(request, kode_soal):
     id_kelas = request.user.id_kelas
     nomorsoal = Soal.objects.filter(kode_soal=kode_soal, id_kelas=id_kelas)
-    paginator = Paginator(nomorsoal, 2)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
 
     listweb = {
         'judul_web' : 'Soal Ujian | SMP Plus Rahmat',
         'sub_title' : 'SOAL UJIAN SISWA SMP PLUS RAHMAT',
         'nomorsoal' : nomorsoal,
-        'page_obj' : page_obj,
     }
+
+    if request.method == 'POST':
+        id_soal_list = request.POST.getlist('id_soal[]')
+        jawaban_siswa_list = request.POST.getlist('jawaban_siswa[]')
+        id_siswa_list = request.POST.getlist('id_siswa[]')
+        kunci_jawaban_list = request.POST.getlist('kunci_jawaban[]')
+        bobot_soal_list = request.POST.getlist('bobot_soal[]')
+
+        data_list = []
+        for i in range(len(jawaban_siswa_list)):
+            ratio = SequenceMatcher(None, jawaban_siswa_list[i], kunci_jawaban_list[i]).ratio()
+            hasil = round(ratio * float(bobot_soal_list[i]), 2)
+
+            data_list.append(Jawaban(
+                id_soal=id_soal_list[i],
+                jawaban_siswa=jawaban_siswa_list[i],
+                nilai=hasil,
+                id_siswa=id_siswa_list[i]
+            ))
+        
+        Jawaban.objects.bulk_create(data_list)
+        
+        messages.success(request, 'Alhamdulillah! Anda telah berhasil mengerjakan soal!')
+        return redirect('nilai_ujian')
 
     return render(request, 'pg_siswa/detail_soal.html', listweb)
 
