@@ -847,14 +847,9 @@ def profil_pengajar(request):
 
 def data_soal(request):
     query = """
-    SELECT b.nama_kelas AS kelas, a.kode_soal AS kodesoal, c.nama_mapel AS mapel,
-           GROUP_CONCAT(a.soal SEPARATOR ',') AS banyak_soal,
-           (LENGTH(GROUP_CONCAT(a.soal SEPARATOR ',')) - LENGTH(REPLACE(GROUP_CONCAT(a.soal SEPARATOR ','), ',', '')) + 1) AS jumlah_soal
-    FROM tb_soal a, tb_kelas b, tb_mapel c
-    WHERE b.id_kelas = a.id_kelas
-    AND a.id_mapel = c.id_mapel
-    GROUP BY a.kode_soal, b.id_kelas
-    ORDER BY b.id_kelas
+    SELECT kode_soal, nama_ujian, jumlah_soal, nama_mapel, id_kelas
+    FROM tb_kdsoal a, tb_mapel b
+    WHERE a.`id_mapel` = b.`id_mapel`
     """
 
     with connection.cursor() as cursor:
@@ -864,11 +859,11 @@ def data_soal(request):
     datasoal = []
     for row in results:
         item = {
-            'nama_kelas': row[0],
-            'kode_soal': row[1],
-            'mapel': row[2],
-            'banyak_soal': row[3],
-            'jumlah_soal': row[4],
+            'kode_soal': row[0],
+            'nama_ujian': row[1],
+            'jumlah_soal': row[2],
+            'nama_mapel': row[3],
+            'id_kelas': row[4],
         }
         datasoal.append(item)
 
@@ -876,6 +871,7 @@ def data_soal(request):
         'judul_web' : 'Data Soal | SMP Plus Rahmat',
         'sub_title' : 'DAFTAR SOAL MAPEL SMP PLUS RAHMAT',
         'datasoal' : datasoal,
+        'kls' : Kelas.objects.all(), 
     }
 
     return render(request, 'pg_pengajar/data_soal.html', listweb)
@@ -912,6 +908,17 @@ def tambahsoal(request):
         return redirect('tambah_soal')
 
     return render(request, 'pg_pengajar/tambah_soal.html', listweb)
+
+def tambahujian(request):
+    if request.method == 'POST':
+        kode_soal = request.POST['kode_soal']
+        nama_ujian = request.POST['nama_ujian']
+        jumlah_soal = request.POST['jumlah_soal']
+        id_kelas = request.POST['id_kelas']
+        id_mapel = request.POST['id_mapel']
+
+        Kdsoal.objects.create(kode_soal=kode_soal, nama_ujian=nama_ujian, jumlah_soal=jumlah_soal, id_kelas=id_kelas, id_mapel=id_mapel)
+        return redirect('data_soal')
 
 def detail_soal(request, kode_soal):
     listweb = {
