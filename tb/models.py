@@ -5,9 +5,7 @@ from django.utils import timezone
 # Create your models here.
 class Soal(models.Model):
     id_soal = models.CharField(primary_key=True, max_length=50)
-    id_kelas = models.CharField(max_length=10, null=False)
-    id_mapel = models.CharField(max_length=10, null=False)
-    kode_soal = models.CharField(max_length=50, null=False)
+    id_kdsoal = models.CharField(max_length=50, null=False)
     soal = models.TextField(null=False)
     kunci_jawaban = models.TextField(null=False)
     bobot_soal = models.IntegerField(null=False)
@@ -43,9 +41,11 @@ class Jawaban(models.Model):
     tgl_ujian = models.DateTimeField(default=timezone.now)
 
 class Kdsoal(models.Model):
-    kode_soal = models.CharField(primary_key=True, max_length=50)
+    id_kdsoal = models.CharField(primary_key=True, max_length=50)
+    kode_soal = models.CharField(max_length=50, null=False)
     nama_ujian = models.CharField(max_length=255, null=False)
     jumlah_soal = models.IntegerField(null=False)
     id_mapel = models.CharField(max_length=50, null=False)
     id_kelas = models.CharField(max_length=10, null=False, default=0)
+    tgl_input = models.DateTimeField(default=timezone.now)
     

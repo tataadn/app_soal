@@ -846,110 +846,84 @@ def profil_pengajar(request):
     return render(request, 'pg_pengajar/profil.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
 
 def data_soal(request):
-    query = """
-    SELECT kode_soal, nama_ujian, jumlah_soal, nama_mapel, id_kelas
-    FROM tb_kdsoal a, tb_mapel b
-    WHERE a.`id_mapel` = b.`id_mapel`
-    """
-
-    with connection.cursor() as cursor:
-        cursor.execute(query)
-        results = cursor.fetchall()
-
-    datasoal = []
-    for row in results:
-        item = {
-            'kode_soal': row[0],
-            'nama_ujian': row[1],
-            'jumlah_soal': row[2],
-            'nama_mapel': row[3],
-            'id_kelas': row[4],
-        }
-        datasoal.append(item)
-
     listweb = {
         'judul_web' : 'Data Soal | SMP Plus Rahmat',
-        'sub_title' : 'DAFTAR SOAL MAPEL SMP PLUS RAHMAT',
-        'datasoal' : datasoal,
+        'sub_title' : 'DAFTAR SOAL SMP PLUS RAHMAT',
+        'datasoal' : Kdsoal.objects.all().order_by('-tgl_input'),
+        # 'datasoal' : datasoal,
         'kls' : Kelas.objects.all(), 
     }
 
     return render(request, 'pg_pengajar/data_soal.html', listweb)
-
-def tambahsoal(request):
-    listweb = {
-        'judul_web' : 'Halaman Tambah Soal | SMP Plus Rahmat', 
-        'sub_title' : 'SOAL UJIAN SMP PLUS RAHMAT',
-        'kls' : Kelas.objects.all(), 
-    }
-    if request.method == 'POST':
-        id_kelas_list = request.POST.getlist('id_kelas[]')
-        id_mapel_list = request.POST.getlist('id_mapel[]')
-        kode_soal_list = request.POST.getlist('kode_soal[]')
-        soal_list = request.POST.getlist('soal[]')
-        kunci_jawaban_list = request.POST.getlist('kunci_jawaban[]')
-        bobot_soal_list = request.POST.getlist('bobot_soal[]')
-        id_user_list = request.POST.getlist('id_user[]')
-
-        for i in range(len(soal_list)):
-
-            question = Soal(
-                id_kelas=id_kelas_list[i],
-                id_mapel=id_mapel_list[i],
-                kode_soal=kode_soal_list[i],
-                soal=soal_list[i],
-                kunci_jawaban=kunci_jawaban_list[i],
-                bobot_soal=bobot_soal_list[i],
-                id_user=id_user_list[i]
-            )
-            question.save()
-    
-        messages.success(request, 'Data saved successfully.')
-        return redirect('tambah_soal')
-
-    return render(request, 'pg_pengajar/tambah_soal.html', listweb)
 
 def tambahujian(request):
     if request.method == 'POST':
         kode_soal = request.POST['kode_soal']
         nama_ujian = request.POST['nama_ujian']
         jumlah_soal = request.POST['jumlah_soal']
-        id_kelas = request.POST['id_kelas']
+        id_kelas = request.POST.getlist('id_kelas[]')
         id_mapel = request.POST['id_mapel']
 
-        Kdsoal.objects.create(kode_soal=kode_soal, nama_ujian=nama_ujian, jumlah_soal=jumlah_soal, id_kelas=id_kelas, id_mapel=id_mapel)
+        id_kelas_str = ', '.join(id_kelas)
+
+        Kdsoal.objects.create(kode_soal=kode_soal, nama_ujian=nama_ujian, jumlah_soal=jumlah_soal, id_kelas=id_kelas_str, id_mapel=id_mapel)
+        
         return redirect('data_soal')
 
-def detail_soal(request, kode_soal):
+def editujian(request, id):
+    if request.method == 'POST':
+        kode_soal = request.POST['kode_soal']
+        nama_ujian = request.POST['nama_ujian']
+        jumlah_soal = request.POST['jumlah_soal']
+        id_kelas = request.POST.getlist('id_kelas[]')
+        id_mapel = request.POST['id_mapel']
+
+        id_kelas_str = ', '.join(id_kelas)
+
+        Kdsoal.objects.filter(id_kdsoal=id).update(kode_soal=kode_soal, nama_ujian=nama_ujian, jumlah_soal=jumlah_soal, id_kelas=id_kelas_str, id_mapel=id_mapel)
+        return redirect('data_soal')
+
+def hapusujian(request, id):
+    kdsoal = Kdsoal.objects.get(id_kdsoal=id)
+    kdsoal.delete()
+    return redirect('data_soal')
+
+def detail_soal(request, id):
     listweb = {
         'judul_web' : 'Halaman Detail Soal | SMP Plus Rahmat', 
         'sub_title' : 'DETAIL SOAL SMP PLUS RAHMAT',
-        'listsoal' : Soal.objects.filter(kode_soal=kode_soal),
+        'listsoal' : Soal.objects.filter(id_kdsoal=id),
+        'listkode' : Kdsoal.objects.filter(id_kdsoal=id),
+        'jumlahsoal' : Soal.objects.filter(id_kdsoal=id).count(),
     }
     return render(request, 'pg_pengajar/detail_soal.html', listweb)
 
-def edit_soal(request, kode_soal, pk):
-    listweb = {
-        'judul_web' : 'Halaman Edit Soal | SMP Plus Rahmat', 
-        'sub_title' : 'EDIT SOAL SMP PLUS RAHMAT',
-        'list_soal' : Soal.objects.get(id_soal=pk, kode_soal=kode_soal),
-        'list_kelas' : Kelas.objects.all(),
-    }
-
+def tambahsoal(request):
     if request.method == 'POST':
-        kelas = request.POST['id_kelas']
-        kode = request.POST['kode_soal']
+        id_kdsoal = request.POST['id_kdsoal']
         soal = request.POST['soal']
         kunci_jawaban = request.POST['kunci_jawaban']
-        bobot = request.POST['bobot_soal']
-        Soal.objects.filter(id_soal=pk, kode_soal=kode_soal).update(id_kelas=kelas, kode_soal=kode, soal=soal, kunci_jawaban=kunci_jawaban, bobot_soal=bobot)
-        messages.success(request, 'Soal berhasil diedit!')
-        return redirect('detail_soal', kode_soal=kode_soal)
-    
-    return render(request, 'pg_pengajar/edit_soal.html', listweb)
+        bobot_soal = request.POST['bobot_soal']
+        id_user = request.POST['id_user']
 
-def hapus_soal(request, kode_soal, pk):
-    soal = Soal.objects.get(id_soal=pk, kode_soal=kode_soal)
+        Soal.objects.create(id_kdsoal=id_kdsoal, soal=soal, kunci_jawaban=kunci_jawaban, bobot_soal=bobot_soal, id_user=id_user)
+        messages.success(request, 'Berhasil menambah soal!')
+        return redirect('detail_soal', id=id_kdsoal)
+
+def edit_soal(request, id):
+    if request.method == 'POST':
+        id_kdsoal = request.POST['id_kdsoal']
+        soal = request.POST['soal']
+        kunci_jawaban = request.POST['kunci_jawaban']
+        bobot_soal = request.POST['bobot_soal']
+
+        Soal.objects.filter(id_soal=id).update(soal=soal, kunci_jawaban=kunci_jawaban, bobot_soal=bobot_soal)
+        messages.success(request, 'Berhasil mengedit soal!')
+        return redirect('detail_soal', id=id_kdsoal)
+
+def hapus_soal(request, id):
+    soal = Soal.objects.get(id_soal=id)
+    id_kdsoal = soal.id_kdsoal
     soal.delete()
     messages.success(request, 'Berhasil menghapus soal!')
-    return redirect('detail_soal', kode_soal=kode_soal)
+    return redirect('detail_soal', id=id_kdsoal)
