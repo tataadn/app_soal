@@ -8,7 +8,7 @@
 		<meta name="keywords" content="Metronic, bootstrap, bootstrap 5, Angular 11, VueJs, React, Laravel, admin themes, web design, figma, web development, ree admin themes, bootstrap admin, bootstrap dashboard" />
 		<link rel="canonical" href="Https://preview.keenthemes.com/metronic8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="shortcut icon" href="static/media/logos/LOGO_BARU.png" />
+		<link rel="shortcut icon" href="static/media/LOGO_BARU.png" />
 		<!--begin::Fonts-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 		<!--end::Fonts-->
@@ -67,7 +67,7 @@
 									</div>
 								</div>
 								<div class="menu-item">
-									<a class="menu-link btn btn-active-light-primary active" href="/dashboard">
+									<a class="menu-link btn btn-active-light-primary {% if request.path == '/dashboard' %}active{% endif %}" href="/dashboard">
 										<span class="menu-icon">
 											<!--begin::Svg Icon | path: icons/duotone/Design/PenAndRuller.svg-->
 											<span class="svg-icon svg-icon-2">
@@ -83,7 +83,7 @@
 								</div>
 								
 								<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-									<span class="menu-link btn btn-active-light-primary">
+									<span class="menu-link btn btn-active-light-primary {% if request.path == '/daftar-siswa' %}active{% endif %}">
 										<span class="menu-icon">
 											<!--begin::Svg Icon | path: assets/media/icons/duotone/Home/Book-open.svg-->
 											<span class="svg-icon svg-icon-2"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -100,7 +100,7 @@
 									</span>
 									<div class="menu-sub menu-sub-accordion">
 										<div class="menu-item">
-											<a class="menu-link" href="/daftar-siswa">
+											<a class="menu-link {% if request.path == '/daftar-siswa' %}active{% endif %}" href="/daftar-siswa">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -119,7 +119,7 @@
 								</div>
 
 								<div class="menu-item">
-									<a class="menu-link btn btn-active-light-primary" href="/data-soal">
+									<a class="menu-link btn btn-active-light-primary {% if request.path == '/data-soal' %}active{% endif %}" href="/data-soal">
 										<span class="menu-icon">
 											<!--begin::Svg Icon | path: /var/www/preview.keenthemes.com/kt-products/docs/metronic/html/releases/2023-03-24-172858/core/html/src/media/icons/duotune/text/txt009.svg-->
 											<span class="svg-icon svg-icon-2"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -134,7 +134,7 @@
 								</div>
 								
 								<div class="menu-item">
-									<a class="menu-link btn btn-active-light-primary" href="/profil-pengajar">
+									<a class="menu-link btn btn-active-light-primary {% if request.path == '/profil-pengajar' %}active{% endif %}" href="/profil-pengajar">
 										<span class="menu-icon">
 											<!--begin::Svg Icon | path: assets/media/icons/duotone/Communication/Address-card.svg-->
 											<span class="svg-icon svg-icon-2"><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">

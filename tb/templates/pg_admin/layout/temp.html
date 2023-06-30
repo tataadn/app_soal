@@ -8,7 +8,7 @@
 		<meta name="keywords" content="Metronic, bootstrap, bootstrap 5, Angular 11, VueJs, React, Laravel, admin themes, web design, figma, web development, ree admin themes, bootstrap admin, bootstrap dashboard" />
 		<link rel="canonical" href="Https://preview.keenthemes.com/metronic8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="shortcut icon" href="static/media/logos/LOGO_BARU.png" />
+		<link rel="shortcut icon" href="static/media/LOGO_BARU.png" />
 		<!--begin::Fonts-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 		<!--end::Fonts-->
@@ -67,7 +67,7 @@
 									</div>
 								</div>
 								<div class="menu-item">
-									<a class="menu-link btn btn-active-light-primary active" href="/beranda">
+									<a class="menu-link btn btn-active-light-primary {% if request.path == '/beranda' %}active{% endif %}" href="/beranda">
 										<span class="menu-icon">
 											<!--begin::Svg Icon | path: icons/duotone/Design/PenAndRuller.svg-->
 											<span class="svg-icon svg-icon-2">
@@ -82,7 +82,7 @@
 									</a>
 								</div>
 								<div class="menu-item">
-									<a class="menu-link btn btn-active-light-primary" href="/data-pengajar">
+									<a class="menu-link btn btn-active-light-primary {% if request.path == '/data-pengajar' %}active{% endif %}" href="/data-pengajar">
 										<span class="menu-icon">
 											<!--begin::Svg Icon | path: icons/duotone/Communication/Group.svg-->
 											<span class="svg-icon svg-icon-2">
@@ -97,7 +97,7 @@
 									</a>
 								</div>
 								<div class="menu-item">
-									<a class="menu-link btn btn-active-light-primary" href="/data-kelas">
+									<a class="menu-link btn btn-active-light-primary {% if request.path == '/data-kelas' %}active{% endif %}" href="/data-kelas">
 										<span class="menu-icon">
 											<!--begin::Svg Icon | path: icons/duotone/Communication/Group.svg-->
 											<span class="svg-icon svg-icon-2">
@@ -113,7 +113,7 @@
 								</div>
 								
 								<div class="menu-item">
-									<a class="menu-link btn btn-active-light-primary" href="/profil">
+									<a class="menu-link btn btn-active-light-primary {% if request.path == '/profil' %}active{% endif %}" href="/profil">
 										<span class="menu-icon">
 											<!--begin::Svg Icon | path: assets/media/icons/duotone/Communication/Address-card.svg-->
 											<span class="svg-icon svg-icon-2"><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -289,28 +289,14 @@
 			</span>
 			<!--end::Svg Icon-->
 		</div>
-		<!--end::Scrolltop-->
-		<!--end::Main-->
-		<!--begin::Javascript-->
-		<!--begin::Global Javascript Bundle(used by all pages)-->
 		<script src="static/plugins/global/plugins.bundle.js"></script>
 		<script src="static/js/scripts.bundle.js"></script>
-		<!--end::Global Javascript Bundle-->
-		<!--begin::Page Vendors Javascript(used by this page)-->
 		<script src="static/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
-		<!--end::Page Vendors Javascript-->
-		<!--begin::Page Custom Javascript(used by this page)-->
-		<script src="static/js/custom/widgets.js"></script>
-		<script src="static/js/custom/apps/chat/chat.js"></script>
-		<script src="static/js/custom/modals/create-app.js"></script>
-		<script src="static/js/custom/modals/upgrade-plan.js"></script>
-		<!--end::Page Custom Javascript-->
-		<!--begin::Page Vendors Javascript(used by this page)-->
 		<script src="static/plugins/custom/datatables/datatables.bundle.js"></script>
 		<script>
 			$('table').dataTable();
 
-			var table = $('#kt_table_users').DataTable();
+			var table = $('#table_users').DataTable();
 			$('#pencarian').on( 'keyup', function () {
 				table.search( this.value ).draw();
 			} );

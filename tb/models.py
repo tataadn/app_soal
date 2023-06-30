@@ -9,7 +9,6 @@ class Soal(models.Model):
     soal = models.TextField(null=False)
     kunci_jawaban = models.TextField(null=False)
     bobot_soal = models.IntegerField(null=False)
-    id_user = models.BigIntegerField(null=False, default=1)
     tgl_input = models.DateTimeField(default=timezone.now)
 
 class User(AbstractUser):
@@ -47,5 +46,6 @@ class Kdsoal(models.Model):
     jumlah_soal = models.IntegerField(null=False)
     id_mapel = models.CharField(max_length=50, null=False)
     id_kelas = models.CharField(max_length=10, null=False, default=0)
+    id_user = models.BigIntegerField(null=False, default=1)
     tgl_input = models.DateTimeField(default=timezone.now)
     

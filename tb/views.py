@@ -74,8 +74,12 @@ def logout_admin(request):
     return redirect('login_admin')
 
 def beranda(request):
-    judul_web = 'SMP Plus Rahmat'
-    return render(request, 'pg_admin/index.html', {'judul_web' : judul_web})
+    listweb = {
+        'judul_web' : 'Beranda Admin | SMP Plus Rahmat',
+        'jml_siswa' : User.objects.filter(is_siswa=True).count(),
+        'jml_pengajar' : User.objects.filter(is_guru=True).count(),
+    }
+    return render(request, 'pg_admin/index.html', listweb)
 
 def data_pengajar(request):
     query = """
@@ -698,9 +702,12 @@ def login_siswa(request):
         pwd_siswa = request.POST['password']
         user = authenticate(request, username=usn_siswa, password=pwd_siswa)
 
-        if user is not None and user.is_siswa == True:
+        if user is not None and user.is_siswa == True and user.is_active == True:
             login(request, user)
             return redirect('index')
+        elif user.is_active == False:
+            messages.error(request, 'Akun Anda Sudah Tidak Aktif! Silakan Hubungi Admin!')
+            return redirect('login_siswa')
         else:
             messages.error(request, 'Username atau password anda salah!')
             return redirect('login_siswa')
@@ -808,9 +815,12 @@ def login_pengajar(request):
         pwd_pengajar = request.POST['password']
         user = authenticate(request, username=usn_pengajar, password=pwd_pengajar)
 
-        if user is not None and user.is_guru == True:
+        if user is not None and user.is_guru == True and user.is_active == True:
             login(request, user)
             return redirect('dashboard')
+        elif user.is_active == False:
+            messages.error(request, 'Akun Anda Sudah Tidak Aktif! Silakan Hubungi Admin!')
+            return redirect('login_pengajar')
         else:
             messages.error(request, 'Username atau password anda salah!')
             return redirect('login_pengajar')
@@ -821,8 +831,35 @@ def logout_pengajar(request):
     return redirect('login_pengajar')
 
 def beranda_pengajar(request):
-    judul_web = 'SMP Plus Rahmat'
-    return render(request, 'pg_pengajar/index.html', {'judul_web' : judul_web})
+    iduser = request.user.id
+
+    query = """
+        SELECT soal, kunci_jawaban, id_user
+        FROM tb_kdsoal a, tb_soal b
+        WHERE a.`id_kdsoal` = b.`id_kdsoal`
+        AND id_user = %s
+    """
+
+    with connection.cursor() as cursor:
+        cursor.execute(query, [iduser])
+        results = cursor.fetchall()
+
+    total_soal = []
+    for row in results:
+        item = {
+            'soal': row[0],
+            'kunci_jawaban': row[1],
+            'id_user': row[2]
+        }
+        total_soal.append(item)
+
+    listweb = {
+        'judul_web' : 'SMP Plus Rahmat',
+        'jml_siswa' : User.objects.filter(is_siswa=True).count(),
+        'jml_ujian' : Kdsoal.objects.filter(id_user=iduser).count(),
+        'jml_soal' : len(total_soal),
+    }
+    return render(request, 'pg_pengajar/index.html', listweb)
 
 def daftarsiswa_pengajar(request):
     listweb = {
@@ -846,11 +883,13 @@ def profil_pengajar(request):
     return render(request, 'pg_pengajar/profil.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
 
 def data_soal(request):
+    iduser = request.user.id
+
     listweb = {
         'judul_web' : 'Data Soal | SMP Plus Rahmat',
         'sub_title' : 'DAFTAR SOAL SMP PLUS RAHMAT',
-        'datasoal' : Kdsoal.objects.all().order_by('-tgl_input'),
         # 'datasoal' : datasoal,
+        'datasoal' : Kdsoal.objects.filter(id_user=iduser).order_by('-tgl_input'),
         'kls' : Kelas.objects.all(), 
     }
 
@@ -863,10 +902,11 @@ def tambahujian(request):
         jumlah_soal = request.POST['jumlah_soal']
         id_kelas = request.POST.getlist('id_kelas[]')
         id_mapel = request.POST['id_mapel']
+        id_user = request.POST['id_user']
 
         id_kelas_str = ', '.join(id_kelas)
 
-        Kdsoal.objects.create(kode_soal=kode_soal, nama_ujian=nama_ujian, jumlah_soal=jumlah_soal, id_kelas=id_kelas_str, id_mapel=id_mapel)
+        Kdsoal.objects.create(kode_soal=kode_soal, nama_ujian=nama_ujian, jumlah_soal=jumlah_soal, id_kelas=id_kelas_str, id_mapel=id_mapel, id_user=id_user)
         
         return redirect('data_soal')
 
@@ -876,11 +916,10 @@ def editujian(request, id):
         nama_ujian = request.POST['nama_ujian']
         jumlah_soal = request.POST['jumlah_soal']
         id_kelas = request.POST.getlist('id_kelas[]')
-        id_mapel = request.POST['id_mapel']
 
         id_kelas_str = ', '.join(id_kelas)
 
-        Kdsoal.objects.filter(id_kdsoal=id).update(kode_soal=kode_soal, nama_ujian=nama_ujian, jumlah_soal=jumlah_soal, id_kelas=id_kelas_str, id_mapel=id_mapel)
+        Kdsoal.objects.filter(id_kdsoal=id).update(kode_soal=kode_soal, nama_ujian=nama_ujian, jumlah_soal=jumlah_soal, id_kelas=id_kelas_str)
         return redirect('data_soal')
 
 def hapusujian(request, id):
@@ -904,9 +943,8 @@ def tambahsoal(request):
         soal = request.POST['soal']
         kunci_jawaban = request.POST['kunci_jawaban']
         bobot_soal = request.POST['bobot_soal']
-        id_user = request.POST['id_user']
 
-        Soal.objects.create(id_kdsoal=id_kdsoal, soal=soal, kunci_jawaban=kunci_jawaban, bobot_soal=bobot_soal, id_user=id_user)
+        Soal.objects.create(id_kdsoal=id_kdsoal, soal=soal, kunci_jawaban=kunci_jawaban, bobot_soal=bobot_soal)
         messages.success(request, 'Berhasil menambah soal!')
         return redirect('detail_soal', id=id_kdsoal)
 

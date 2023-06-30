@@ -265,7 +265,13 @@
                                             <tr>
                                                 <td>Terakhir Login</td>
                                                 <td>:</td>
-                                                <td>{{ siswa.last_login }}</td>
+                                                <td>
+                                                    {% if siswa.last_login == None %}
+                                                    <h4 class="text-danger">Belum Login</h4>
+                                                    {% else %}
+                                                    {{ siswa.last_login }}
+                                                    {% endif %}
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
