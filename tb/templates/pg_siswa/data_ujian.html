@@ -1,0 +1,50 @@
+{% extends 'pg_siswa/layout/temp.html' %} 
+{% block content %} 
+
+<div class="d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <div class="container" id="kt_content_container">
+            <!--begin::Row-->
+            <div class="row gy-10 gx-xl-10 mb-7">
+                {% for item in datasoal %}
+                    <div class="col-md-6">
+                        <div class="card card-flush h-md-100 bg-danger">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h2 class="text-white">[{{ item.kode_soal }}]</h2>
+                                    <h5 class="text-white ms-7 text-center">{{ item.tgl_input|date:"d M Y, H:i" }}</h5>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <h1 class="text-white display-5 mb-5">{{ item.nama_ujian }}</h1>
+                                <div class="fw-bolder text-white mb-3 fs-4">Total keseluruhan soal: {{ item.jumlah_soal }}</div>
+                                <div class="d-flex flex-column text-white">
+                                    <div class="d-flex align-items-center py-2">
+                                        <span class="bullet bg-primary me-3"></span>
+                                        Baca doa sebelum mengerjakan soal
+                                    </div>
+                                    <div class="d-flex align-items-center py-2">
+                                        <span class="bullet bg-primary me-3"></span>Pastikan dalam posisi nyaman dan tidak terganggu
+                                    </div>
+                                    <div class="d-flex align-items-center py-2">
+                                        <span class="bullet bg-primary me-3"></span>Pastikan jaringan internet stabil
+                                    </div>
+                                    <div class='d-flex align-items-center py-2'>
+                                        <span class='bullet bg-primary me-3'></span>
+                                        <em>Silakan mengerjakan jika sudah siap!</em>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-end align-items-end pt-0">
+                                <a href="/soal-{{ item.id_kdsoal }}" class="btn btn-light btn-active-light-danger my-1 me-2">Kerjakan!</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <!--end::Row-->
+        </div>
+    </div>
+</div>
+
+{% endblock %}

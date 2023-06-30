@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db import connection
 from django.core.paginator import Paginator
-from django.urls import reverse_lazy
+from django.db.models import *
 # Create your views here.
 
 index_web = {
@@ -731,34 +731,39 @@ def nilai_ujian(request):
     sub_title = 'NILAI UJIAN SISWA SMP PLUS RAHMAT'
     return render(request, 'pg_siswa/nilai_ujian.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
 
-def soal_ujian(request):
+def data_ujian(request):
     user_id_kelas = request.user.id_kelas
-    
+    user_id = request.user.id
+
     query = """
-    SELECT a.`id_soal` AS id, b.nama_kelas AS kelas, a.`kode_soal`, c.`nama_mapel`,
-           GROUP_CONCAT(a.soal SEPARATOR ',') AS banyak_soal,
-           (LENGTH(GROUP_CONCAT(a.soal SEPARATOR ',')) - LENGTH(REPLACE(GROUP_CONCAT(a.soal SEPARATOR ','), ',', '')) + 1) AS jumlah_soal
-    FROM tb_soal a, tb_kelas b, tb_mapel c
-    WHERE b.id_kelas = a.id_kelas
-    AND a.`id_mapel` = c.`id_mapel`
-    AND b.`id_kelas` = %s
-    GROUP BY a.`kode_soal`, b.id_kelas
-    ORDER BY b.id_kelas
+        SELECT a.`id_kdsoal` AS id_kdsoal, kode_soal, nama_ujian,
+        jumlah_soal, id_kelas, a.`tgl_input` AS tgl_input
+        FROM tb_soal b, tb_kdsoal a
+        WHERE b.`id_kdsoal` = a.`id_kdsoal`
+        AND id_kelas LIKE %s
+        AND NOT EXISTS (
+            SELECT *
+            FROM tb_jawaban
+            WHERE tb_jawaban.`id_soal` = b.`id_soal`
+            AND id_siswa = %s
+        )
+        GROUP BY kode_soal
+        ORDER BY b.`tgl_input` DESC
     """
 
     with connection.cursor() as cursor:
-        cursor.execute(query, [user_id_kelas])
+        cursor.execute(query, ['%' + user_id_kelas + '%', user_id])
         results = cursor.fetchall()
 
     datasoal = []
     for row in results:
         item = {
-            'id_soal': row[0],
-            'nama_kelas': row[1],
-            'kode_soal': row[2],
-            'mapel': row[3],
-            'banyak_soal': row[4],
-            'jumlah_soal': row[5],
+            'id_kdsoal': row[0],
+            'kode_soal': row[1],
+            'nama_ujian': row[2],
+            'jumlah_soal': row[3],
+            'id_kelas': row[4],
+            'tgl_input': row[5],
         }
         datasoal.append(item)
 
@@ -766,12 +771,13 @@ def soal_ujian(request):
         'judul_web' : 'Soal Ujian | SMP Plus Rahmat',
         'sub_title' : 'SOAL UJIAN SISWA SMP PLUS RAHMAT',
         'datasoal' : datasoal,
+        # 'datasoal' : Kdsoal.objects.filter(id_kelas__contains=user_id_kelas).order_by('-tgl_input'),
+        # 'jawaban_siswa': jawaban_siswa,
     }
-    return render(request, 'pg_siswa/soal_ujian.html', listweb)
+    return render(request, 'pg_siswa/data_ujian.html', listweb)
 
-def halaman_soal(request, kode_soal):
-    id_kelas = request.user.id_kelas
-    nomorsoal = Soal.objects.filter(kode_soal=kode_soal, id_kelas=id_kelas)
+def halaman_soal(request, id):
+    nomorsoal = Soal.objects.filter(id_kdsoal=id)
 
     listweb = {
         'judul_web' : 'Soal Ujian | SMP Plus Rahmat',

@@ -83,8 +83,8 @@ urlpatterns = [
     path('index', beranda_siswa, name='index'),
     path('profil-siswa', profil_siswa, name='profil_siswa'),
     path('nilai-ujian', nilai_ujian, name='nilai_ujian'),
-    path('soal-ujian', soal_ujian, name='soal_ujian'),
-    path('soal-<str:kode_soal>', halaman_soal, name='halaman_soal'),
+    path('soal-ujian', data_ujian, name='data_ujian'),
+    path('soal-<int:id>', halaman_soal, name='halaman_soal'),
     path('hitung-hasil', halaman_soal, name='halaman_soal'),
 
 

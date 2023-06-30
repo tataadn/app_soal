@@ -45,7 +45,7 @@ class Kdsoal(models.Model):
     nama_ujian = models.CharField(max_length=255, null=False)
     jumlah_soal = models.IntegerField(null=False)
     id_mapel = models.CharField(max_length=50, null=False)
-    id_kelas = models.CharField(max_length=10, null=False, default=0)
+    id_kelas = models.CharField(max_length=50, null=False, default=0)
     id_user = models.BigIntegerField(null=False, default=1)
     tgl_input = models.DateTimeField(default=timezone.now)
     
