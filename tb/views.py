@@ -718,18 +718,148 @@ def logout_siswa(request):
     return redirect('login_siswa')
 
 def beranda_siswa(request):
-    judul_web = 'SMP Plus Rahmat'
-    return render(request, 'pg_siswa/index.html', {'judul_web' : judul_web})
+    id_siswa = request.user.id
+    id_kelas = request.user.id_kelas
+
+    query = """
+        SELECT COUNT(DISTINCT kode_soal) AS count_ujian
+        FROM tb_soal b
+        JOIN tb_kdsoal a ON b.`id_kdsoal` = a.`id_kdsoal`
+        WHERE id_kelas LIKE %s
+        AND NOT EXISTS (
+            SELECT *
+            FROM tb_jawaban
+            WHERE tb_jawaban.`id_soal` = b.`id_soal`
+            AND id_siswa = %s
+        )
+        GROUP BY kode_soal
+    """
+
+    with connection.cursor() as cursor:
+        cursor.execute(query, ['%' + id_kelas + '%', id_siswa])
+        results = cursor.fetchall()
+
+    tanggungan_ujian = []
+    for row in results:
+        item = {
+            'count_ujian': row[0],
+        }
+        tanggungan_ujian.append(item)
+
+
+    query2 = """
+        SELECT COUNT(DISTINCT kode_soal) AS ujian_selesai
+        FROM tb_soal b
+        JOIN tb_kdsoal a ON b.`id_kdsoal` = a.`id_kdsoal`
+        WHERE id_kelas LIKE %s
+        AND EXISTS (
+            SELECT *
+            FROM tb_jawaban
+            WHERE tb_jawaban.`id_soal` = b.`id_soal`
+            AND id_siswa = %s
+        )
+        GROUP BY kode_soal
+    """
+
+    with connection.cursor() as cursor:
+        cursor.execute(query2, ['%' + id_kelas + '%', id_siswa])
+        results = cursor.fetchall()
+    
+    ujian_selesai = []
+    for row in results:
+        item = {
+            'ujian_selesai': row[0],
+        }
+        ujian_selesai.append(item)
+
+    listweb = {
+        'judul_web' : 'Beranda | SMP Plus Rahmat',
+        'tanggungan_ujian' : tanggungan_ujian,
+        'ujian_selesai' : ujian_selesai,
+    }
+    return render(request, 'pg_siswa/index.html', listweb)
 
 def profil_siswa(request):
     judul_web = 'Profil Saya | SMP Plus Rahmat'
     sub_title = 'PROFIL SISWA SMP PLUS RAHMAT'
     return render(request, 'pg_siswa/profil.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
 
+def halaman_soal(request, id):
+    nomorsoal = Soal.objects.filter(id_kdsoal=id)
+
+    listweb = {
+        'judul_web' : 'Soal Ujian | SMP Plus Rahmat',
+        'sub_title' : 'SOAL UJIAN SISWA SMP PLUS RAHMAT',
+        'nomorsoal' : nomorsoal,
+    }
+
+    if request.method == 'POST':
+        id_soal_list = request.POST.getlist('id_soal[]')
+        jawaban_siswa_list = request.POST.getlist('jawaban_siswa[]')
+        id_siswa_list = request.POST.getlist('id_siswa[]')
+        kunci_jawaban_list = request.POST.getlist('kunci_jawaban[]')
+        bobot_soal_list = request.POST.getlist('bobot_soal[]')
+
+        data_list = []
+        for i in range(len(jawaban_siswa_list)):
+            ratio = SequenceMatcher(None, jawaban_siswa_list[i], kunci_jawaban_list[i]).ratio()
+            hasil = round(ratio * float(bobot_soal_list[i]), 2)
+
+            data_list.append(Jawaban(
+                id_soal=id_soal_list[i],
+                jawaban_siswa=jawaban_siswa_list[i],
+                nilai=hasil,
+                id_siswa=id_siswa_list[i]
+            ))
+        
+        Jawaban.objects.bulk_create(data_list)
+        
+        messages.success(request, 'Alhamdulillah! Anda telah berhasil mengerjakan soal!')
+        return redirect('nilai_ujian')
+
+    return render(request, 'pg_siswa/detail_soal.html', listweb)
+
 def nilai_ujian(request):
-    judul_web = 'Nilai Ujian | SMP Plus Rahmat'
-    sub_title = 'NILAI UJIAN SISWA SMP PLUS RAHMAT'
-    return render(request, 'pg_siswa/nilai_ujian.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
+    id_siswa = request.user.id
+
+    query = """
+    SELECT a.id_kdsoal AS id_kdsoal, kode_soal, nama_ujian, 
+    a.`tgl_input` AS tgl_input, jumlah_soal, soal, 
+    jawaban_siswa, id_siswa, c.`tgl_ujian` AS tgl_input_jawaban,
+    SUM(nilai) AS nilai_siswa
+    FROM tb_jawaban c, tb_soal b, tb_kdsoal a
+    WHERE c.id_soal= b.`id_soal`
+    AND b.`id_kdsoal` = a.`id_kdsoal`
+    AND id_siswa = %s
+    GROUP BY kode_soal
+    """
+
+    with connection.cursor() as cursor:
+        cursor.execute(query, [id_siswa])
+        results = cursor.fetchall()
+
+    jawaban_siswa = []
+    for row in results:
+        item = {
+            'id_kdsoal': row[0],
+            'kode_soal': row[1],
+            'nama_ujian': row[2],
+            'tgl_input': row[3],
+            'jumlah_soal': row[4],
+            'soal': row[5],
+            'jawaban_siswa': row[6],
+            'id_siswa': row[7],
+            'tgl_input_jawaban': row[8],
+            'nilai_siswa': row[9],
+        }
+        jawaban_siswa.append(item)
+
+    listweb = {
+        'judul_web' : 'Nilai Ujian | SMP Plus Rahmat',
+        'sub_title' : 'NILAI UJIAN SISWA SMP PLUS RAHMAT',
+        'jawaban_siswa': jawaban_siswa,
+    }
+    return render(request, 'pg_siswa/nilai_ujian.html', listweb)
 
 def data_ujian(request):
     user_id_kelas = request.user.id_kelas
@@ -771,45 +901,41 @@ def data_ujian(request):
         'judul_web' : 'Soal Ujian | SMP Plus Rahmat',
         'sub_title' : 'SOAL UJIAN SISWA SMP PLUS RAHMAT',
         'datasoal' : datasoal,
-        # 'datasoal' : Kdsoal.objects.filter(id_kelas__contains=user_id_kelas).order_by('-tgl_input'),
-        # 'jawaban_siswa': jawaban_siswa,
     }
     return render(request, 'pg_siswa/data_ujian.html', listweb)
 
-def halaman_soal(request, id):
-    nomorsoal = Soal.objects.filter(id_kdsoal=id)
+def detail_jawaban(request, id):
+    id_siswa = request.user.id
 
-    listweb = {
-        'judul_web' : 'Soal Ujian | SMP Plus Rahmat',
-        'sub_title' : 'SOAL UJIAN SISWA SMP PLUS RAHMAT',
-        'nomorsoal' : nomorsoal,
+    query = """
+        SELECT id_kdsoal, soal, jawaban_siswa, nilai
+        FROM tb_soal b, tb_jawaban c
+        WHERE b.`id_soal` = c.id_soal
+        AND id_siswa = %s
+        AND id_kdsoal = %s
+    """
+
+    with connection.cursor() as cursor:
+        cursor.execute(query, [id_siswa, id])
+        results = cursor.fetchall()
+
+    detail_jawaban = []
+    for row in results:
+        item = {
+            'id_kdsoal': row[0],
+            'soal': row[1],
+            'jawaban_siswa': row[2],
+            'nilai': row[3],
+        }
+        detail_jawaban.append(item)
+
+    listweb ={
+        'judul_web' : 'Detail Jawaban Siswa | SMP Plus Rahmat',
+        'sub_title' : 'DETAIL JAWABAN SISWA SMP PLUS RAHMAT',
+        'detail_jawaban': detail_jawaban,
     }
+    return render(request, 'pg_siswa/detail_jawaban.html', listweb)
 
-    if request.method == 'POST':
-        id_soal_list = request.POST.getlist('id_soal[]')
-        jawaban_siswa_list = request.POST.getlist('jawaban_siswa[]')
-        id_siswa_list = request.POST.getlist('id_siswa[]')
-        kunci_jawaban_list = request.POST.getlist('kunci_jawaban[]')
-        bobot_soal_list = request.POST.getlist('bobot_soal[]')
-
-        data_list = []
-        for i in range(len(jawaban_siswa_list)):
-            ratio = SequenceMatcher(None, jawaban_siswa_list[i], kunci_jawaban_list[i]).ratio()
-            hasil = round(ratio * float(bobot_soal_list[i]), 2)
-
-            data_list.append(Jawaban(
-                id_soal=id_soal_list[i],
-                jawaban_siswa=jawaban_siswa_list[i],
-                nilai=hasil,
-                id_siswa=id_siswa_list[i]
-            ))
-        
-        Jawaban.objects.bulk_create(data_list)
-        
-        messages.success(request, 'Alhamdulillah! Anda telah berhasil mengerjakan soal!')
-        return redirect('nilai_ujian')
-
-    return render(request, 'pg_siswa/detail_soal.html', listweb)
 
 
 

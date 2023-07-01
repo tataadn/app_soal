@@ -7,40 +7,35 @@
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
         <div id="kt_content_container" class="container">
-            {% for item in nomorsoal %}
             <!--begin::details View-->
             <form action="" method="POST">
-            <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+                {% for item in nomorsoal %}
+                <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
                 <!--begin::Card header-->
                 <div class="card-header cursor-pointer">
                     <!--begin::Card title-->
                     <div class="card-title m-0">
-                        <h2 class="text-danger fw-bolder m-0">Mengerjakan Soal!</h2>
+                        <h2 class="text-danger fw-bolder m-0">Soal No {{forloop.counter}}</h2>
                     </div>
                     <!--end::Card title-->
                 </div>
-                <!--begin::Card header-->
-                <!--begin::Card body-->
                 <div class="card-body p-9">
                     <div class="row">
                         <div class="col-lg-12 mb-7">
                             <div class="d-flex flex-column flex-md-row">
                                 <div class="col-lg-12">
-                                        {% csrf_token %}
-                                        <h3 class="mb-5"> Soal No {{forloop.counter}} <span class="text-danger">*</span></h3>
-                                        <h4>{{ item.soal }}</h4>
-                                        <textarea name="jawaban_siswa[]" class="form-control form-control-solid mb-3"></textarea>
-                                        <textarea hidden name="kunci_jawaban[]" class="form-control form-control-solid mb-3">{{ item.kunci_jawaban }}</textarea>
-                                        <input type="number" name="bobot_soal[]" class="form-control form-control-solid mb-4" value="{{ item.bobot_soal }}" hidden />
-                                        <input hidden type="text" name="id_soal[]" class="form-control form-control-solid mb-4" value="{{ item.id_soal }}" />
-                                        <input hidden type="text" name="id_siswa[]" class="form-control form-control-solid mb-4" value="{{ user.id }}" />
-                                        
-                                    </div>
+                                    {% csrf_token %}
+                                    <h3>{{ item.soal }}</h3>
+                                    <textarea name="jawaban_siswa[]" class="form-control form-control-solid mb-3"></textarea>
+                                    <textarea hidden name="kunci_jawaban[]" class="form-control form-control-solid mb-3">{{ item.kunci_jawaban }}</textarea>
+                                    <input type="number" name="bobot_soal[]" class="form-control form-control-solid mb-4" value="{{ item.bobot_soal }}" hidden />
+                                    <input hidden type="text" name="id_soal[]" class="form-control form-control-solid mb-4" value="{{ item.id_soal }}" />
+                                    <input hidden type="text" name="id_siswa[]" class="form-control form-control-solid mb-4" value="{{ user.id }}" />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!--end::Card body-->
+                </div>
                 </div>
                 {% endfor %}
                 <button type="submit" class="btn btn-warning">Simpan Jawaban</button>

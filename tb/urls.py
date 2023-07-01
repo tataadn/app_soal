@@ -85,7 +85,7 @@ urlpatterns = [
     path('nilai-ujian', nilai_ujian, name='nilai_ujian'),
     path('soal-ujian', data_ujian, name='data_ujian'),
     path('soal-<int:id>', halaman_soal, name='halaman_soal'),
-    path('hitung-hasil', halaman_soal, name='halaman_soal'),
+    path('jawaban-<int:id>', detail_jawaban, name='detail_jawaban'),
 
 
 
