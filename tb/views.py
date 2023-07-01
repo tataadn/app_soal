@@ -722,17 +722,16 @@ def beranda_siswa(request):
     id_kelas = request.user.id_kelas
 
     query = """
-        SELECT COUNT(DISTINCT kode_soal) AS count_ujian
+        SELECT COUNT(DISTINCT a.`id_kdsoal`) AS count_ujian
         FROM tb_soal b
         JOIN tb_kdsoal a ON b.`id_kdsoal` = a.`id_kdsoal`
         WHERE id_kelas LIKE %s
-        AND NOT EXISTS (
-            SELECT *
-            FROM tb_jawaban
-            WHERE tb_jawaban.`id_soal` = b.`id_soal`
-            AND id_siswa = %s
+        AND EXISTS (
+        SELECT *
+        FROM tb_jawaban
+        WHERE tb_jawaban.`id_soal` = b.`id_soal`
+        AND id_siswa = %s
         )
-        GROUP BY kode_soal
     """
 
     with connection.cursor() as cursor:
@@ -748,17 +747,16 @@ def beranda_siswa(request):
 
 
     query2 = """
-        SELECT COUNT(DISTINCT kode_soal) AS ujian_selesai
+        SELECT COUNT(DISTINCT a.`id_kdsoal`) AS ujian_selesai
         FROM tb_soal b
         JOIN tb_kdsoal a ON b.`id_kdsoal` = a.`id_kdsoal`
         WHERE id_kelas LIKE %s
-        AND EXISTS (
-            SELECT *
-            FROM tb_jawaban
-            WHERE tb_jawaban.`id_soal` = b.`id_soal`
-            AND id_siswa = %s
+        AND NOT EXISTS (
+        SELECT *
+        FROM tb_jawaban
+        WHERE tb_jawaban.`id_soal` = b.`id_soal`
+        AND id_siswa = %s
         )
-        GROUP BY kode_soal
     """
 
     with connection.cursor() as cursor:
@@ -1007,14 +1005,30 @@ def daftarsiswa_pengajar(request):
         'kls9b' : User.objects.filter(is_siswa=True, id_kelas='9B').order_by('nama_lengkap'),
         'kls9c' : User.objects.filter(is_siswa=True, id_kelas='9C').order_by('nama_lengkap')
     }
-    return render(request, 'pg_pengajar/daftar_siswa.html', listweb)
+    return render(request, 'pg_pengajar/data_siswa/daftar_siswa.html', listweb)
+
+def nilai_siswa(request):
+    listweb = {
+        'judul_web' : 'Halaman Nilai Siswa | SMP Plus Rahmat',
+        'sub_title' : 'NILAI SISWA SMP PLUS RAHMAT',
+        'datasoal' : Kdsoal.objects.all(),
+    }
+    return render(request, 'pg_pengajar/data_siswa/data_kd_nilai.html', listweb)
+
+def kd_nilai(request):
+    listweb = {
+        'judul_web' : 'Halaman Nilai Siswa | SMP Plus Rahmat',
+        'sub_title' : 'NILAI SISWA SMP PLUS RAHMAT',
+        'datasoal' : Kdsoal.objects.all(),
+    }
+    return render(request, 'pg_pengajar/data_siswa/index_kd_nilai.html', listweb)
 
 def profil_pengajar(request):
     judul_web = 'Profil Saya | SMP Plus Rahmat'
     sub_title = 'PROFIL PENGAJAR SMP PLUS RAHMAT'
     return render(request, 'pg_pengajar/profil.html', {'judul_web' : judul_web, 'sub_title' : sub_title})
 
-def data_soal(request):
+def data_ujian(request):
     iduser = request.user.id
 
     listweb = {
@@ -1025,7 +1039,7 @@ def data_soal(request):
         'kls' : Kelas.objects.all(), 
     }
 
-    return render(request, 'pg_pengajar/data_soal.html', listweb)
+    return render(request, 'pg_pengajar/data_soal/data_ujian.html', listweb)
 
 def tambahujian(request):
     if request.method == 'POST':
@@ -1067,7 +1081,7 @@ def detail_soal(request, id):
         'listkode' : Kdsoal.objects.filter(id_kdsoal=id),
         'jumlahsoal' : Soal.objects.filter(id_kdsoal=id).count(),
     }
-    return render(request, 'pg_pengajar/detail_soal.html', listweb)
+    return render(request, 'pg_pengajar/data_soal/detail_soal.html', listweb)
 
 def tambahsoal(request):
     if request.method == 'POST':
