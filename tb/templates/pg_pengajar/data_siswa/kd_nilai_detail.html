@@ -1,0 +1,49 @@
+{% extends 'pg_pengajar/layout/temp.html' %} 
+{% block content %} 
+
+<div class="d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <div class="container" id="kt_content_container">
+            <div class="row gy-10 gx-xl-10 row_field" id="rowfield">
+                <div class="row mt-7 mb-7">
+                    <!-- LIST SOAL -->
+                    {% for row in datanilai %}
+                    <div class="col-md-6">
+                        <div class="card shadow-sm mb-7">
+                            <div class="card-header ribbon ribbon-top ribbon-vertical">
+                                <div class="ribbon-label bg-primary fs-3 fw-bold">
+                                    {{ row.nilai }}
+                                </div>
+                                <div class="card-title fw-bolder fs-2">
+                                    <div class="symbol symbol-circle symbol-40px overflow-hidden me-3">
+                                        <div class="symbol-label">
+                                            <img src="media/{{ row.foto }}" alt="{{ row.nama_lengkap }}" class="w-100" />
+                                        </div>
+                                    </div>
+                                    {{ row.nama_lengkap }}
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <h2 class="fw-bolder mb-7">{{ forloop.counter }}. {{ row.soal }}</h2>
+                                    <div class="fv-row mb-3">
+                                        <p class="fw-semibold mb-2 text-success">Kunci Jawaban:</p>
+                                        <textarea class="form-control form-control-solid" disabled>{{ row.kunci_jawaban }}</textarea>
+                                    </div>
+                                    <div class="fv-row mb-3">
+                                        <p class="fw-semibold mb-2 text-danger">Jawaban Siswa:</p>
+                                        <textarea class="form-control form-control-solid" disabled>{{ row.jawaban_siswa }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- LIST SOAL -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

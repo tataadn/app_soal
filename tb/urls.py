@@ -83,7 +83,7 @@ urlpatterns = [
     path('index', beranda_siswa, name='index'),
     path('profil-siswa', profil_siswa, name='profil_siswa'),
     path('nilai-ujian', nilai_ujian, name='nilai_ujian'),
-    path('soal-ujian', data_ujian, name='data_ujian'),
+    path('soal-ujian', data_soal, name='data_soal'),
     path('soal-<int:id>', halaman_soal, name='halaman_soal'),
     path('jawaban-<int:id>', detail_jawaban, name='detail_jawaban'),
 
@@ -97,6 +97,8 @@ urlpatterns = [
     path('daftar-siswa', daftarsiswa_pengajar, name='daftar_siswa'),
     path('nilai-siswa', nilai_siswa, name='nilai_siswa'),
     path('nilai-<str:kode_soal>', kd_nilai, name='kd_nilai'),
+    path('detail-<str:kode_soal>-<int:id>', kd_nilai_detail, name='kd_nilai_detail'),
+    path('export-<str:kode_soal>', export_nilai, name='export_nilai'),
     path('profil-pengajar', profil_pengajar, name='profil_pengajar'),
     path('data-soal', data_ujian, name='data_ujian'),
     path('tambah-ujian', tambahujian, name='tambah_ujian'),

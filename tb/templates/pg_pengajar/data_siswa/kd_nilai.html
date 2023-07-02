@@ -4,53 +4,52 @@
 <div class="d-flex flex-column flex-column-fluid" id="kt_content">
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <div class="container" id="kt_content_container">
-            <div class="row mb-7">
-                <div class="col-md-12">
-                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_tambah_ujian"><i class="fas la-plus-circle fs-4 me-2"></i> Tambah Ujian</a>
-                </div>
-            </div>
             <div class="row gy-10 gx-xl-10 mb-7">
-                {% for item in datasoal %}
-                <div class="col-md-4">
-                    <div class="card card-flush h-md-100 bg-primary">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <h1 class="text-white">[{{ item.kode_soal }}]</h1>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body pt-7">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-rounded table-striped border gy-7 gs-7" id="tbl_siswa">
+                                    <thead>
+                                        <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                            <th>No</th>
+                                            <th>Nama Siswa</th>
+                                            <th>Kelas</th>
+                                            <th>Nilai</th>
+                                            <th>Detail</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for row in datanilai %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td class="d-flex align-items-center">
+                                                <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                                    <div class="symbol-label">
+                                                        <img src="media/{{ row.foto }}" alt="{{ row.nama_lengkap }}" class="w-100" />
+                                                    </div>
+                                                </div>
+                                                {{ row.nama_lengkap }}
+                                            </td>
+                                            <td>{{ row.id_kelas }}</td>
+                                            <td>
+                                                {% if row.nilai_siswa < 75 %}
+                                                    <span class="badge badge-danger badge-square badge-lg p-2">{{ row.nilai_siswa }}</span>
+                                                {% else %}
+                                                    <span class="badge badge-success badge-square badge-lg p-2">{{ row.nilai_siswa }}</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <a href="/detail-{{ row.kode_soal }}-{{ row.id_siswa }}" class="btn btn-sm btn-icon btn-warning"><i class="bi bi-chat-square-text-fill fs-4"></i></a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="card-toolbar">
-                                <button type="button" class="btn btn-sm btn-icon btn-color-light" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
-                                    <span class="svg-icon svg-icon-muted svg-icon-2hx"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor"/>
-                                        <rect x="11" y="11" width="2" height="2" rx="1" fill="currentColor"/>
-                                        <rect x="11" y="15" width="2" height="2" rx="1" fill="currentColor"/>
-                                        <rect x="11" y="7" width="2" height="2" rx="1" fill="currentColor"/>
-                                        </svg>
-                                    </span>
-                                </button>
-                                <div class="menu menu-sub menu-sub-dropdown w-110px h-90px" data-kt-menu="true">
-                                    <div class="px-7 py-5">
-                                        <div class="mb-5">
-                                            <a href="#" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#modal_edit_{{ item.id_kdsoal }}">Edit</a>
-                                        </div>
-                                        <div class="mb-5">
-                                            <a href="#" class="menu-link px-3 text-danger" data-bs-toggle="modal" data-bs-target="#modal_hapus_{{ item.id_kdsoal }}">Hapus</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-body pt-1">
-                            <h1 class="text-white">{{ item.nama_ujian }}</h1> <br>
-                            <h5 class="fw-bolder text-white mb-5">Total keseluruhan soal: {{ item.jumlah_soal }}</h5>
-                            <h5 class="fw-bolder text-white mb-5">Kelas: {{ item.id_kelas }}</h5>
-                        </div>
-                        <div class="card-footer d-flex justify-content-end align-items-end pt-0">
-                            <a href="/detail-{{ item.id_kdsoal }}" class="btn btn-light btn-active-secondary my-1 me-2">Lihat Daftar Soal</a>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.views.generic import *
 from difflib import SequenceMatcher
 from .models import *
@@ -6,8 +6,9 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db import connection
-from django.core.paginator import Paginator
 from django.db.models import *
+from django.http import HttpResponse
+import xlsxwriter
 # Create your views here.
 
 index_web = {
@@ -830,6 +831,7 @@ def nilai_ujian(request):
     AND b.`id_kdsoal` = a.`id_kdsoal`
     AND id_siswa = %s
     GROUP BY kode_soal
+    ORDER BY c.`tgl_ujian` DESC
     """
 
     with connection.cursor() as cursor:
@@ -859,7 +861,7 @@ def nilai_ujian(request):
     }
     return render(request, 'pg_siswa/nilai_ujian.html', listweb)
 
-def data_ujian(request):
+def data_soal(request):
     user_id_kelas = request.user.id_kelas
     user_id = request.user.id
 
@@ -1013,15 +1015,162 @@ def nilai_siswa(request):
         'sub_title' : 'NILAI SISWA SMP PLUS RAHMAT',
         'datasoal' : Kdsoal.objects.all(),
     }
-    return render(request, 'pg_pengajar/data_siswa/data_kd_nilai.html', listweb)
+    return render(request, 'pg_pengajar/data_siswa/index_kd_nilai.html', listweb)
 
-def kd_nilai(request):
+def kd_nilai(request, kode_soal):
+
+    query = """
+        SELECT foto, nama_lengkap, d.`id_kelas` AS id_kelas, 
+        SUM(nilai) AS nilai_siswa, id_siswa, kode_soal, soal, 
+        kunci_jawaban, jawaban_siswa, nilai
+        FROM tb_jawaban a, tb_soal b, tb_kdsoal c, tb_user d
+        WHERE a.`id_soal` = b.`id_soal`
+        AND b.`id_kdsoal` = c.`id_kdsoal`
+        AND a.`id_siswa` = d.`id`
+        AND kode_soal = %s
+        GROUP BY id_siswa
+    """
+
+    with connection.cursor() as cursor:
+        cursor.execute(query, [kode_soal])
+        results = cursor.fetchall()
+
+    kd_nilai = []
+    for row in results:
+        item = {
+            'foto': row[0],
+            'nama_lengkap': row[1],
+            'id_kelas': row[2],
+            'nilai_siswa': row[3],
+            'id_siswa': row[4],
+            'kode_soal': row[5],
+            'soal': row[6],
+            'kunci_jawaban': row[7],
+            'jawaban_siswa': row[8],
+            'nilai': row[9],
+        }
+        kd_nilai.append(item)
+
     listweb = {
         'judul_web' : 'Halaman Nilai Siswa | SMP Plus Rahmat',
         'sub_title' : 'NILAI SISWA SMP PLUS RAHMAT',
-        'datasoal' : Kdsoal.objects.all(),
+        'datanilai' : kd_nilai,
     }
-    return render(request, 'pg_pengajar/data_siswa/index_kd_nilai.html', listweb)
+    return render(request, 'pg_pengajar/data_siswa/kd_nilai.html', listweb)
+
+def kd_nilai_detail(request, kode_soal, id):
+
+    query = """
+        SELECT foto, nama_lengkap, d.`id_kelas` AS id_kelas, id_siswa, kode_soal, soal, 
+        kunci_jawaban, jawaban_siswa, nilai, nama_ujian
+        FROM tb_jawaban a, tb_soal b, tb_kdsoal c, tb_user d
+        WHERE a.`id_soal` = b.`id_soal`
+        AND b.`id_kdsoal` = c.`id_kdsoal`
+        AND a.`id_siswa` = d.`id`
+        AND kode_soal = %s
+        AND id_siswa = %s
+    """
+
+    with connection.cursor() as cursor:
+        cursor.execute(query, [kode_soal, id])
+        results = cursor.fetchall()
+
+    kd_nilai_detail = []
+    for row in results:
+        item = {
+            'foto': row[0],
+            'nama_lengkap': row[1],
+            'id_kelas': row[2],
+            'id_siswa': row[3],
+            'kode_soal': row[4],
+            'soal': row[5],
+            'kunci_jawaban': row[6],
+            'jawaban_siswa': row[7],
+            'nilai': row[8],
+            'nama_ujian': row[9],
+        }
+        kd_nilai_detail.append(item)
+
+    listweb = {
+        'judul_web' : 'Halaman Detail Nilai Siswa | SMP Plus Rahmat',
+        'sub_title' : 'DETAIL NILAI SISWA SMP PLUS RAHMAT',
+        'datanilai' : kd_nilai_detail,
+    }
+
+    return render(request, 'pg_pengajar/data_siswa/kd_nilai_detail.html', listweb)
+
+def export_nilai(request, kode_soal):
+    query = """
+        SELECT kode_soal, nama_lengkap, d.`id_kelas` AS id_kelas, soal, 
+        jawaban_siswa, nilai
+        FROM tb_jawaban a, tb_soal b, tb_kdsoal c, tb_user d
+        WHERE a.`id_soal` = b.`id_soal`
+        AND b.`id_kdsoal` = c.`id_kdsoal`
+        AND a.`id_siswa` = d.`id`
+        AND kode_soal = %s
+    """
+
+    with connection.cursor() as cursor:
+        cursor.execute(query, [kode_soal])
+        results = cursor.fetchall()
+
+    data = []
+    for row in results:
+        item = {
+            'kode_soal': row[0],
+            'nama_lengkap': row[1],
+            'id_kelas': row[2],
+            'soal': row[3],
+            'jawaban_siswa': row[4],
+            'nilai': row[5],
+        }
+        data.append(item)
+
+    workbook = xlsxwriter.Workbook('Nilai Ujian ' + kode_soal + '.xlsx')
+    worksheet = workbook.add_worksheet()
+
+    headers = ['Nama Siswa', 'Kelas', 'Soal Ujian', 'Jawaban Siswa', 'Nilai per Soal']
+
+    # Write the headers to the worksheet starting from row index 0
+    for col_num, header in enumerate(headers):
+        worksheet.write(0, col_num, header)
+
+    rowspan_counts = {}
+
+    # Track the rowspan count for each unique nama_lengkap value
+    for row_num, row_data in enumerate(data, 1):  # Start at row index 1
+        nama_lengkap = row_data['nama_lengkap']
+
+        # Check if rowspan count for the current nama_lengkap exists
+        if nama_lengkap in rowspan_counts:
+            rowspan = rowspan_counts[nama_lengkap]
+            rowspan_counts[nama_lengkap] += 1  # Increment rowspan count
+        else:
+            rowspan = 1
+            rowspan_counts[nama_lengkap] = 2  # Set initial rowspan count
+
+        if rowspan == 1:
+            worksheet.write(row_num, 0, nama_lengkap)
+
+        # Apply rowspan to the nama_lengkap column
+        if rowspan > 1:
+            start_row = row_num - 1
+            end_row = row_num + rowspan - 2
+            worksheet.merge_range(start_row, 0, end_row, 0, nama_lengkap)
+
+        worksheet.write(row_num, 1, row_data['id_kelas'])
+        worksheet.write(row_num, 2, row_data['soal'])
+        worksheet.write(row_num, 3, row_data['jawaban_siswa'])
+        worksheet.write(row_num, 4, row_data['nilai'])
+
+    workbook.close()
+
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=Nilai Ujian ' + kode_soal + '.xlsx'
+    with open('Nilai Ujian ' + kode_soal + '.xlsx', 'rb') as file:
+        response.write(file.read())
+
+    return response
 
 def profil_pengajar(request):
     judul_web = 'Profil Saya | SMP Plus Rahmat'
