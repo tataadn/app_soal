@@ -21,12 +21,12 @@ USE `db_smp`;
 DROP TABLE IF EXISTS `tb_user`;
 
 CREATE TABLE `tb_user` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `password` varchar(128) NOT NULL,
   `last_login` datetime(6) DEFAULT NULL,
   `is_superuser` tinyint(1) NOT NULL,
   `username` varchar(150) NOT NULL,
-  `first_name` varchar(150) NOT NULL,
+  `first_name` varchar(30) NOT NULL,
   `last_name` varchar(150) NOT NULL,
   `email` varchar(254) NOT NULL,
   `is_staff` tinyint(1) NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE `tb_user` (
   `is_guru` tinyint(1) NOT NULL,
   `is_admin` tinyint(1) NOT NULL,
   `foto` varchar(100) DEFAULT NULL,
-  `id_mapel` varchar(10) DEFAULT NULL,
+  `id_mapel` varchar(50) DEFAULT NULL,
   `id_kelas` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
@@ -48,16 +48,19 @@ CREATE TABLE `tb_user` (
   KEY `fk_kelas` (`id_kelas`),
   CONSTRAINT `fk_kelas` FOREIGN KEY (`id_kelas`) REFERENCES `tb_kelas` (`id_kelas`),
   CONSTRAINT `fk_mapel` FOREIGN KEY (`id_mapel`) REFERENCES `tb_mapel` (`id_mapel`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `tb_user` */
 
 insert  into `tb_user`(`id`,`password`,`last_login`,`is_superuser`,`username`,`first_name`,`last_name`,`email`,`is_staff`,`is_active`,`date_joined`,`nomor_induk`,`nama_lengkap`,`alamat`,`jenis_kelamin`,`is_siswa`,`is_guru`,`is_admin`,`foto`,`id_mapel`,`id_kelas`) values 
-(1,'pbkdf2_sha256$600000$oY8bod4QeHkcMO88ED4hx7$97SHWJU/R7H9ph/bhwvk6RF886Z84GcxqpG1DJ6AJI0=','2023-06-18 13:17:04.007533',1,'adminsmp','','','smprahmat@gmail.com',1,1,'2023-06-05 14:23:22.000000','12345','Admin SMP','smp rahmat, bence','Perempuan',0,0,1,'foto/spongebob.jpg',NULL,NULL),
-(2,'pbkdf2_sha256$600000$FuK1cXQYcR2XET6mg9B9cc$vAJsi3Pre0d1/yUwQbAfWuK6Ngw3cpqZNLyhXFQ+hnk=','2023-06-17 13:11:57.208871',0,'98765','','','anisaa@gmail.com',0,1,'2023-06-09 13:36:20.359857','98765','Anisa','ngadiluwih','Perempuan',0,1,0,'foto/teacher.jpg','MP03',NULL),
-(3,'pbkdf2_sha256$600000$5twXCWSPYeN6p6ErFRJGBD$AyPa3nY2n+l+Sp4WfGYt7v8Av4o3F8GHywaMaNrwKag=','2023-06-10 17:06:41.545041',0,'23456','','','bumiahmad@gmail.com',0,1,'2023-06-09 13:52:08.638102','23456','Ahmad Bumi','gampengrejo, kediri','Laki-Laki',0,1,0,'foto/kim_bum.jpg','MP05',NULL),
-(4,'pbkdf2_sha256$600000$0OW9crIOJBno77Da1S4HR0$ZIz6qeSZKiCdQHV43hjq4WpVe9VDWVlG9Awo/BrhzxQ=','2023-06-18 13:20:33.461438',0,'13579','','','sitiyuji@gmail.com',0,1,'2023-06-09 14:20:31.884422','13579','Siti Yuji','Sukorame, Kediri','Perempuan',1,0,0,'foto/ryujin.jpg',NULL,'7A'),
-(5,'pbkdf2_sha256$600000$wj1MPUqGivKUOaHv65dFfc$tAHyDNsVppaNBQiddh29GZimRAkwkJd0Uqh6GrOZj4Q=','2023-06-18 13:20:13.395664',0,'123456789','','','dodiyanuar@gmail.com',0,1,'2023-06-18 13:19:42.936568','123456789','Dodi Yanuar','Kota Kediri','Laki-Laki',1,0,0,'foto/download.jpg',NULL,'7B');
+(1,'pbkdf2_sha256$180000$gmLmJM9h4vRP$+Yrze8MqCx9gimFQEEQC61FPw+MVnLBxO8Es/or0uQI=','2023-07-06 15:38:21.040430',1,'adminsmp','','','Info@rahmat.sch.id',1,1,'2023-06-05 14:23:22.000000','12345','Admin SMP','Jl. Kapten Tendean, Bence Gg.I, Pakunden – Kota Kediri','Perempuan',0,0,1,'foto/LOGO_BARU.png',NULL,NULL),
+(6,'pbkdf2_sha256$600000$4WB2IucgilOmsOgXiKqJSf$/8b89EYje0/dZiBu6EfY0rpXT/e9uQzXaT7Jd9Ty+ck=',NULL,0,'123456789','','','dhaninjaya@gmail.com',0,1,'2023-06-21 10:29:37.002422','123456789','Deehan Dhaninjaya','Kota Kediri','Laki-Laki',1,0,0,'foto/download_UkxWM1Y.jpg',NULL,'7B'),
+(15,'pbkdf2_sha256$180000$LiU4Jqz9MjL0$kGaOb7uND34hWMvUBjUrArWbgCnQQBhWVqZwKVQuW8Q=',NULL,0,'20190221','','','subandiyantoro@gmail.com',0,1,'2023-07-06 14:25:21.429652','20190221','Subandiyantoro, S.Pd., M.Pd','Ngadiluwih, Kediri','Laki-Laki',0,1,0,'foto/photo_6140787057358911304_y.jpg','MP03',NULL),
+(16,'pbkdf2_sha256$180000$fx49gFYPPdIe$ywqQfzvB0eTjhPDjTewOMN5HAuYN6NQXpNXkCYs7e/g=','2023-07-06 15:37:49.748394',0,'20171121','','','hajarsholeha@gmail.com',0,1,'2023-07-06 14:26:09.865659','20171121','Hajar Solehah, S.Pd','Gampengrejo, Kediri','Perempuan',0,1,0,'foto/photo_6140787057358911305_y.jpg','MP02',NULL),
+(17,'pbkdf2_sha256$180000$bVDCCBucNWYe$FOqONa+SYbWSfXFGWjWb152x4P3EQy/nA/fB9+yWlsM=','2023-07-06 15:38:38.467321',0,'20170302','','','humaidah23@gmail.com',0,1,'2023-07-06 14:28:16.509658','20170302','Indah Humaidah, S.Hum','Kota Kediri','Perempuan',0,1,0,'foto/photo_6140787057358911306_y.jpg','MP01',NULL),
+(18,'pbkdf2_sha256$180000$hR5zP7k2lKSN$08kFmbseyXD/5cKVT314cJ8gCgDhDr+X/gwSwNrUszQ=','2023-07-06 15:27:20.646893',0,'0099876804','','','iqlima.hani@gmail.com',0,1,'2023-07-06 14:36:31.965378','0099876804','Iqlima Ainun Hanifah','Gampengrejo, Kediri','Perempuan',1,0,0,'foto/Iqlima_Ainun_Hanifah.jpeg',NULL,'7A'),
+(19,'pbkdf2_sha256$180000$RLRNr8yYMRfl$YXsbPb7yiPPY87I0UJrjBi6oZXVBp1VHRGf/PuZlDIE=',NULL,0,'0098852841','','','sirinabidah@gmail.com',0,1,'2023-07-06 14:38:51.217636','0098852841','Sirin Abidah','Kota Kediri','Perempuan',1,0,0,'foto/Sirin_Abidah.jpeg',NULL,'7A'),
+(20,'pbkdf2_sha256$180000$nl4WlyaucJvz$1lloxyoU0cK568JG+4Ra7xVoDaebyMAQAIyHWFzSUgE=','2023-07-06 15:35:44.886222',0,'0097816504','','','permataaura@gmail.com',0,1,'2023-07-06 14:39:40.715526','0097816504','Permata Aura','Kota Kediri','Perempuan',1,0,0,'foto/Permata_Aura.jpeg',NULL,'7A');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

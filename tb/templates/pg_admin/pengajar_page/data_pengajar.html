@@ -63,8 +63,7 @@
                     <!--begin::Card title-->
                     <div class="card-title">
                         <!--begin::Search-->
-                        <div class="d-flex align-items-center position-relative my-1">
-                            <!--begin::Svg Icon | path: icons/duotone/General/Search.svg-->
+                        <!-- <div class="d-flex align-items-center position-relative my-1">
                             <span class="svg-icon svg-icon-1 position-absolute ms-6">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -74,9 +73,8 @@
                                     </g>
                                 </svg>
                             </span>
-                            <!--end::Svg Icon-->
                             <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search user" id="pencarian" />
-                        </div>
+                        </div> -->
                         <!--end::Search-->
                     </div>
                     <div class="card-toolbar">
@@ -132,7 +130,7 @@
                                                 <!--FOTO PENGAJAR-->
                                                 <div class="fv-row mb-7">
                                                     <!--begin::Label-->
-                                                    <label class="required d-block fw-bold fs-6 mb-5">Foto Pengajar</label>
+                                                    <label class="required d-block fw-bold fs-6 mb-5">Foto Guru</label>
                                                     <!--end::Label-->
                                                     <!--begin::Image input-->
                                                     <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url(static/media/avatars/blank.png)">
@@ -164,18 +162,18 @@
                                                     <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
                                                     <!--end::Hint-->
                                                 </div>
-                                                <!--FOTO PENGAJAR-->
+                                                <!--FOTO Guru-->
 
-                                                <!--NOMOR PENGAJAR-->
+                                                <!--NOMOR Guru-->
                                                 <div class="fv-row mb-7">
                                                     <!--begin::Label-->
-                                                    <label class="required fw-bold fs-6 mb-2">NIP</label>
+                                                    <label class="required fw-bold fs-6 mb-2">Nomor Guru</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input type="text" name="nomor_induk" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="123456789" />
                                                     <!--end::Input-->
                                                 </div>
-                                                <!--NOMOR PENGAJAR-->
+                                                <!--NOMOR Guru-->
                                                 
                                                 <!--NAMA LENGKAP-->
                                                 <div class="fv-row mb-7">
@@ -210,7 +208,7 @@
                                                 </div>
                                                 <!--password-->
                                                 
-                                                <!--ALAMAT PENGAJAR-->
+                                                <!--ALAMAT Guru-->
                                                 <div class="fv-row mb-12">
                                                     <!--begin::Label-->
                                                     <label class="required fw-bold fs-6 mb-2">Alamat</label>
@@ -219,7 +217,7 @@
                                                     <input type="text" name="alamat" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Jl. Bence, Kediri" />
                                                     <!--end::Input-->
                                                 </div>
-                                                <!--ALAMAT PENGAJAR-->
+                                                <!--ALAMAT Guru-->
 
                                                 <!--JENIS KELAMIN-->
                                                 <div class="mb-7">
@@ -273,7 +271,7 @@
                                                         <!--end::Input-->
                                                         <!--begin::Label-->
                                                         <label class="form-check-label" for="is_guru">
-                                                            <div class="fw-bolder text-white">Pengajar</div>
+                                                            <div class="fw-bolder text-white">Guru</div>
                                                         </label>
                                                         <!--end::Label-->
                                                     </div>
@@ -363,7 +361,7 @@
                         <!--begin::Table body-->
                         <tbody class="text-gray-600 fw-bold">
 
-                            {% for pengajar in pengguna %}
+                            {% for guru in pengguna %}
                             <!--begin::Table row-->
                             <tr>
                                 
@@ -372,40 +370,40 @@
                                     <!--begin:: Avatar -->
                                     <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                         <div class="symbol-label">
-                                            <img src="media/{{ pengajar.foto }}" alt="{{ pengajar.nama_lengkap }}" class="w-100" />
+                                            <img src="media/{{ guru.foto }}" alt="{{ guru.nama_lengkap }}" class="w-100" />
                                         </div>
                                     </div>
                                     <!--end::Avatar-->
                                     <!--begin::User details-->
                                     <div class="d-flex flex-column">
-                                        <a href="#" class="text-gray-800 text-hover-primary mb-1" data-bs-toggle="modal" data-bs-target="#modal_detail_{{ pengajar.nomor_induk }}">{{ pengajar.nama_lengkap }}</a>
-                                        <span>{{ pengajar.email }}</span>
+                                        <a href="#" class="text-gray-800 text-hover-primary mb-1" data-bs-toggle="modal" data-bs-target="#modal_detail_{{ guru.nomor_induk }}">{{ guru.nama_lengkap }}</a>
+                                        <span>{{ guru.email }}</span>
                                     </div>
                                     <!--begin::User details-->
                                 </td>
                                 <!--end::User=-->
                                 <!--begin::Last login=-->
                                 <td>
-                                    {% if pengajar.last_login == None %}
+                                    {% if guru.last_login == None %}
                                     <div class="badge badge-light-danger fw-bolder">
                                         Belum Login
                                     </div>
                 
                                     {% else %}
                                     <div class="badge badge-light fw-bolder">
-                                        {{ pengajar.last_login }}
+                                        {{ guru.last_login }}
                                     </div>
                                     {% endif %}
                                 </td>
                                 <!--end::Last login=-->
                                 
                                 <!--begin::Joined-->
-                                <td>{{ pengajar.date_joined }}</td>
+                                <td>{{ guru.date_joined }}</td>
                                 <!--begin::Joined-->
 
                                 <!--begin::Status-->
                                 <td>
-                                    {% if pengajar.is_active == 1 %}
+                                    {% if guru.is_active == 1 %}
                                     <div class="badge badge-light-success fw-bolder">
                                         Aktif
                                     </div>
@@ -434,18 +432,18 @@
                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#modal_edit_{{ pengajar.nomor_induk }}">Edit</a>
+                                            <a href="#" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#modal_edit_{{ guru.nomor_induk }}">Edit</a>
                                         </div>
                                         <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3 text-danger" data-bs-toggle="modal" data-bs-target="#modal_hapus_{{ pengajar.nomor_induk }}">Hapus Akun</a>
+                                            <a href="#" class="menu-link px-3 text-danger" data-bs-toggle="modal" data-bs-target="#modal_hapus_{{ guru.nomor_induk }}">Hapus Akun</a>
                                         </div>
                                         <!--end::Menu item-->
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-3">
-                                            {% if pengajar.is_active == 1 %}
-                                            <a href="/nonaktif-pg{{ pengajar.id }}" class="menu-link px-3 text-danger">Non-aktif</a>
+                                            {% if guru.is_active == 1 %}
+                                            <a href="/nonaktif-pg{{ guru.id }}" class="menu-link px-3 text-danger">Non-aktif</a>
                                             {% else %}
-                                            <a href="/aktif-pg{{ pengajar.id }}" class="menu-link px-3 text-success">Aktifkan</a>
+                                            <a href="/aktif-pg{{ guru.id }}" class="menu-link px-3 text-success">Aktifkan</a>
                                             {% endif %}
                                         </div>
                                         <!--end::Menu item-->
@@ -464,15 +462,15 @@
                 </div>
                 <!--end::Card body-->
 
-                <!-- LIHAT DETAIL pengajar -->
-                {% for pengajar in pengguna %}
-                <div class="modal fade" tabindex="-1" id="modal_detail_{{ pengajar.nomor_induk }}">
+                <!-- LIHAT DETAIL guru -->
+                {% for guru in pengguna %}
+                <div class="modal fade" tabindex="-1" id="modal_detail_{{ guru.nomor_induk }}">
                     <div class="modal-dialog modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">{{ pengajar.nama_lengkap }}
+                                <h5 class="modal-title">{{ guru.nama_lengkap }}
                                     <span>
-                                        {% if pengajar.is_active == 1 %}
+                                        {% if guru.is_active == 1 %}
                                         <div class="badge badge-light-success fw-bolder">
                                             Aktif
                                         </div>
@@ -502,7 +500,7 @@
                                 <div class="d-flex flex-row flex-center">
                                     <div class="symbol symbol-square symbol-200px overflow-hidden me-3">
                                         <div class="symbol-label">
-                                            <img src="media/{{ pengajar.foto }}" alt="{{ pengajar.nama_lengkap }}" class="w-100" />
+                                            <img src="media/{{ guru.foto }}" alt="{{ guru.nama_lengkap }}" class="w-100" />
                                         </div>
                                     </div>
                                 </div>
@@ -515,47 +513,47 @@
                                                 <td>Nama Lengkap</td>
                                                 <td>:</td>
                                                 <td>
-                                                    <h4 class="text-gray-800 mb-1">{{ pengajar.nama_lengkap }}</h4>
+                                                    <h4 class="text-gray-800 mb-1">{{ guru.nama_lengkap }}</h4>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Email pengajar</td>
+                                                <td>Email guru</td>
                                                 <td>:</td>
                                                 <td>
-                                                    <h4>{{ pengajar.email }}</h4>
+                                                    <h4>{{ guru.email }}</h4>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Mata Pelajaran</td>
                                                 <td>:</td>
                                                 <td>
-                                                    <h4 class="text-primary">{{ pengajar.nama_mapel }}</h4>
+                                                    <h4 class="text-primary">{{ guru.nama_mapel }}</h4>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>NIP</td>
+                                                <td>Nomor Guru</td>
                                                 <td>:</td>
-                                                <td>{{ pengajar.nomor_induk }}</td>
+                                                <td>{{ guru.nomor_induk }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Alamat</td>
                                                 <td>:</td>
-                                                <td>{{ pengajar.alamat }}</td>
+                                                <td>{{ guru.alamat }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Jenis Kelamin</td>
                                                 <td>:</td>
-                                                <td>{{ pengajar.jenis_kelamin }}</td>
+                                                <td>{{ guru.jenis_kelamin }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Tanggal Akun Terdaftar</td>
                                                 <td>:</td>
-                                                <td>{{ pengajar.date_joined }}</td>
+                                                <td>{{ guru.date_joined }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Terakhir Login</td>
                                                 <td>:</td>
-                                                <td>{{ pengajar.last_login }}</td>
+                                                <td>{{ guru.last_login }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -570,17 +568,17 @@
                     </div>
                 </div>
                 {% endfor %}
-                <!-- LIHAT DETAIL pengajar -->
+                <!-- LIHAT DETAIL guru -->
 
-                <!-- EDIT pengajar -->
-                {% for pengajar in pengguna %}
-                <div class="modal fade" tabindex="-1" id="modal_edit_{{ pengajar.nomor_induk }}">
+                <!-- EDIT guru -->
+                {% for guru in pengguna %}
+                <div class="modal fade" tabindex="-1" id="modal_edit_{{ guru.nomor_induk }}">
                     <div class="modal-dialog modal-dialog-scrollable">
                         <div class="modal-content">
-                            <form id="kt_modal_add_user_form" class="form" method="post" action="/pengajar-edt{{ pengajar.id }}" enctype="multipart/form-data">
+                            <form id="kt_modal_add_user_form" class="form" method="post" action="/pengajar-edt{{ guru.id }}" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Edit Data pengajar</h5>
+                                    <h5 class="modal-title">Edit Data Guru</h5>
                     
                                     <!--begin::Close-->
                                     <div class="btn btn-icon btn-sm btn-active-light-danger ms-2" data-bs-dismiss="modal" aria-label="Close">
@@ -600,15 +598,15 @@
                                     <!--begin::Scroll-->
                                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
 
-                                        <!--FOTO pengajar-->
+                                        <!--FOTO Guru-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required d-block fw-bold fs-6 mb-5">Foto pengajar</label>
+                                            <label class="required d-block fw-bold fs-6 mb-5">Foto Guru</label>
                                             <!--end::Label-->
                                             <!--begin::Image input-->
                                             <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url(static/media/avatars/blank.png)">
                                                 <!--begin::Preview existing avatar-->
-                                                <div class="image-input-wrapper w-125px h-125px" style="background-image: url(media/{{pengajar.foto}});"></div>
+                                                <div class="image-input-wrapper w-125px h-125px" style="background-image: url(media/{{guru.foto}});"></div>
                                                 <!--end::Preview existing avatar-->
                                                 <!--begin::Label-->
                                                 <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
@@ -633,18 +631,18 @@
                                             <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
                                             <!--end::Hint-->
                                         </div>
-                                        <!--FOTO pengajar-->
+                                        <!--FOTO guru-->
 
-                                        <!--NOMOR pengajar-->
+                                        <!--NOMOR guru-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-bold fs-6 mb-2">NIP</label>
+                                            <label class="required fw-bold fs-6 mb-2">Nomor Guru</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="nomor_induk" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="123456789" value="{{ pengajar.nomor_induk }}" />
+                                            <input type="text" name="nomor_induk" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="123456789" value="{{ guru.nomor_induk }}" />
                                             <!--end::Input-->
                                         </div>
-                                        <!--NOMOR pengajar-->
+                                        <!--NOMOR guru-->
                                         
                                         <!--NAMA LENGKAP-->
                                         <div class="fv-row mb-7">
@@ -652,7 +650,7 @@
                                             <label class="required fw-bold fs-6 mb-2">Nama Lengkap</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="nama_lengkap" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="John Doe" value="{{ pengajar.nama_lengkap}}"/>
+                                            <input type="text" name="nama_lengkap" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="John Doe" value="{{ guru.nama_lengkap}}"/>
                                             <!--end::Input-->
                                         </div>
                                         <!--NAMA LENGKAP-->
@@ -663,21 +661,21 @@
                                             <label class="required fw-bold fs-6 mb-2">Email</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="example@domain.com" value="{{ pengajar.email }}" />
+                                            <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="example@domain.com" value="{{ guru.email }}" />
                                             <!--end::Input-->
                                         </div>
                                         <!--EMAIL-->
                                         
-                                        <!--ALAMAT pengajar-->
+                                        <!--ALAMAT guru-->
                                         <div class="fv-row mb-12">
                                             <!--begin::Label-->
-                                            <label class="required fw-bold fs-6 mb-2">Alamat pengajar</label>
+                                            <label class="required fw-bold fs-6 mb-2">Alamat Guru</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="alamat" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Jl. Bence, Kediri" value="{{ pengajar.alamat }}" />
+                                            <input type="text" name="alamat" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Jl. Bence, Kediri" value="{{ guru.alamat }}" />
                                             <!--end::Input-->
                                         </div>
-                                        <!--ALAMAT pengajar-->
+                                        <!--ALAMAT guru-->
 
                                         <!--JENIS KELAMIN-->
                                         <div class="mb-7">
@@ -690,7 +688,7 @@
                                                 <!--begin::Radio-->
                                                 <div class="form-check form-check-custom form-check-solid">
                                                     <!--begin::Input-->
-                                                    {% if pengajar.jenis_kelamin == 'Perempuan' %}
+                                                    {% if guru.jenis_kelamin == 'Perempuan' %}
                                                     <input class="form-check-input me-3" name="jenis_kelamin" type="radio" value="Perempuan" id="perempuan" checked />
                                                     {% else %}
                                                     <input class="form-check-input me-3" name="jenis_kelamin" type="radio" value="Perempuan" id="perempuan" />
@@ -710,7 +708,7 @@
                                             <div class="d-flex fv-row">
                                                 <!--begin::Radio-->
                                                 <div class="form-check form-check-custom form-check-solid">
-                                                    {% if pengajar.jenis_kelamin == 'Laki-Laki' %}
+                                                    {% if guru.jenis_kelamin == 'Laki-Laki' %}
                                                     <!--begin::Input-->
                                                     <input class="form-check-input me-3" name="jenis_kelamin" type="radio" value="Laki-Laki" id="laki_laki" checked />
                                                     {% else %}
@@ -743,11 +741,11 @@
                     </div>
                 </div>
                 {% endfor %}
-                <!-- EDIT pengajar -->
+                <!-- EDIT guru -->
 
-                <!-- HAPUS pengajar -->
-                {% for pengajar in pengguna %}
-                <div class="modal fade" tabindex="-1" id="modal_hapus_{{ pengajar.nomor_induk }}">
+                <!-- HAPUS guru -->
+                {% for guru in pengguna %}
+                <div class="modal fade" tabindex="-1" id="modal_hapus_{{ guru.nomor_induk }}">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header bg-danger">
@@ -767,12 +765,12 @@
                             </div>
                 
                             <div class="modal-body">
-                                <h3 class="text-danger">Yakin akan menghapus akun {{ pengajar.nama_lengkap }}?</h3>
+                                <h3 class="text-danger">Yakin akan menghapus akun {{ guru.nama_lengkap }}?</h3>
                             </div>
                 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                                <a href="/pengajar-rmv{{ pengajar.id }}" class="btn btn-danger">Hapus!</a>
+                                <a href="/pengajar-rmv{{ guru.id }}" class="btn btn-danger">Hapus!</a>
                             </div>
                         </div>
                     </div>

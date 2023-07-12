@@ -14,7 +14,7 @@
 		<!--end::Fonts-->
 		<!--begin::Page Vendor Stylesheets(used by this page)-->
 		<link href="static/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
-		<!-- <link href="static/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" /> -->
+		<link href="static/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 		<link href='https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
 		<link href='https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css' rel='stylesheet' type='text/css'>
 
@@ -313,20 +313,11 @@
 			</span>
 			<!--end::Svg Icon-->
 		</div>
-		<!--end::Scrolltop-->
-		<!--end::Main-->
-		<!--begin::Javascript-->
-		<!--begin::Global Javascript Bundle(used by all pages)-->
 		<script src="static/plugins/global/plugins.bundle.js"></script>
 		<script src="static/js/scripts.bundle.js"></script>
-		<!--end::Global Javascript Bundle-->
-		<!--begin::Page Vendors Javascript(used by this page)-->
 		<script src="static/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
-		<!--end::Page Vendors Javascript-->
-		<!--begin::Page Custom Javascript(used by this page)-->
-		<!-- <script src="static/plugins/custom/datatables/datatables.bundle.js"></script> -->
-		<!-- jQuery Library -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script src="static/plugins/custom/datatables/datatables.bundle.js"></script>
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 
 		<!-- Datatable JS -->
 		<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
@@ -337,60 +328,6 @@
 		<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
 		<script>
 			$('#tbl_siswa').DataTable({
-				// dom: 'Bfrtip',
-				// buttons: [
-				// 'copyHtml5',
-				// 'excelHtml5',
-				// 'csvHtml5',
-				// 'pdfHtml5'
-				// ]
-			});
-			// $("#kt_datatable_zero_configuration").DataTable();
-			// $('#kt_table_users').dataTable({
-			// 	dom: "Bfrtip",
-			// 	"processing": true,
-			// 	//"serverSide": true,
-			// 	"ajax": {
-			// 	"url": "pg_pengajar/data_siswa/kd_nilai.html",
-			// 	"type": "POST"
-			// 	},
-			// });
-
-			// var table = $('#kt_table_users').DataTable();
-			// $('#pencarian').on( 'keyup', function () {
-			// 	table.search( this.value ).draw();
-			// } );
-			// $(document).ready(function() {
-			// 	$('#example').dataTable();
-			// } );
-			// table = $('#kt_table_users').DataTable( {
-			// 	paging: false
-			// } );
-			
-			// table.destroy();
-			
-			// table = $('#kt_table_users').DataTable( {
-			// 	searching: false
-			// } );
-		</script>
-
-		<script>
-			$("#kt_datatable_dom_positioning").DataTable({
-				"language": {
-					"lengthMenu": "Show _MENU_",
-				},
-				"dom":
-					"<'row'" +
-					"<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
-					"<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
-					">" +
-
-					"<'table-responsive'tr>" +
-
-					"<'row'" +
-					"<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
-					"<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
-					">"
 			});
 		</script>
 		<!--end::Page Vendors Javascript-->

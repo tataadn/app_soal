@@ -22,26 +22,24 @@ DROP TABLE IF EXISTS `tb_soal`;
 
 CREATE TABLE `tb_soal` (
   `id_soal` int(11) NOT NULL AUTO_INCREMENT,
-  `id_kelas` varchar(10) NOT NULL,
-  `id_mapel` varchar(10) NOT NULL,
-  `kode_soal` varchar(50) NOT NULL,
+  `id_kdsoal` int(11) NOT NULL,
   `soal` longtext NOT NULL,
   `kunci_jawaban` longtext NOT NULL,
   `bobot_soal` int(11) NOT NULL,
-  `id_user` bigint(20) NOT NULL,
+  `tgl_input` datetime DEFAULT NULL,
   PRIMARY KEY (`id_soal`),
-  KEY `fk_user` (`id_user`),
-  CONSTRAINT `fk_user` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  KEY `fk_kdsoal` (`id_kdsoal`),
+  CONSTRAINT `fk_kdsoal` FOREIGN KEY (`id_kdsoal`) REFERENCES `tb_kdsoal` (`id_kdsoal`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `tb_soal` */
 
-insert  into `tb_soal`(`id_soal`,`id_kelas`,`id_mapel`,`kode_soal`,`soal`,`kunci_jawaban`,`bobot_soal`,`id_user`) values 
-(1,'7A','MP03','KDS001','Sebutkan ciri ciri yang ada pada kalimat tidak langsung!','Tidak memakai tanda petik pada kalimat, cara membacanya tidak dengan ekspresi atau datar dan adanya pada pemakaian kata ganti orang.',20,2),
-(2,'7A','MP03','KDS001','Sebutkan apa saja ciri-ciri pantun!','Memiliki empat baris di tiap bait, jumlah suku kata 8 sampai 12 di tiap baris, dengan memiliki rima akhir a-b-a-b. Sampiran di baris pertama dan kedua dan Isi terdapat di baris ketiga dan keempat.',20,2),
-(3,'7A','MP03','KDS001','pengertian dari rima?','Pengulangan kata pada sajak baik di awal maupun di akhir',20,2),
-(4,'7A','MP03','KDS001','Yang merupakan pengarang syair berjudul ‘Syair Perahu’ adalah','Hamzah Fansuri',20,2),
-(6,'7A','MP03','KDS001','Gurindam merupakan puisi lama dari bahasa India yaitu kirindam yang artinya?','Mula-mula atau perumpamaan',20,2);
+insert  into `tb_soal`(`id_soal`,`id_kdsoal`,`soal`,`kunci_jawaban`,`bobot_soal`,`tgl_input`) values 
+(1,2,'Sebutkan apa saja ciri-ciri kalimat tidak langsung!','- Tidak menggunakan tanda petik pada kalimat\r\n- Cara membacanya atau nadanya datar\r\n- Adanya perubahan kata ganti orang',20,'2023-07-06 15:07:48'),
+(2,2,'Sebutkan apa saja ciri-ciri pantun!','- Terdapat empat baris pada tiap bait\r\n- Jumlah suku kata sekitar 8 sampai 12 suku kata pada tiap baris\r\n- Setiap baris memiliki rima akhir a-b-a-b\r\n- Sampiran terdapat pada baris pertama dan kedua\r\n- Isi terdapat pada baris ketiga dan keempat',20,'2023-07-06 15:22:53'),
+(3,2,'Sebutkan apa saja ciri-ciri gurindam!','- Dalam satu bait terdiri dari dua baris\r\n- Jumlah kata pada tiap baris sekitar 10 sampai 14 kata\r\n- Rima pada tiap baris bersajak a-a, b-b, c-c, dan seterusnya\r\n- Soal, masalah, atau perjanjian terdapat pada baris pertama\r\n- Jawaban atau akibat terdapat pada baris kedua\r\n- Berisi tentang nasihat, kata-kata mutiara atau filosofi hidup',20,'2023-07-06 15:23:49'),
+(4,2,'Sebutkan unsur-unsur yang terdapat pada Fabel dan jelaskan!','- Tokoh; binatang menjadi pelaku dalam cerita baik tokoh protagonis maupun antagonis, tokoh utama (sering dibicarakan, sering muncul) atau pembantu (tambahan)\r\n- Penokohan dan watak tokoh; tokoh diberikan karakter atau sifat\r\n- Setting/latar; tempat, waktu, sosial pada cerita\r\n- Tema; ide atau gagasan yang mendasari cerita\r\n- Amanat; pesan cerita tersebut',20,'2023-07-06 15:25:02'),
+(5,2,'Perbaikilah penggunaan huruf kapital pada teks berikut!\r\n\r\ngedong gincu diresmikan sebagai salah satu simbol indramayu. Peresmiannya dilakukan oleh ibu hj. anasophana pada puncak peringatan hari jadi indramayu yang ke-491, tanggal 7 oktober 2018.','Gedong Gincu diresmikan sebagai salah satu symbol Indramayu. Peresmiannya dilakukan oleh Ibu Hj. Ana Sophana pada puncak peringatan hari jadi Indramayu yang ke-491 tanggal 7 Oktober 2018.',20,'2023-07-06 15:26:04');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

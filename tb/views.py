@@ -11,43 +11,6 @@ from django.http import HttpResponse
 import xlsxwriter
 # Create your views here.
 
-index_web = {
-    'judul_web' : 'Halaman index',
-}
-
-cekdb_web = {
-    'judul_web' : 'Halaman cek db',
-}
-
-def index_siswa(request):
-    if request.method == 'POST':
-        kalimat1 = request.POST['kalimat1']
-        kalimat2 = request.POST['kalimat2']
-        
-        ratio = SequenceMatcher(None, kalimat1, kalimat2).ratio()
-        hasil = "Nilai {0:.2f}".format(ratio*100)
-        
-        return render(request, 'pg-siswa/index.html', {'ratio': hasil, 'judul_web' : 'Halaman index'})
-    return render(request, 'pg-siswa/index.html', index_web)
-
-def soal_db(request):
-    soal = Soal.objects.all()
-    if request.method == 'POST':
-        cekdb_web = request.POST['kunci_jawaban']
-        jawaban = request.POST['jawaban']
-        bobot_soal = request.POST['bobot_soal']
-
-        ratio = SequenceMatcher(None, jawaban, cekdb_web).ratio()
-        hasil = "Nilai {0:.2f}".format(ratio*int(bobot_soal))
-        
-        var_halaman = {'soal':soal, 'ratio':hasil, 'judul_web' : 'Hasil cek db'}
-
-        return render(request,"pg-siswa/cek_db.html", var_halaman)
-    else:
-        return render(request,"pg-siswa/cek_db.html", {'soal':soal, 'judul_web' : 'Halaman cek db'})
-
-
-
 # ALL USERS VIEWS
 def index(request):
     judul_web = 'SMP Plus Rahmat'
@@ -88,6 +51,7 @@ def data_pengajar(request):
         nama_lengkap, alamat, jenis_kelamin, is_guru, foto, a.id_mapel as idmapel, nama_mapel, email, is_active
         FROM tb_user a, tb_mapel b
         WHERE a.`id_mapel` = b.id_mapel
+        ORDER BY a.date_joined DESC
     """
 
     with connection.cursor() as cursor:
@@ -115,11 +79,10 @@ def data_pengajar(request):
         pengajar.append(item)
 
     listweb = {
-        'judul_web' : 'Data Pengajar | SMP Plus Rahmat', 
-        'sub_title' : 'DATA PENGAJAR SMP PLUS RAHMAT', 
+        'judul_web' : 'Data Guru | SMP Plus Rahmat', 
+        'sub_title' : 'DATA GURU SMP PLUS RAHMAT', 
         'mpl' : Mapel.objects.all(), 
         'pengguna' : pengajar
-        # 'pengguna' : User.objects.filter(is_guru=True).order_by('date_joined'),
     }
     
     if request.method == 'POST':
@@ -493,7 +456,7 @@ def edit_pengajar(request, id):
             jk = request.POST['jenis_kelamin']
             username = request.POST['nomor_induk']
             User.objects.filter(id=id).create(foto=foto, nomor_induk=nip, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
-            messages.success(request, 'Akun siswa berhasil diedit!')
+            messages.success(request, 'Akun guru berhasil diedit!')
 
         else:
             nip = request.POST['nomor_induk']
@@ -503,7 +466,7 @@ def edit_pengajar(request, id):
             jk = request.POST['jenis_kelamin']
             username = request.POST['nomor_induk']
             User.objects.filter(id=id).update(nomor_induk=nip, nama_lengkap=nama, email=email, alamat=alamat, jenis_kelamin=jk, username=username)
-            messages.success(request, 'Akun siswa berhasil diedit!')
+            messages.success(request, 'Akun guru berhasil diedit!')
 
         return redirect('data_pengajar')
 
@@ -684,7 +647,7 @@ def hapus_9c(request, id):
 def hapus_pengajar(request, id):
     pengajar = User.objects.get(id=id)
     pengajar.delete()
-    messages.success(request, 'Akun pengajar berhasil dihapus!')
+    messages.success(request, 'Akun guru berhasil dihapus!')
     return redirect('data_pengajar')
 
 def profil_admin(request):
@@ -706,9 +669,6 @@ def login_siswa(request):
         if user is not None and user.is_siswa == True and user.is_active == True:
             login(request, user)
             return redirect('index')
-        elif user.is_active == False:
-            messages.error(request, 'Akun Anda Sudah Tidak Aktif! Silakan Hubungi Admin!')
-            return redirect('login_siswa')
         else:
             messages.error(request, 'Username atau password anda salah!')
             return redirect('login_siswa')
@@ -950,12 +910,10 @@ def login_pengajar(request):
         if user is not None and user.is_guru == True and user.is_active == True:
             login(request, user)
             return redirect('dashboard')
-        elif user.is_active == False:
-            messages.error(request, 'Akun Anda Sudah Tidak Aktif! Silakan Hubungi Admin!')
-            return redirect('login_pengajar')
         else:
             messages.error(request, 'Username atau password anda salah!')
             return redirect('login_pengajar')
+
     return render(request, 'pg_pengajar/auth/login_pengajar.html', {'judul_web' : 'Halaman login'})
 
 def logout_pengajar(request):
@@ -1010,10 +968,12 @@ def daftarsiswa_pengajar(request):
     return render(request, 'pg_pengajar/data_siswa/daftar_siswa.html', listweb)
 
 def nilai_siswa(request):
+    user_id = request.user.id
+
     listweb = {
         'judul_web' : 'Halaman Nilai Siswa | SMP Plus Rahmat',
         'sub_title' : 'NILAI SISWA SMP PLUS RAHMAT',
-        'datasoal' : Kdsoal.objects.all(),
+        'datasoal' : Kdsoal.objects.filter(id_user=user_id).order_by('-tgl_input'),
     }
     return render(request, 'pg_pengajar/data_siswa/index_kd_nilai.html', listweb)
 
@@ -1129,39 +1089,19 @@ def export_nilai(request, kode_soal):
     workbook = xlsxwriter.Workbook('Nilai Ujian ' + kode_soal + '.xlsx')
     worksheet = workbook.add_worksheet()
 
-    headers = ['Nama Siswa', 'Kelas', 'Soal Ujian', 'Jawaban Siswa', 'Nilai per Soal']
+    headers = ['No.', 'Nama Siswa', 'Kelas', 'Soal Ujian', 'Jawaban Siswa', 'Nilai per Soal']
 
     # Write the headers to the worksheet starting from row index 0
     for col_num, header in enumerate(headers):
         worksheet.write(0, col_num, header)
 
-    rowspan_counts = {}
-
-    # Track the rowspan count for each unique nama_lengkap value
     for row_num, row_data in enumerate(data, 1):  # Start at row index 1
-        nama_lengkap = row_data['nama_lengkap']
-
-        # Check if rowspan count for the current nama_lengkap exists
-        if nama_lengkap in rowspan_counts:
-            rowspan = rowspan_counts[nama_lengkap]
-            rowspan_counts[nama_lengkap] += 1  # Increment rowspan count
-        else:
-            rowspan = 1
-            rowspan_counts[nama_lengkap] = 2  # Set initial rowspan count
-
-        if rowspan == 1:
-            worksheet.write(row_num, 0, nama_lengkap)
-
-        # Apply rowspan to the nama_lengkap column
-        if rowspan > 1:
-            start_row = row_num - 1
-            end_row = row_num + rowspan - 2
-            worksheet.merge_range(start_row, 0, end_row, 0, nama_lengkap)
-
-        worksheet.write(row_num, 1, row_data['id_kelas'])
-        worksheet.write(row_num, 2, row_data['soal'])
-        worksheet.write(row_num, 3, row_data['jawaban_siswa'])
-        worksheet.write(row_num, 4, row_data['nilai'])
+        worksheet.write(row_num, 0, row_num)  # Write the row number
+        worksheet.write(row_num, 1, row_data['nama_lengkap'])
+        worksheet.write(row_num, 2, row_data['id_kelas'])
+        worksheet.write(row_num, 3, row_data['soal'])
+        worksheet.write(row_num, 4, row_data['jawaban_siswa'])
+        worksheet.write(row_num, 5, row_data['nilai'])
 
     workbook.close()
 
@@ -1183,7 +1123,6 @@ def data_ujian(request):
     listweb = {
         'judul_web' : 'Data Soal | SMP Plus Rahmat',
         'sub_title' : 'DAFTAR SOAL SMP PLUS RAHMAT',
-        # 'datasoal' : datasoal,
         'datasoal' : Kdsoal.objects.filter(id_user=iduser).order_by('-tgl_input'),
         'kls' : Kelas.objects.all(), 
     }
@@ -1202,8 +1141,8 @@ def tambahujian(request):
         id_kelas_str = ', '.join(id_kelas)
 
         Kdsoal.objects.create(kode_soal=kode_soal, nama_ujian=nama_ujian, jumlah_soal=jumlah_soal, id_kelas=id_kelas_str, id_mapel=id_mapel, id_user=id_user)
-        
-        return redirect('data_soal')
+        messages.success(request, 'Berhasil menambah ujian!')
+        return redirect('data_ujian')
 
 def editujian(request, id):
     if request.method == 'POST':
@@ -1215,12 +1154,14 @@ def editujian(request, id):
         id_kelas_str = ', '.join(id_kelas)
 
         Kdsoal.objects.filter(id_kdsoal=id).update(kode_soal=kode_soal, nama_ujian=nama_ujian, jumlah_soal=jumlah_soal, id_kelas=id_kelas_str)
-        return redirect('data_soal')
+        messages.success(request, 'Berhasil mengedit ujian!')
+        return redirect('data_ujian')
 
 def hapusujian(request, id):
     kdsoal = Kdsoal.objects.get(id_kdsoal=id)
     kdsoal.delete()
-    return redirect('data_soal')
+    messages.success(request, 'Berhasil menghapus ujian!')
+    return redirect('data_ujian')
 
 def detail_soal(request, id):
     listweb = {
