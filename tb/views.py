@@ -9,6 +9,8 @@ from django.db import connection
 from django.db.models import *
 from django.http import HttpResponse
 import xlsxwriter
+import random
+import string
 # Create your views here.
 
 # ALL USERS VIEWS
@@ -827,9 +829,10 @@ def data_soal(request):
 
     query = """
         SELECT a.`id_kdsoal` AS id_kdsoal, kode_soal, nama_ujian,
-        jumlah_soal, id_kelas, a.`tgl_input` AS tgl_input
-        FROM tb_soal b, tb_kdsoal a
+        jumlah_soal, id_kelas, a.`tgl_input` AS tgl_input, nama_mapel
+        FROM tb_soal b, tb_kdsoal a, tb_mapel c
         WHERE b.`id_kdsoal` = a.`id_kdsoal`
+        AND a.id_mapel = c.id_mapel
         AND id_kelas LIKE %s
         AND NOT EXISTS (
             SELECT *
@@ -854,6 +857,7 @@ def data_soal(request):
             'jumlah_soal': row[3],
             'id_kelas': row[4],
             'tgl_input': row[5],
+            'nama_mapel': row[6],
         }
         datasoal.append(item)
 
@@ -1120,11 +1124,18 @@ def profil_pengajar(request):
 def data_ujian(request):
     iduser = request.user.id
 
+    random_letters = random.choices(string.ascii_letters, k=3)
+    random_letters_string = ''.join(random_letters).upper()
+    random_numbers = [str(random.randint(0, 9)) for _ in range(4)]
+    random_numbers_string = ''.join(random_numbers)
+    result = random_letters_string + random_numbers_string
+
     listweb = {
         'judul_web' : 'Data Soal | SMP Plus Rahmat',
         'sub_title' : 'DAFTAR SOAL SMP PLUS RAHMAT',
         'datasoal' : Kdsoal.objects.filter(id_user=iduser).order_by('-tgl_input'),
         'kls' : Kelas.objects.all(), 
+        'random_kdsoal' : result,
     }
 
     return render(request, 'pg_pengajar/data_soal/data_ujian.html', listweb)
